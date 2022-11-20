@@ -1,5 +1,9 @@
+using System.Data.Common;
 using API.Data;
+using API.DTOs;
 using API.Entities;
+using API.Interface;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,25 +11,37 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers
 {
     [Authorize]
-    public class ToolsController: BaseApiController
+    public class ToolsController : BaseApiController
     {
-    private readonly DataContext _context;
-    public ToolsController(DataContext context)
-    {
-        _context = context;
-    }
+        private readonly IToolsRepository _toolsRepository;
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Tools>>> GetTools()
-    {
-        return await _context.Tools.ToListAsync();
-    }
+        private readonly IMapper _mapper;
+        public ToolsController(IToolsRepository toolsRepository, IMapper mapper)
+        {
+            this._toolsRepository = toolsRepository;
+            this._mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ToolsDto>>> GetTools()
+        {
+            var tools = await _toolsRepository.GetToolsAsync();
+
+            return Ok(tools);
+        }
 
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Tools>> GetTool(int id)
-    {
-        return await _context.Tools.FindAsync(id);
-    }
+        [HttpGet("{toolname}")]
+        public async Task<ActionResult<ToolsDto>> GetTool(string toolname)
+        {
+            return await _toolsRepository.GetToolAsync(toolname);
+        }
+
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<ToolsDto>> GetToolOwner(int id)
+        // {
+        //     var tools = await _toolsRepository.GetToolsByTheOwner(id);
+        //     return Ok(tools);
+        // }
     }
 }
