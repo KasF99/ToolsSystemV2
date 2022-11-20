@@ -12,7 +12,9 @@ namespace API.Helpers
             CreateMap<AppUser, MemberDto>();
             CreateMap<Tools, ToolsDto>()
              .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src =>
-                src.Photos.FirstOrDefault(x => x.IsMain).Url));
+                src.Photos.FirstOrDefault(x => x.IsMain).Url))
+             .ForMember(dest => dest.Owner, opt => opt.MapFrom(src =>
+                src.AppUser.KnownAs));
             CreateMap<Photo, PhotoDto>();
         }
     }

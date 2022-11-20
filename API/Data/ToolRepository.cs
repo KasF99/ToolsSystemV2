@@ -37,14 +37,14 @@ namespace API.Data
             return await _context.Tools.FindAsync(id);
         }
 
-        // public async Task<IEnumerable<ToolsDto>> GetToolsByTheOwner(int id)
-        // {
+        public async Task<IEnumerable<ToolsDto>> GetToolsByTheOwner(int id)   //for the future chagnes
+        {
 
-        //     return await _context.Tools  
-        //         .Where(x => x.AppUserId == id)
-        //         .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
-        //         .ToListAsync();
-        // }
+            return await _context.Tools  
+                .Where(x => x.AppUserId == id)
+                .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
 
         public async Task<Tools> GetToolsByToolnameAsync(string toolname)
         {
