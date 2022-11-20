@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminPanelComponent implements OnInit {
 
+  registerMode = false
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  registerToggle() {
+    this.registerMode =!this.registerMode
+  }
+  cancelRegisterMode(event: boolean) { 
+    this.registerMode = false
   }
 
 }

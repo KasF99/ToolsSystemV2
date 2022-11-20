@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { ReplaySubject } from 'rxjs';
 import { map } from "rxjs/operators";
 import { User } from '../_models/user';
@@ -13,7 +14,7 @@ export class AccountService {
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, public toastr: ToastrService) { }
   
   login(model: any) {
     return this.http.post(this.baseUrl + 'account/login', model).pipe(
@@ -32,8 +33,9 @@ export class AccountService {
     return this.http.post(this.baseUrl + 'account/register', model).pipe(
       map((user: User) => {
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user))
-          this.currentUserSource.next(user)
+          // localStorage.setItem('user', JSON.stringify(user))
+          // this.currentUserSource.next(user)
+          this.toastr.success("You registered new user, check ... tab")
         }
         return user
       })
