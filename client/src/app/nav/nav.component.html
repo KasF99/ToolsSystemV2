@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+
+    <div class="container">
+        <a class="navbar-brand" routerLink="/">ToolsSystemApp</a>
+        
+
+        <ul class="navbar-nav mr-auto" >
+            <ng-container *ngIf="accountService.currentUser$| async">
+                <li class="nav-item" >
+                    <a class="nav-link" routerLink="/tools" routerLinkActive="active">Tools</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin Panel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/mechanic" routerLinkActive="active">Mechanic Panel</a>
+                </li>
+            </ng-container>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/errors" routerLinkActive="active">Error Panel</a>
+            </li>
+
+        </ul>
+
+        <!-- <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()" autocomplete="off" >
+            <input name="username" [(ngModel)]="model.username" class="form-control mr-sm-2" type="text"
+                placeholder="Login">
+            <input name="password" [(ngModel)]="model.password" class="form-control mr-sm-2 password" type="password"
+                placeholder="Password">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form> -->
+
+        <div class="btn-group" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+            <button id="button-animated" dropdownToggle type="button" class="btn btn-group dropdown-toggle text-light"
+                aria-controls="dropdown-animated">
+                Welcome {{user.username | titlecase}} <span class="caret"></span>
+            </button>
+            <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu mt-2" role="menu"
+                aria-labelledby="button-animated">
+                <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+                <li role="menuitem"><a class="dropdown-item" href="#" (click)="logout()">Logout</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</nav>
