@@ -1,12 +1,26 @@
 <div class="card mb-4">
     <div class="card-img-wrapper">
-        <img src="{{tool.photoUrl}}" alt="{{tool.toolName}}">
+        <img class="center" src="{{tool.photoUrl}}" alt="{{tool.toolName}}">
+        <ul class="list-inline member-icons animate text-center">
+            <li class="list-inline-item"><button routerLink='/tools/{{tool.toolName}}' class="btn btn-primary">
+                <i class="fa fa-info-circle" aria-hidden="true"></i></button></li>
+            <li class="list-inline-item"><button class="btn btn-primary">
+                <i class="fa fa-heart"></i></button></li>
+            <li class="list-inline-item"><button class="btn btn-primary">
+                <i class="fa fa-envelope"></i></button></li>
+        </ul>
     </div>
 
+    <h6 class="card-text text-center mt-3">{{tool.toolName}}</h6>
+
     <div class="card-body p-11">
-        <h6 class="card-title text-center mb-1">
-            <i class="fa fa-user mr-2"></i>
-            {{tool.toolNumber}}
+        <h6 class="card-title text-center text-muted mb-1">
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+              {{tool.dateOfService}}
         </h6>
     </div>
+
+   
+   
+
 </div>
