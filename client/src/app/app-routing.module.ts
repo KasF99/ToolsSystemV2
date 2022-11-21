@@ -21,6 +21,8 @@ const routes: Routes = [
       { path: 'tools', component: ToolsListComponent },
       // { path: 'tools/:id', component: ToolsDetailComponent },
       { path: 'tools/:toolname', component: ToolsDetailComponent },
+      { path: 'admin/tools', component: ToolsDetailComponent },
+      { path: 'admin/tools/:toolname', component: ToolsDetailComponent },
       { path: 'admin', component: AdminPanelComponent },
       { path: 'mechanic', component: MechanicPanelComponent },
 
