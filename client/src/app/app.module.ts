@@ -23,6 +23,7 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ToolsCardComponent } from './tools/tools-card/tools-card.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ToolsCardComponent } from './tools/tools-card/tools-card.component';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
     
   ],
   bootstrap: [AppComponent]
