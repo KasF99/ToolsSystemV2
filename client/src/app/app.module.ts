@@ -22,6 +22,7 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ToolsCardComponent } from './tools/tools-card/tools-card.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     TestErrorsComponent,
     NotFoundComponent,
     ServerErrorComponent,
+    ToolsCardComponent,
 
   ],
   imports: [

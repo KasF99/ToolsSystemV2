@@ -1,1 +1,5 @@
-<p>tools-list works!</p>
+<div class="row">
+    <div *ngFor="let tool of tools" class="col-2">
+        <app-tools-card [tool]="tool"></app-tools-card>
+    </div>
+</div>
