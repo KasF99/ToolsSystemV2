@@ -1,1 +1,76 @@
-<p>tools-detail works!</p>
+<div class="row" *ngIf="tool">
+    <div class="col-4">
+        <div *ngIf="!closeToService" class="card">
+            <img src="{{tool.photoUrl || './assets/tool.png'}}" alt="{{tool.toolName}}" 
+                class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div class="mb-2">
+                    <strong>Tool name: </strong>  {{tool.toolName}}
+                </div>
+                <div class="mb-2">
+                    <strong>Owner: </strong> {{tool.owner}}
+                    
+                </div>
+                <div>
+                    <strong>Added date: </strong>
+                    <p>{{tool.created}}</p>
+                </div>
+                <div>
+                    <strong>Service date: </strong>
+                    <p>{{tool.dateOfService}}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <!-- <div class="btn-group d-flex">
+                    <button class="btn btn-primary">Like</button>
+                    <button class="btn btn-success">Message</button>
+                </div> -->
+            </div>
+        </div>
+
+        <div *ngIf="closeToService" class="card" style="background-color: hwb(0 52% 16%) ;">
+            <img src="{{tool.photoUrl || './assets/tool.png'}}" alt="{{tool.toolName}}" 
+                class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div class="mb-2">
+                    <strong>Tool name: </strong>  {{tool.toolName}}
+                </div>
+                <div class="mb-2">
+                    <strong>Owner: </strong> {{tool.owner}}
+                    
+                </div>
+                <div>
+                    <strong>Added date: </strong>
+                    <p>{{tool.created}}</p>
+                </div>
+                <div>
+                    <strong>Service date: </strong>
+                    <p>{{tool.dateOfService}}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <!-- <div class="btn-group d-flex">
+                    <button class="btn btn-primary">Like</button>
+                    <button class="btn btn-success">Message</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <tabset class="member-tabset">
+            <tab heading="About {{tool.toolName}}">
+                <h4>Tool number: </h4>
+                <p>{{tool.toolNumber}}</p>
+                <h4>Description: </h4>
+                <p>{{tool.description}}</p> 
+                <h4>Place for more info in future....</h4>
+                
+            </tab>
+            <tab heading="Photos">
+               
+            </tab>
+          </tabset>
+    </div>
+</div>
+

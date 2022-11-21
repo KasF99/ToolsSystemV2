@@ -6,7 +6,7 @@
   }
 
   .nav-tabs > li.open, .member-tabset > .nav-tabs > li:hover {
-    border-bottom: 4px solid #fbcdcf;
+    border-bottom: 4px solid #54bcdb;
   }
 
   .member-tabset > .nav-tabs > li.open > a, .member-tabset > .nav-tabs > li:hover > a {
@@ -16,7 +16,7 @@
   }
 
   .member-tabset > .nav-tabs > li.open > a > i, .member-tabset > .nav-tabs > li:hover > a > i {
-    color: #a6a6a6;
+    color: #3c55c7;
   }
 
   .member-tabset > .nav-tabs > li.open .dropdown-menu, .member-tabset > .nav-tabs > li:hover .dropdown-menu {
@@ -24,13 +24,13 @@
   }
 
   .member-tabset > .nav-tabs > li.active {
-    border-bottom: 4px solid #E95420;
+    border-bottom: 4px solid #4679c5;
     position: relative;
   }
 
   .member-tabset > .nav-tabs > li.active > a {
     border: 0 !important;
-    color: #333333;
+    color: #274077;
   }
 
   .member-tabset > .nav-tabs > li.active > a > i {
