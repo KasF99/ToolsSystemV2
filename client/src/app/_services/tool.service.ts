@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, JsonpInterceptor } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Tool } from '../_models/tools';
 
@@ -14,6 +15,7 @@ import { Tool } from '../_models/tools';
   
 export class ToolService {
   baseUrl = environment.apiUrl
+  tool: Tool
 
   constructor(public http: HttpClient) { }
 
@@ -23,5 +25,9 @@ export class ToolService {
 
   getTool(toolname: string) {
     return this.http.get<Tool>(this.baseUrl + 'tools/'+ toolname)
+  }
+
+  updateTool(tool: Tool, toolname: string) {
+    return this.http.put<Tool>(this.baseUrl + 'tools/' + toolname, tool)
   }
 }

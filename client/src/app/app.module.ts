@@ -28,6 +28,8 @@ import { ToolsListAdminComponent } from './admin-panel/tools/tools-list-admin/to
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 
 import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/tools-edit-admin.component';
+// import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+// import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,7 @@ import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/to
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
+  HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
     SharedModule,
@@ -62,7 +64,8 @@ import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/to
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    // {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
     
   ],
   bootstrap: [AppComponent]
