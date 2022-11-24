@@ -13,6 +13,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { ToolsDetailComponent } from './tools/tools-detail/tools-detail.component';
 import { ToolsListComponent } from './tools/tools-list/tools-list.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { PreventChangesGuard } from './_guards/prevent-changes.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,7 +28,7 @@ const routes: Routes = [
 
       { path: 'admin/tools', component: ToolsListAdminComponent },
       { path: 'admin/tools/:toolname', component: ToolsDetailAdminComponent },
-      { path: 'admin/tools/:toolname/edit', component: ToolsEditAdminComponent },
+      { path: 'admin/tools/:toolname/edit', component: ToolsEditAdminComponent, canDeactivate:[PreventChangesGuard]},
 
       { path: 'member/edit', component: MemberEditComponent },
       { path: 'admin', component: AdminPanelComponent },
