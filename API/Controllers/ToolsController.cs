@@ -1,4 +1,5 @@
 using System.Data.Common;
+using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -14,10 +15,12 @@ namespace API.Controllers
     public class ToolsController : BaseApiController
     {
         private readonly IToolsRepository _toolsRepository;
+        private readonly IUserRepository _userRepository;
 
         private readonly IMapper _mapper;
-        public ToolsController(IToolsRepository toolsRepository, IMapper mapper)
+        public ToolsController(IToolsRepository toolsRepository, IMapper mapper, IUserRepository userRepository)
         {
+            this._userRepository = userRepository;
             this._toolsRepository = toolsRepository;
             this._mapper = mapper;
         }
@@ -37,11 +40,19 @@ namespace API.Controllers
             return await _toolsRepository.GetToolAsync(toolname);
         }
 
-        // [HttpGet("{id}")]
-        // public async Task<ActionResult<ToolsDto>> GetToolOwner(int id)
-        // {
-        //     var tools = await _toolsRepository.GetToolsByTheOwner(id);
-        //     return Ok(tools);
-        // }
+
+        [HttpPut("{toolname}")]
+        public async Task<ActionResult> UpdateTool(ToolUpdateDto toolUpdateDto, string toolname)
+        {
+            var tool = await _toolsRepository.GetToolsByToolnameAsync(toolname);
+
+            _mapper.Map(toolUpdateDto, tool);
+
+            _toolsRepository.Update(tool);
+
+            if (await _toolsRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to update tool");
+        }
     }
 }

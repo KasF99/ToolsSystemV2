@@ -15,10 +15,13 @@ export class ToolsListAdminComponent implements OnInit {
   ngOnInit(): void {
     this.loadTools()
   }
+
   loadTools() {
     this.toolService.getTools().subscribe(tools => {
       this.tools = tools
     })
   }
+
+  
 
 }
