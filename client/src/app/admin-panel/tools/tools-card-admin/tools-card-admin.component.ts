@@ -8,9 +8,17 @@ import { Tool } from 'src/app/_models/tools';
 })
 export class ToolsCardAdminComponent implements OnInit {
   @Input() tool: Tool
+  closeToService: boolean;
   constructor() { }
 
   ngOnInit(): void {
+    this.close()
+  }
+
+  close() {
+    if (this.tool.serviceDate < 20) {
+      this.closeToService = true
+    }
   }
 
 }

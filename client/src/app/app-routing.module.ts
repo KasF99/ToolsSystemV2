@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { ToolsDetailAdminComponent } from './admin-panel/tools/tools-detail-admin/tools-detail-admin.component';
+import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/tools-edit-admin.component';
+import { ToolsListAdminComponent } from './admin-panel/tools/tools-list-admin/tools-list-admin.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { HomeComponent } from './home/home.component';
 import { MechanicPanelComponent } from './mechanic-panel/mechanic-panel.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { ToolsDetailComponent } from './tools/tools-detail/tools-detail.component';
 import { ToolsListComponent } from './tools/tools-list/tools-list.component';
 import { AuthGuard } from './_guards/auth.guard';
@@ -19,10 +23,13 @@ const routes: Routes = [
     children: [
       
       { path: 'tools', component: ToolsListComponent },
-      // { path: 'tools/:id', component: ToolsDetailComponent },
       { path: 'tools/:toolname', component: ToolsDetailComponent },
-      { path: 'admin/tools', component: ToolsDetailComponent },
-      { path: 'admin/tools/:toolname', component: ToolsDetailComponent },
+
+      { path: 'admin/tools', component: ToolsListAdminComponent },
+      { path: 'admin/tools/:toolname', component: ToolsDetailAdminComponent },
+      { path: 'admin/tools/:toolname/edit', component: ToolsEditAdminComponent },
+
+      { path: 'member/edit', component: MemberEditComponent },
       { path: 'admin', component: AdminPanelComponent },
       { path: 'mechanic', component: MechanicPanelComponent },
 

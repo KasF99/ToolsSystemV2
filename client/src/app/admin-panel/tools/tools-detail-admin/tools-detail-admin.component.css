@@ -13,3 +13,13 @@
     background-color: #fff;
     border-top: none;
 }
+
+.card-service {
+    box-shadow: 2px 0 10px rgba(255, 0, 0, 0.91);
+    border: solid 3px  rgba(255, 0, 0, 0.91);
+}
+
+.service-date {
+    background: rgba(255, 4, 4, 0.11);
+    border-right: solid 3px rgba(250, 14, 14, 0) ;
+}

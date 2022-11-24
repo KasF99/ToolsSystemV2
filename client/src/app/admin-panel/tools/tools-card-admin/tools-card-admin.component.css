@@ -40,3 +40,8 @@
 .animate {
     transition: all 0.3s ease-in-out;
 }
+
+.card-service {
+    box-shadow: 2px 0 10px rgba(255, 0, 0, 0.91);
+    border: solid 3px  rgba(255, 0, 0, 0.91);
+}

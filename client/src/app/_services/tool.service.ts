@@ -21,13 +21,6 @@ export class ToolService {
     return this.http.get<Tool[]>(this.baseUrl + 'tools')
   }
 
-  // getTools() {
-  //   return this.http.get<Tool[]>(this.baseUrl + 'tools', httpOptions)
-  // }
-  // getTool(toolname: string) {
-  //   return this.http.get<Tool>(this.baseUrl + 'tools/'+ toolname, httpOptions)
-  // }
-
   getTool(toolname: string) {
     return this.http.get<Tool>(this.baseUrl + 'tools/'+ toolname)
   }

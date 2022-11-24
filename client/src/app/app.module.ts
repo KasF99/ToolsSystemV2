@@ -25,6 +25,9 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { ToolsCardAdminComponent } from './admin-panel/tools/tools-card-admin/tools-card-admin.component';
 import { ToolsDetailAdminComponent } from './admin-panel/tools/tools-detail-admin/tools-detail-admin.component';
 import { ToolsListAdminComponent } from './admin-panel/tools/tools-list-admin/tools-list-admin.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+
+import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/tools-edit-admin.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,8 @@ import { ToolsListAdminComponent } from './admin-panel/tools/tools-list-admin/to
     ToolsCardAdminComponent,
     ToolsDetailAdminComponent,
     ToolsListAdminComponent,
+    MemberEditComponent,
+    ToolsEditAdminComponent,
 
   ],
   imports: [

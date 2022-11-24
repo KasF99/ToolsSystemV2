@@ -21,14 +21,14 @@
                 </div>
             </div>
             <div class="card-footer">
-                <!-- <div class="btn-group d-flex">
-                    <button class="btn btn-primary">Like</button>
-                    <button class="btn btn-success">Message</button>
-                </div> -->
+                <div class="btn-group d-flex">
+                    <button class="btn btn-primary">Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                </div>
             </div>
         </div>
 
-        <div *ngIf="closeToService" class="card" style="background-color: hwb(0 52% 16%) ;">
+        <div *ngIf="closeToService" class="card card-service">
             <img src="{{tool.photoUrl || './assets/tool.png'}}" alt="{{tool.toolName}}" 
                 class="card-img-top img-thumbnail">
             <div class="card-body">
@@ -43,16 +43,16 @@
                     <strong>Added date: </strong>
                     <p>{{tool.created}}</p>
                 </div>
-                <div>
+                <div class="service-date">
                     <strong>Service date: </strong>
                     <p>{{tool.dateOfService}}</p>
                 </div>
             </div>
             <div class="card-footer">
-                <!-- <div class="btn-group d-flex">
-                    <button class="btn btn-primary">Like</button>
-                    <button class="btn btn-success">Message</button>
-                </div> -->
+                <div class="btn-group d-flex">
+                    <button class="btn btn-primary" routerLink='/admin/tools/{{tool.toolName}}/edit' >Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                </div>
             </div>
         </div>
     </div>
