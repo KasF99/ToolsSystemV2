@@ -4,6 +4,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { NgxSpinnerModule } from 'ngx-spinner';
 // import { NgxSpinnerModule } from 'ngx-spinner';
 
 
@@ -18,9 +19,7 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     }),
     TabsModule.forRoot(),
     NgxGalleryModule,
-    // NgxSpinnerModule.forRoot({
-    //   type: 'ball-8bits'
-    // })
+    NgxSpinnerModule
   ],
   exports: [
     CommonModule,
@@ -28,7 +27,7 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     ToastrModule,
     TabsModule,
     NgxGalleryModule,
-    // NgxSpinnerModule
+    NgxSpinnerModule
   ]
 })
 export class SharedModule { }

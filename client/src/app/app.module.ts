@@ -26,10 +26,11 @@ import { ToolsCardAdminComponent } from './admin-panel/tools/tools-card-admin/to
 import { ToolsDetailAdminComponent } from './admin-panel/tools/tools-detail-admin/tools-detail-admin.component';
 import { ToolsListAdminComponent } from './admin-panel/tools/tools-list-admin/tools-list-admin.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
-
 import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/tools-edit-admin.component';
-// import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+
+ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 // import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 @NgModule({
   declarations: [
@@ -61,11 +62,12 @@ import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/to
     FormsModule,
     SharedModule,
     TabsModule.forRoot(),
+    // NgxSpinnerModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    // {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
     
   ],
   bootstrap: [AppComponent]

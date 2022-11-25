@@ -11,6 +11,7 @@ import { ToolService } from 'src/app/_services/tool.service';
   styleUrls: ['./tools-edit-admin.component.css']
 })
 export class ToolsEditAdminComponent implements OnInit {
+  
   @ViewChild('editForm') editForm: NgForm | undefined
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
     if (this.editForm?.dirty) {
@@ -18,6 +19,7 @@ export class ToolsEditAdminComponent implements OnInit {
     }
   }
   tool: Tool
+  toolName: string
 
   constructor(public toolService: ToolService, public route: ActivatedRoute,
     public toastr: ToastrService, public router: Router) { }
@@ -29,13 +31,15 @@ export class ToolsEditAdminComponent implements OnInit {
   loadTool() {
     this.toolService.getTool(this.route.snapshot.paramMap.get('toolname')).subscribe(tool => {
       this.tool = tool
+      this.toolName = this.tool.toolName
     })
 
   }
 
   updateTools() {
-    this.toolService.updateTool(this.tool, this.tool.toolName).subscribe(() => {
+    this.toolService.updateTool(this.tool, this.toolName).subscribe(tool => {
       this.editForm?.reset(this.tool)
+      this.router.navigateByUrl("/admin")
       this.toastr.success('Profile updated successfully');
     })
   }

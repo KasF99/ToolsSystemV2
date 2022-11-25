@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Tool } from 'src/app/_models/tools';
 import { ToolService } from 'src/app/_services/tool.service';
 
@@ -10,18 +11,11 @@ import { ToolService } from 'src/app/_services/tool.service';
 export class ToolsListAdminComponent implements OnInit {
 
   tools: Tool[] = []
+  tools$: Observable<Tool[]> = new Observable()
   constructor(public toolService: ToolService) { }
 
   ngOnInit(): void {
-    this.loadTools()
+    this.tools$ = this.toolService.getTools();
   }
-
-  loadTools() {
-    this.toolService.getTools().subscribe(tools => {
-      this.tools = tools
-    })
-  }
-
   
-
 }
