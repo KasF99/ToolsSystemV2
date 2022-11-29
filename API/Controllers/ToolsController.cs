@@ -16,10 +16,12 @@ namespace API.Controllers
     {
         private readonly IToolsRepository _toolsRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IPhotoService _photoService;
 
         private readonly IMapper _mapper;
-        public ToolsController(IToolsRepository toolsRepository, IMapper mapper, IUserRepository userRepository)
+        public ToolsController(IToolsRepository toolsRepository, IMapper mapper, IUserRepository userRepository, IPhotoService photoService)
         {
+            this._photoService = photoService;
             this._userRepository = userRepository;
             this._toolsRepository = toolsRepository;
             this._mapper = mapper;
@@ -53,6 +55,33 @@ namespace API.Controllers
             if (await _toolsRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to update tool");
+        }
+
+        [HttpPost("{toolname}/add-photo")]
+        public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file, string toolname)
+        {
+            var tool = await _toolsRepository.GetToolsByToolnameAsync(toolname);
+
+            var result = await _photoService.AddPhotoAsync(file);
+
+            if (result.Error != null) return BadRequest(result.Error.Message);
+
+            var photo = new Photo
+            {
+                Url = result.SecureUrl.AbsoluteUri,
+                PublicId = result.PublicId
+            };
+
+            if (tool.Photos.Count == 0)
+            {
+                photo.IsMain = true;
+            }
+
+            tool.Photos.Add(photo);
+
+            if (await _userRepository.SaveAllAsync()) return _mapper.Map<PhotoDto>(photo);
+
+            return BadRequest("Problem addding photo");
         }
     }
 }
