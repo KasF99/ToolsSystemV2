@@ -27,7 +27,7 @@ export class ToolsEditAdminComponent implements OnInit {
 
   constructor(public toolService: ToolService, public route: ActivatedRoute,
     public toastr: ToastrService, public router: Router, public accountService: AccountService)
-  { this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user); }
+  { }
 
   ngOnInit(): void {
     this.loadTool()

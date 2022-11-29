@@ -11,7 +11,7 @@ import { ToolService } from 'src/app/_services/tool.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-photo-editot-admin',
+  selector: 'app-photo-edit-admin',
   templateUrl: './photo-edit-admin.component.html',
   styleUrls: ['./photo-edit-admin.component.css']
 })
@@ -25,7 +25,7 @@ export class PhotoEditotAdminComponent implements OnInit {
   accountService: AccountService;
 
   constructor(private toolService: ToolService, public route: ActivatedRoute) {
-   this.initializeUser()
+ 
   }
 
   ngOnInit(): void {
@@ -43,6 +43,15 @@ export class PhotoEditotAdminComponent implements OnInit {
     this.hasBaseDropZoneOver = e;
   }
 
+  setMainPhoto(photo: Photo) {
+    this.toolService.setMainPhoto(photo.id, this.tool.toolName).subscribe(() => {
+      this.tool.photoUrl = photo.url;
+      this.tool.photos.forEach(p => {
+        if (p.isMain) p.isMain = false;
+        if (p.id === photo.id) p.isMain = true;
+      })
+    })
+  } 
 
 
   initializeUploader() {

@@ -41,12 +41,15 @@ export class ToolService {
     return this.http.put<Tool>(this.baseUrl + 'tools/' + toolname, tool).pipe(
       map(() => {
         const index = this.tools.indexOf(tool)
-        this.tools[index] = {...this.tools[index], ...tool}
+        this.tools[index] = { ...this.tools[index], ...tool }
 
       }
-
       )
     )
+  }
+
+  setMainPhoto(photoId: number, toolname: string) { 
+    return this.http.put(this.baseUrl + 'tools/' + toolname + '/set-main-photo/' + photoId, {});
   }
 
 
