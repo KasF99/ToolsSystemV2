@@ -53,6 +53,12 @@ export class PhotoEditotAdminComponent implements OnInit {
     })
   } 
 
+  deletePhoto(photoId: number) { 
+    this.toolService.deletePhoto(photoId, this.tool.toolName).subscribe(() => {
+      this.tool.photos = this.tool.photos.filter(x => x.id !== photoId);
+    })
+  }
+
 
   initializeUploader() {
     this.uploader = new FileUploader({

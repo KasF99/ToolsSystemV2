@@ -52,5 +52,9 @@ export class ToolService {
     return this.http.put(this.baseUrl + 'tools/' + toolname + '/set-main-photo/' + photoId, {});
   }
 
+  deletePhoto(photoId: number, toolname: string) { 
+    return this.http.delete(this.baseUrl + 'tools/' + toolname + '/delete-photo/' + photoId);
+  }
+
 
 }
