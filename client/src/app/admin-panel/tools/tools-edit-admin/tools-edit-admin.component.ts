@@ -33,7 +33,6 @@ export class ToolsEditAdminComponent implements OnInit {
       this.tool = tool
       this.toolName = this.tool.toolName
     })
-
   }
 
   updateTools() {

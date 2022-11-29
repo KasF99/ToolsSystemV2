@@ -79,7 +79,10 @@ namespace API.Controllers
 
             tool.Photos.Add(photo);
 
-            if (await _userRepository.SaveAllAsync()) return _mapper.Map<PhotoDto>(photo);
+            if (await _userRepository.SaveAllAsync())
+            {
+                return CreatedAtAction(nameof(GetTool), new {toolname = tool.ToolName}, _mapper.Map<PhotoDto>(photo));
+            }
 
             return BadRequest("Problem addding photo");
         }

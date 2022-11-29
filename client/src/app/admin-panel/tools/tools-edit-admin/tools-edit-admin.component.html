@@ -47,22 +47,21 @@
 
         <div class="col-8">
             <tabset class="member-tabset">
-                <form #editForm="ngForm" id="editForm" (ngSubmit)="updateTools()">
-                    <tab heading="Edit {{tool.toolName}}">
-                        <h4 class="mt-1">Tool name: </h4>
-                        <textarea [(ngModel)]="tool.toolName" name="toolName" rows="1" class="form-control"></textarea>
-                        <h4 class="mt-3">Tool number: </h4>
-                        <textarea [(ngModel)]="tool.toolNumber" name="toolNumber" rows="1"
-                            class="form-control"></textarea>
-                        <h4 class="mt-3"> Description: </h4>
-                        <textarea [(ngModel)]="tool.description" name="description" rows="3"
-                            class="form-control"></textarea>
-                    </tab>
-                </form>
+                <tab heading="Edit {{tool.toolName}}">
+                    <form #editForm="ngForm" id="editForm" (ngSubmit)="updateTools()">
+                            <h4 class="mt-1">Tool name: </h4>
+                            <textarea [(ngModel)]="tool.toolName" name="toolName" rows="1" class="form-control"></textarea>
+                            <h4 class="mt-3">Tool number: </h4>
+                            <textarea [(ngModel)]="tool.toolNumber" name="toolNumber" rows="1"
+                                class="form-control"></textarea>
+                            <h4 class="mt-3"> Description: </h4>
+                            <textarea [(ngModel)]="tool.description" name="description" rows="3"
+                                class="form-control"></textarea>
+                    </form>
+                </tab>
                 <tab heading="Photos">
-                    <p>
-                        Photo edit here!
-                    </p>
+                    <app-photo-editot-admin [tool]="tool">
+                    </app-photo-editot-admin>
                 </tab>
             </tabset>
         </div>
