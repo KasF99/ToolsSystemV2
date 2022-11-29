@@ -29,7 +29,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/tools-edit-admin.component';
 
  import { LoadingInterceptor } from './_interceptors/loading.interceptor';
-import { PhotoEditotAdminComponent } from './admin-panel/photo-edit-admin/photo-editot-admin.component';
+import { PhotoEditotAdminComponent } from './admin-panel/photo-edit-admin/photo-edit-admin.component';
 // import { NgxSpinnerModule } from 'ngx-spinner';
 
 

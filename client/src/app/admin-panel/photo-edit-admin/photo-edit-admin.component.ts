@@ -12,8 +12,8 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-photo-editot-admin',
-  templateUrl: './photo-editot-admin.component.html',
-  styleUrls: ['./photo-editot-admin.component.css']
+  templateUrl: './photo-edit-admin.component.html',
+  styleUrls: ['./photo-edit-admin.component.css']
 })
 export class PhotoEditotAdminComponent implements OnInit {
   @Input() tool: Tool | undefined
@@ -24,7 +24,9 @@ export class PhotoEditotAdminComponent implements OnInit {
   member: Member;
   accountService: AccountService;
 
-  constructor(private toolService: ToolService, public route: ActivatedRoute) {}
+  constructor(private toolService: ToolService, public route: ActivatedRoute) {
+   this.initializeUser()
+  }
 
   ngOnInit(): void {
     this.loadTool()
@@ -46,7 +48,8 @@ export class PhotoEditotAdminComponent implements OnInit {
   initializeUploader() {
     this.uploader = new FileUploader({
       url: this.baseUrl + 'tools/' + this.tool.toolName + '/add-photo',
-      authToken: 'Bearer ' +JSON.parse(localStorage.getItem('user'))?.token,
+      authToken: 'Bearer ' + JSON.parse(localStorage.getItem('user'))?.token,
+      // authToken: 'Bearer ' + this.user.token,
       isHTML5: true,
       allowedFileType: ['image'],
       removeAfterUpload: true,
@@ -65,4 +68,10 @@ export class PhotoEditotAdminComponent implements OnInit {
       }
     }
   }
+
+  initializeUser() {
+    this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+  }
+
+
 }

@@ -31,7 +31,6 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<ToolsDto>>> GetTools()
         {
             var tools = await _toolsRepository.GetToolsAsync();
-
             return Ok(tools);
         }
 
@@ -81,10 +80,31 @@ namespace API.Controllers
 
             if (await _userRepository.SaveAllAsync())
             {
-                return CreatedAtAction(nameof(GetTool), new {toolname = tool.ToolName}, _mapper.Map<PhotoDto>(photo));
+                return CreatedAtAction(nameof(GetTool), new { toolname = tool.ToolName }, _mapper.Map<PhotoDto>(photo));
             }
 
             return BadRequest("Problem addding photo");
+        }
+
+
+        [HttpPut("{toolname}/set-main-photo/{photoId}")]
+        public async Task<ActionResult> SetMainPhoto(int photoId, string toolname)
+        {
+            var tool = await _toolsRepository.GetToolsByToolnameAsync(toolname);
+
+            var photo = tool.Photos.FirstOrDefault(x => x.Id == photoId);
+
+            if (photo.IsMain) return BadRequest("This is already your main photo");
+
+            var currentMain = tool.Photos.FirstOrDefault(x => x.IsMain);
+
+            if (currentMain != null) currentMain.IsMain = false;
+
+            photo.IsMain = true;
+
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to set main photo");
         }
     }
 }

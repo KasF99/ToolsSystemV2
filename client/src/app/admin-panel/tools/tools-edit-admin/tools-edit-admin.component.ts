@@ -2,7 +2,10 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { take } from 'rxjs/operators';
 import { Tool } from 'src/app/_models/tools';
+import { User } from 'src/app/_models/user';
+import { AccountService } from 'src/app/_services/account.service';
 import { ToolService } from 'src/app/_services/tool.service';
 
 @Component({
@@ -20,9 +23,11 @@ export class ToolsEditAdminComponent implements OnInit {
   }
   tool: Tool
   toolName: string
+  user: User | null = null;
 
   constructor(public toolService: ToolService, public route: ActivatedRoute,
-    public toastr: ToastrService, public router: Router) { }
+    public toastr: ToastrService, public router: Router, public accountService: AccountService)
+  { this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user); }
 
   ngOnInit(): void {
     this.loadTool()
