@@ -1,28 +1,44 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
 
     <div class="container">
-        <a class="navbar-brand" routerLink="/tools">ToolsSystemApp</a>
-        
 
-        <ul class="navbar-nav mr-auto" >
-            <ng-container *ngIf="accountService.currentUser$| async">
-              
+        <ng-container *ngIf="!(accountService.currentUser$| async)" >
+
+            <a class="navbar-brand" routerLink="/">ToolsSystemApp</a>
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/errors" routerLinkActive="active">Error Panel</a>
+                </li>
+            </ul>
+        
+        </ng-container>
+
+        <ng-container *ngIf="accountService.currentUser$| async">
+
+            <a class="navbar-brand" routerLink="/tools">ToolsSystemApp</a>
+
+            <ul class="navbar-nav mr-auto">
+
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin Panel</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/mechanic" routerLinkActive="active">Mechanic Panel</a>
                 </li>
-                <li class="nav-item" >
+
+                <li class="nav-item">
                     <a class="nav-link" routerLink="/tools" routerLinkActive="active">Tools</a>
                 </li>
-            </ng-container>
 
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/errors" routerLinkActive="active">Error Panel</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/errors" routerLinkActive="active">Error Panel</a>
+                </li>
 
-        </ul>
+            </ul>
+
+        </ng-container>
 
         <div class="btn-group" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
             <button id="button-animated" dropdownToggle type="button" class="btn btn-group dropdown-toggle text-light"

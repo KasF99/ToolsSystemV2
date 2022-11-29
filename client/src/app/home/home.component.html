@@ -1,5 +1,6 @@
-<div class="container mt-5">
-    <div *ngIf="!loginMode && !registerMode" style='text-align: center;'>
+
+  <div class="d-flex flex-column justify-content-center align-items-center" style="height: calc(70vh);"> 
+    <div *ngIf="!loginMode && !registerMode" style='text-align: center; '>
         
         <div>
             <img src="/assets/Logo_Gestamp.jpg"   class="img-fluid" alt="Logo_Gestamp" >
@@ -10,8 +11,8 @@
         </div>
     
         <div class="text-center">
-            <button (click)="loginToggle()" class="btn btn-primary btn-lg mr-2">Login</button>
-            <button (click)="registerToggle()" class="btn btn-info btn-lg">Register(Temp...)</button>
+            <button (click)="loginToggle()" class="btn btn-primary btn-lg mr-2" style="width: 50% ;">Login</button>
+            <!-- <button (click)="registerToggle()" class="btn btn-info btn-lg">Register(Temp...)</button> -->
         </div>
     </div>
 
@@ -30,4 +31,6 @@
             </div>
         </div>
     </div>
-</div>
+
+  </div>
+  

@@ -12,6 +12,7 @@ export class ToolsListAdminComponent implements OnInit {
 
   tools: Tool[] = []
   tools$: Observable<Tool[]> = new Observable()
+  
   constructor(public toolService: ToolService) { }
 
   ngOnInit(): void {
