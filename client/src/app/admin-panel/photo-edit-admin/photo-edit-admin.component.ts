@@ -25,7 +25,7 @@ export class PhotoEditotAdminComponent implements OnInit {
   accountService: AccountService;
 
   constructor(private toolService: ToolService, public route: ActivatedRoute) {
- 
+
   }
 
   ngOnInit(): void {
@@ -51,9 +51,9 @@ export class PhotoEditotAdminComponent implements OnInit {
         if (p.id === photo.id) p.isMain = true;
       })
     })
-  } 
+  }
 
-  deletePhoto(photoId: number) { 
+  deletePhoto(photoId: number) {
     this.toolService.deletePhoto(photoId, this.tool.toolName).subscribe(() => {
       this.tool.photos = this.tool.photos.filter(x => x.id !== photoId);
     })
@@ -76,10 +76,16 @@ export class PhotoEditotAdminComponent implements OnInit {
       file.withCredentials = false;
     }
 
+
+    //check this one more time before register 
+    
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
         const photo = JSON.parse(response);
         this.tool.photos.push(photo);
+        if (photo.isMain && this.tool) {
+          this.tool.photoUrl = photo.url
+        }
       }
     }
   }

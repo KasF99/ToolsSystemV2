@@ -50,21 +50,27 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    console.log(this.registerForm?.value)
-    // this.accountService.register(this.model).subscribe(response => {
-    //   this.router.navigateByUrl("/tools")
-    //   console.log(response)
-    //   this.cancel()
-    // }, err => { 
-    //   this.toastr.error(err.error) 
-    // })
+    const values = {...this.registerForm.value}
+    this.accountService.register(values).subscribe(response => {
+      this.router.navigateByUrl("/tools")
+      // this.cancel()
+    }, err => { 
+      this.validationErrors = err
+    })
   }
 
 
-  // cancel() {
-  //   // this.cancelRegister.emit(false);
-  // }
+  cancel() {
+    this.cancelRegister.emit(false);
+  }
+  
+  //FOR GOOD DATE
 
+  // private getDateOnly(dob: string | undefined) {
+  //   if (!dob) return;
+  //   let theDob = new Date(dob);
+  //   return new Date(theDob.setMinutes(theDob.getMinutes()-theDob.getTimezoneOffset())).toISOString().slice(0,10)
+  // }
 
 
 }
