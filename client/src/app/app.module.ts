@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
@@ -59,12 +59,13 @@ import { PhotoEditotAdminComponent } from './admin-panel/photo-edit-admin/photo-
   imports: [
     BrowserModule,
     AppRoutingModule,
-  HttpClientModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
     SharedModule,
     TabsModule.forRoot(),
-    // NgxSpinnerModule,
+    ReactiveFormsModule
+    
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
