@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
@@ -14,22 +14,32 @@ export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   model: any = {};
   registerForm: FormGroup | undefined;
+  maxDate: Date;
+  validationErrors: string[] = [];
+  
 
-  constructor(public accountService: AccountService, public toastr: ToastrService, public router: Router) { }
+  constructor(public accountService: AccountService, public toastr: ToastrService, public router: Router, public fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm();
+    // this.maxDate = new Date();                                   //for future development 
+    // this.maxDate.setFullYear(this.maxDate.getFullYear() -18);
   }
 
   initializeForm() {
-    this.registerForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      confirmPassword: new FormControl('', [Validators.required, this.matchValues('password')])
+    this.registerForm = this.fb.group({
+      // date: ['', Validators.required],
+      username: ['', Validators.required],
+      knownAs: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+      confirmPassword: ['', [Validators.required, this.matchValues('password')]]
     })
+
     this.registerForm.controls['password'].valueChanges.subscribe({
       next: () => this.registerForm.controls['confirmPassword'].updateValueAndValidity()
     })
+
   }
 
   matchValues(matchTo: string): ValidatorFn {

@@ -32,6 +32,8 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotoEditotAdminComponent } from './admin-panel/photo-edit-admin/photo-edit-admin.component';
 
 import { TextInputComponent } from './_forms/text-input/text-input.component';
+import { DatePickerComponent } from './_forms/date-picker/date-picker.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 
@@ -57,6 +59,7 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
     ToolsEditAdminComponent,
     PhotoEditotAdminComponent,
     TextInputComponent,
+    DatePickerComponent,
 
   ],
   imports: [
@@ -67,7 +70,8 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
     FormsModule,
     SharedModule,
     TabsModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BsDatepickerModule.forRoot()
 
   ],
   providers: [
