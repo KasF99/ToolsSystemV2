@@ -28,9 +28,11 @@ import { ToolsListAdminComponent } from './admin-panel/tools/tools-list-admin/to
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/tools-edit-admin.component';
 
- import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotoEditotAdminComponent } from './admin-panel/photo-edit-admin/photo-edit-admin.component';
-// import { NgxSpinnerModule } from 'ngx-spinner';
+
+import { TextInputComponent } from './_forms/text-input/text-input.component';
+
 
 
 @NgModule({
@@ -54,6 +56,7 @@ import { PhotoEditotAdminComponent } from './admin-panel/photo-edit-admin/photo-
     MemberEditComponent,
     ToolsEditAdminComponent,
     PhotoEditotAdminComponent,
+    TextInputComponent,
 
   ],
   imports: [
@@ -65,13 +68,13 @@ import { PhotoEditotAdminComponent } from './admin-panel/photo-edit-admin/photo-
     SharedModule,
     TabsModule.forRoot(),
     ReactiveFormsModule
-    
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
-    
+
   ],
   bootstrap: [AppComponent]
 })
