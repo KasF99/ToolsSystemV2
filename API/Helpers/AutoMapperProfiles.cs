@@ -17,6 +17,7 @@ namespace API.Helpers
                 src.AppUser.KnownAs));
             CreateMap<Photo, PhotoDto>();
             CreateMap<ToolUpdateDto, Tools>();
+            CreateMap<RegisterDto, AppUser>();
 
         }
     }
