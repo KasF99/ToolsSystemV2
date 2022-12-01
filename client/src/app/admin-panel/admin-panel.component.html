@@ -1,15 +1,25 @@
 <div>
     <tabset class="member-tabset">
-        <tab heading="Tools list">
+
+        <tab heading="Tools" id="tab1">
             <app-tools-list-admin>
             </app-tools-list-admin>
         </tab>
 
-        <tab heading="Add new Tool">
-          
+        <tab heading="Add new Tool" id="tab2">
+          <div class="container mt-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <app-tools-register-admin>
+                        </app-tools-register-admin>
+                    </div>
+                </div>
+            </div>
+        </div>
         </tab>
 
-        <tab heading="Register new user" id="tab1">
+        <tab heading="Register new user" id="tab3">
             <div class="container mt-5">
                 <div *ngIf="!registerMode" class="container">
                     <div class="row justify-content-center">
@@ -21,8 +31,6 @@
             </div>
         </tab>
 
-
-        <tab heading="Service">Basic content 2</tab>
         
     </tabset>
 </div>

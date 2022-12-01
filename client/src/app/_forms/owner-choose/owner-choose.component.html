@@ -1,0 +1,12 @@
+<div class="form-group">
+    <select class="form-control" 
+            placeholder="Owner"
+            [class.is-invalid]='ngControl.touched && ngControl.invalid' 
+            [formControl]='ngControl.control'>
+            <option value="" disabled selected hidden>Please Choose...</option>
+        <option *ngFor="let member of members" [value]="member.knownAs">
+            {{member.knownAs}}
+        </option>
+    </select>
+    <div *ngIf="ngControl.control.errors?.required" class="invalid-feedback">You need to choose the owner</div>
+</div>

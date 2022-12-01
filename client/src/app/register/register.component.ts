@@ -66,11 +66,11 @@ export class RegisterComponent implements OnInit {
   
   //FOR GOOD DATE
 
-  // private getDateOnly(dob: string | undefined) {
-  //   if (!dob) return;
-  //   let theDob = new Date(dob);
-  //   return new Date(theDob.setMinutes(theDob.getMinutes()-theDob.getTimezoneOffset())).toISOString().slice(0,10)
-  // }
+  private getDateOnly(dob: string | undefined) {
+    if (!dob) return;
+    let theDob = new Date(dob);
+    return new Date(theDob.setMinutes(theDob.getMinutes()-theDob.getTimezoneOffset())).toISOString().slice(0,10)
+  }
 
 
 }

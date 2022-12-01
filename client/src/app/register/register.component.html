@@ -25,14 +25,17 @@
 
     </div> -->
     <!-- <app-date-picker [formControl]='registerForm.controls["date"]' [label]='"Date"' [maxDate]='maxDate'></app-date-picker> -->
-    <app-text-input [formControl]='registerForm.controls["knownAs"]' [label]='"Known As"'></app-text-input>
-    <app-text-input [formControl]='registerForm.controls["email"]' [label]='"Email"'></app-text-input>
+
     <app-text-input [formControl]="$any(registerForm.controls['username'])" [label]="'Username'"></app-text-input>
     <app-text-input [formControl]="$any(registerForm.controls['password'])" [label]="'Password'" [type]="'password'">
     </app-text-input>
     <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])" [label]="'Confirm password'"
         [type]="'password'"></app-text-input>
 
+    <app-text-input [formControl]='registerForm.controls["knownAs"]' [label]='"Known As"'></app-text-input>
+    <app-text-input [formControl]='registerForm.controls["email"]' [label]='"Email"'></app-text-input>
+
+    
 
     <div class="row" *ngIf="validationErrors.length > 0">
         <ul class="text-danger">
@@ -42,9 +45,12 @@
         </ul>
     </div>
 
+    
+
     <div class="form-group text-center">
         <button [disabled]="!registerForm.valid" class="btn btn-success mr-2 btn-block" type="submit">Register</button>
     </div>
+
 </form>
 
 

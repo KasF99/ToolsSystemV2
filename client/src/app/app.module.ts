@@ -34,6 +34,9 @@ import { PhotoEditotAdminComponent } from './admin-panel/photo-edit-admin/photo-
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { DatePickerComponent } from './_forms/date-picker/date-picker.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ToolsRegisterAdminComponent } from './admin-panel/tools/tools-register-admin/tools-register-admin.component';
+import { OwnerChooseComponent } from './_forms/owner-choose/owner-choose.component';
+
 
 
 
@@ -60,6 +63,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     PhotoEditotAdminComponent,
     TextInputComponent,
     DatePickerComponent,
+    ToolsRegisterAdminComponent,
+    OwnerChooseComponent,
 
   ],
   imports: [

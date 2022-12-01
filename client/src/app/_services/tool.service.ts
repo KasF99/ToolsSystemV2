@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, JsonpInterceptor } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -19,7 +20,7 @@ export class ToolService {
   tools: Tool[] = []
 
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, public toastr: ToastrService ) { }
 
   getTools() {
     if (this.tools.length > 0) return of(this.tools)
@@ -42,7 +43,6 @@ export class ToolService {
       map(() => {
         const index = this.tools.indexOf(tool)
         this.tools[index] = { ...this.tools[index], ...tool }
-
       }
       )
     )
@@ -54,6 +54,17 @@ export class ToolService {
 
   deletePhoto(photoId: number, toolname: string) { 
     return this.http.delete(this.baseUrl + 'tools/' + toolname + '/delete-photo/' + photoId);
+  }
+
+  addTool(model: any, owner: string) {
+    return this.http.post(this.baseUrl + 'users/' + owner + '/register-tool', model).pipe(
+      map((tool: Tool) => {
+        if (tool) {
+          this.toastr.success("You added new user, for futher information and edit check TOOLS tab")
+        }
+        return tool
+      })
+    )
   }
 
 
