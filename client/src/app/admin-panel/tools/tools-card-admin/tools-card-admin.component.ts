@@ -13,11 +13,19 @@ export class ToolsCardAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.close()
+    this.nullPhotoUrl()
   }
 
   close() {
     if (this.tool.serviceDate < 20) {
       this.closeToService = true
+      console.log(this.tool.photoUrl)
+    }
+  }
+
+  nullPhotoUrl() {
+    if (this.tool.photoUrl === null) { 
+      this.tool.photoUrl = './assets/tool.png'
     }
   }
 

@@ -53,15 +53,12 @@ export class ToolsDetailAdminComponent implements OnInit {
       this.galleryImages = this.getImages();
       this.close()
     })
-    
   }
 
   close() {
     if (this.tool.serviceDate < 20) {
       this.closeToService = true
   }
-    console.log(this.tool.serviceDate)
-    console.log(this.closeToService)
   }
 
 }

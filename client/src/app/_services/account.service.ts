@@ -32,7 +32,7 @@ export class AccountService {
     return this.http.post(this.baseUrl + 'account/register', model).pipe(
       map((user: User) => {
         if (user) {
-          this.setCurrentUser(user)
+          // this.setCurrentUser(user)
           this.toastr.success("You registered new user, check ... tab")
         }
         return user
