@@ -67,5 +67,9 @@ export class ToolService {
     )
   }
 
+  deleteTool(owner: string, toolname: string) {
+    return this.http.delete(this.baseUrl + 'users/' + owner + '/delete-tool/' + toolname)
+  }
+
 
 }

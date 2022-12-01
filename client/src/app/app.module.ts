@@ -36,6 +36,7 @@ import { DatePickerComponent } from './_forms/date-picker/date-picker.component'
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ToolsRegisterAdminComponent } from './admin-panel/tools/tools-register-admin/tools-register-admin.component';
 import { OwnerChooseComponent } from './_forms/owner-choose/owner-choose.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 
@@ -76,7 +77,8 @@ import { OwnerChooseComponent } from './_forms/owner-choose/owner-choose.compone
     SharedModule,
     TabsModule.forRoot(),
     ReactiveFormsModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    ModalModule.forRoot()
 
   ],
   providers: [

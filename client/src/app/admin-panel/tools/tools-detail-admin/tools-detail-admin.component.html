@@ -1,15 +1,15 @@
 <div class="row" *ngIf="tool">
     <div class="col-4">
         <div *ngIf="!closeToService" class="card">
-            <img src="{{tool.photoUrl || './assets/tool.png'}}" alt="{{tool.toolName}}" 
+            <img src="{{tool.photoUrl || './assets/tool.png'}}" alt="{{tool.toolName}}"
                 class="card-img-top img-thumbnail">
             <div class="card-body">
                 <div class="mb-2">
-                    <strong>Tool name: </strong>  {{tool.toolName}}
+                    <strong>Tool name: </strong> {{tool.toolName}}
                 </div>
                 <div class="mb-2">
                     <strong>Owner: </strong> {{tool.owner}}
-                    
+
                 </div>
                 <div>
                     <strong>Added: </strong>
@@ -22,22 +22,22 @@
             </div>
             <div class="card-footer">
                 <div class="btn-group d-flex">
-                    <button class="btn btn-primary" routerLink='/admin/tools/{{tool.toolName}}/edit' >Edit</button>
-                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-primary" routerLink='/admin/tools/{{tool.toolName}}/edit'>Edit</button>
+                    <button class="btn btn-danger" (click)="delete()">Delete</button>
                 </div>
             </div>
         </div>
 
         <div *ngIf="closeToService" class="card card-service">
-            <img src="{{tool.photoUrl || './assets/tool.png'}}" alt="{{tool.toolName}}" 
+            <img src="{{tool.photoUrl || './assets/tool.png'}}" alt="{{tool.toolName}}"
                 class="card-img-top img-thumbnail">
             <div class="card-body">
                 <div class="mb-2">
-                    <strong>Tool name: </strong>  {{tool.toolName}}
+                    <strong>Tool name: </strong> {{tool.toolName}}
                 </div>
                 <div class="mb-2">
                     <strong>Owner: </strong> {{tool.owner}}
-                    
+
                 </div>
                 <div>
                     <strong>Added date: </strong>
@@ -50,8 +50,12 @@
             </div>
             <div class="card-footer">
                 <div class="btn-group d-flex">
-                    <button class="btn btn-primary" routerLink='/admin/tools/{{tool.toolName}}/edit' >Edit</button>
-                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-primary" routerLink='/admin/tools/{{tool.toolName}}/edit'>Edit</button>
+                    <button class="btn btn-danger" (click)="delete()">Delete</button>
+
+                    <a class="btn btn-danger" data-toggle="confirmation"
+                        data-title="Are you sure you want to delete this?" target="_blank">Delete</a>
+
                 </div>
             </div>
         </div>
@@ -63,14 +67,14 @@
                 <h4>Tool number: </h4>
                 <p>{{tool.toolNumber}}</p>
                 <h4>Description: </h4>
-                <p>{{tool.description}}</p> 
+                <p>{{tool.description}}</p>
                 <h4>Place for more info in future....</h4>
-                
+
             </tab>
             <tab heading="Photos">
-                <ngx-gallery [options]="galleryOptions" [images]="galleryImages" 
+                <ngx-gallery [options]="galleryOptions" [images]="galleryImages"
                     style="display: inline-block; margin-bottom: 20px;"></ngx-gallery>
             </tab>
-          </tabset>
+        </tabset>
     </div>
 </div>
