@@ -16,20 +16,19 @@ export class ToolsRegisterAdminComponent implements OnInit {
 
   model: any = {};
   registerForm: FormGroup | undefined;
-  minDate: Date;
+  minDate: Date = new Date();
   validationErrors: string[] = [];
-  
   members: Member[] | undefined;
-  // user: User | null = null;
   
   constructor(private memberService: MembersService, public accountService: AccountService,
     public toastr: ToastrService, public router: Router, public fb: FormBuilder, public toolService: ToolService) {
-    // this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+    // this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);                                 //for future development 
   }
 
   ngOnInit(): void {
     this.loadMembers()
     this.initializeForm()
+    this.minDate.setFullYear(this.minDate.getFullYear()); //set minimum date
   }
 
   loadMembers() {
@@ -40,19 +39,19 @@ export class ToolsRegisterAdminComponent implements OnInit {
 
   initializeForm() {
     this.registerForm = this.fb.group({
-      date: ['', Validators.required],
+      dateOfService: ['', Validators.required],
       toolname: ['', Validators.required],
       toolnumber: ['', Validators.required],
       owner: ['', Validators.required],
-      // description: ['', Validators.required],
     })
   }
 
   register(): void {
     console.log(this.registerForm.value)
-    const dob = this.getDateOnly(this.registerForm.controls['date'].value)
+    const dob = this.getDateOnly(this.registerForm.controls['dateOfService'].value)
     const values = {...this.registerForm.value, date: dob}
     this.toolService.addTool(values, values.owner).subscribe(response => {
+
     }, err => { 
       this.validationErrors = err
     })

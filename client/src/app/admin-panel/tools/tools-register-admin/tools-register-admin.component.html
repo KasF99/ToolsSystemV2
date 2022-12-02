@@ -18,7 +18,7 @@
 
     <app-text-input [formControl]="$any(registerForm.controls['toolname'])" [label]="'Toolname'"></app-text-input>
     <app-text-input [formControl]="$any(registerForm.controls['toolnumber'])" [label]="'Number'"></app-text-input>
-    <app-date-picker [formControl]='registerForm.controls["date"]' [label]='"Service Date"'></app-date-picker>
+    <app-date-picker [formControl]='registerForm.controls["dateOfService"]' [label]='"Service Date"' [minDate]="minDate" ></app-date-picker>
     <app-owner-choose [formControl]='registerForm.controls["owner"]' [members]="members" ></app-owner-choose>
    
     <div class="row" *ngIf="validationErrors.length > 0">

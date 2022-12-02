@@ -10,13 +10,14 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 export class DatePickerComponent implements ControlValueAccessor {
 
   @Input() label: string;
-  @Input() maxDate: Date;
+  @Input() minDate: Date;
   bsConfig: Partial<BsDatepickerConfig>;
   
   constructor(@Self() public ngControl: NgControl) {
     this.ngControl.valueAccessor = this;
     this.bsConfig = {
       containerClass: 'theme-dark-blue',
+      // containerClass: 'theme-default',
       dateInputFormat: 'DD MMMM YYYY'
     }
    }
