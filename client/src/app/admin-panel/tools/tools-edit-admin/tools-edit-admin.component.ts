@@ -21,6 +21,7 @@ export class ToolsEditAdminComponent implements OnInit {
       $event.returnValue = 'true';
     }
   }
+  
   tool: Tool
   toolName: string
   user: User | null = null;

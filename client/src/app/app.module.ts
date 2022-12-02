@@ -37,6 +37,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ToolsRegisterAdminComponent } from './admin-panel/tools/tools-register-admin/tools-register-admin.component';
 import { OwnerChooseComponent } from './_forms/owner-choose/owner-choose.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalsDeletionComponent } from './_forms/modals-deletion/modals-deletion.component';
 
 
 
@@ -66,6 +67,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     DatePickerComponent,
     ToolsRegisterAdminComponent,
     OwnerChooseComponent,
+    ModalsDeletionComponent,
 
   ],
   imports: [

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from '@kolkov/ngx-gallery';
 import { ToastrService } from 'ngx-toastr';
@@ -16,6 +17,7 @@ export class ToolsDetailAdminComponent implements OnInit {
   closeToService: boolean = false
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
+ 
 
   constructor(public toolService: ToolService, public route: ActivatedRoute,
     public toastr: ToastrService, public router: Router) { }
@@ -63,11 +65,12 @@ export class ToolsDetailAdminComponent implements OnInit {
   }
   }
 
-  delete() {
-    this.toolService.deleteTool(this.tool.owner, this.tool.toolName).subscribe( () => {
-      this.toastr.info("You deleted this tool, going back to the Tool list")
-      this.router.navigateByUrl("/admin")
-    })
-  }
+  // delete() {
+  //   this.toolService.deleteTool(this.tool.owner, this.tool.toolName).subscribe( () => {
+  //          this.router.navigateByUrl("/admin")
+  //   })
+  // }
+
+ 
 
 }
