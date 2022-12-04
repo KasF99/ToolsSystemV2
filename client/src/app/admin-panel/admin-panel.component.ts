@@ -16,6 +16,7 @@ export class AdminPanelComponent implements OnInit {
   activatedTab?: TabDirective
   @ViewChild(ToolsListAdminComponent) toolsTab: ToolsListAdminComponent
 
+
   constructor(public toolService: ToolService) { }
 
   ngOnInit(): void {
@@ -31,7 +32,7 @@ export class AdminPanelComponent implements OnInit {
   OnActivatedTab(data: TabDirective) {
     this.activatedTab = data;
     if (this.activatedTab.id === "tab1") {
-      this.toolsTab.ngOnInit()
+     this.ngOnInit()
     }
     
   }

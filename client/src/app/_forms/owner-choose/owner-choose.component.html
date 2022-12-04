@@ -3,7 +3,7 @@
             placeholder="Owner"
             [class.is-invalid]='ngControl.touched && ngControl.invalid' 
             [formControl]='ngControl.control'>
-            <option value="" disabled selected hidden>Please Choose...</option>
+            <option value="" disabled selected hidden>Owner...</option>
         <option *ngFor="let member of members" [value]="member.knownAs">
             {{member.knownAs}}
         </option>
