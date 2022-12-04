@@ -3,6 +3,8 @@ using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
+using API.Helpers;
 using API.Interface;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -28,9 +30,11 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ToolsDto>>> GetTools()
+        public async Task<ActionResult<PagedList<ToolsDto>>> GetTools([FromQuery]UserParams userParams)
         {
-            var tools = await _toolsRepository.GetToolsAsync();
+            var tools = await _toolsRepository.GetToolsAsync(userParams);
+
+            Response.AddPaginationHeader(new PaginationHeader(tools.CurrentPage, tools.PageSize, tools.TotalCount, tools.TotalPages));
             return Ok(tools);
         }
 

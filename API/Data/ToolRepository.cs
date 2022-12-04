@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interface;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -25,11 +26,21 @@ namespace API.Data
              .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<ToolsDto>> GetToolsAsync()
+        // public async Task<IEnumerable<ToolsDto>> GetToolsAsync()
+        // {
+        //     return await _context.Tools
+        //        .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
+        //        .ToListAsync();
+        // }
+
+        public async Task<PagedList<ToolsDto>> GetToolsAsync(UserParams userParams)
         {
-            return await _context.Tools
+            var query = _context.Tools
                .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
-               .ToListAsync();
+               .AsNoTracking();
+
+            return await PagedList<ToolsDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+
         }
 
         public async Task<Tools> GetToolsByIdAsync(int id)
