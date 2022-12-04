@@ -1,5 +1,5 @@
-<form #editForm="ngForm" id="editForm" (select)="updateTools()">
-    <div class="row">
+<form #editForm="ngForm" id="editForm">
+    <div class="row mt-3">
         <div *ngFor="let tool of tools$ | async" class="col-2">
             <app-tools-card-admin [tool]="tool"></app-tools-card-admin>
         </div>

@@ -1,7 +1,7 @@
 <div>
-    <tabset class="member-tabset">
+    <tabset class="adminTabs" #adminTabs>
 
-        <tab heading="Tools" id="tab1">
+        <tab heading="Tools" id="tab1" (selectTab)="OnActivatedTab($event)">
             <app-tools-list-admin>
             </app-tools-list-admin>
         </tab>

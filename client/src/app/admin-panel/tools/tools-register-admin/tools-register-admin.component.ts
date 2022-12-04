@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -13,13 +13,14 @@ import { ToolService } from 'src/app/_services/tool.service';
   styleUrls: ['./tools-register-admin.component.css']
 })
 export class ToolsRegisterAdminComponent implements OnInit {
+  // @Output() registerMode = new EventEmitter();
 
   model: any = {};
   registerForm: FormGroup | undefined;
   minDate: Date = new Date();
   validationErrors: string[] = [];
   members: Member[] | undefined;
-  
+
   constructor(private memberService: MembersService, public accountService: AccountService,
     public toastr: ToastrService, public router: Router, public fb: FormBuilder, public toolService: ToolService) {
     // this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);                                 //for future development 
@@ -49,19 +50,20 @@ export class ToolsRegisterAdminComponent implements OnInit {
   register(): void {
     console.log(this.registerForm.value)
     const dob = this.getDateOnly(this.registerForm.controls['dateOfService'].value)
-    const values = {...this.registerForm.value, date: dob}
-    this.toolService.addTool(values, values.owner).subscribe(response => {
-
-    }, err => { 
+    const values = { ...this.registerForm.value, date: dob }
+    this.toolService.addTool(values, values.owner).subscribe(response => {  
+    }, err => {
       this.validationErrors = err
     })
   }
 
+
   private getDateOnly(dob: string | undefined) {
     if (!dob) return;
     let theDob = new Date(dob);
-    return new Date(theDob.setMinutes(theDob.getMinutes()-theDob.getTimezoneOffset())).toISOString().slice(0,10)
+    return new Date(theDob.setMinutes(theDob.getMinutes() - theDob.getTimezoneOffset())).toISOString().slice(0, 10)
   }
+
 
 
 }

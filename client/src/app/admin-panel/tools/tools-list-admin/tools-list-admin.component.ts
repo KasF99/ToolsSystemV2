@@ -13,23 +13,22 @@ export class ToolsListAdminComponent implements OnInit {
 
   tools: Tool[] = []
   tools$: Observable<Tool[]> = new Observable()
-  
-  @ViewChild('editForm') editForm: NgForm | undefined
-  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
-    if (this.editForm?.dirty) {
-      $event.returnValue = 'true';
-    }
+
+  // @ViewChild('editForm') editForm: NgForm | undefined
+  // @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
+  //   if (this.editForm?.dirty) {
+  //     $event.returnValue = 'true';
+  //   }
+  // }
+
+  constructor(public toolService: ToolService) {
+
   }
+
   
-  constructor(public toolService: ToolService) { }
 
   ngOnInit(): void {
     this.tools$ = this.toolService.getTools();
-    this.updateTools()
   }
 
-  updateTools() {
-    this.editForm?.reset(this.tools$)
-  }
-  
 }

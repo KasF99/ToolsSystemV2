@@ -16,8 +16,7 @@ export class ModalsDeletionComponent {
   toolname: string = ''
 
   constructor(private modalService: BsModalService, public toolService: ToolService, public route: ActivatedRoute,
-    public toastr: ToastrService, public router: Router) {
-   
+    public toastr: ToastrService, public router: Router) { 
   }
 
 
@@ -36,8 +35,8 @@ export class ModalsDeletionComponent {
   delete() {
     this.toolService.deleteTool(this.tool.owner, this.tool.toolName).subscribe(() => {
       this.modalRef?.hide();
-      this.toastr.info("You deleted " + this.tool.toolName +", going back to the Tool list")
-      this.router.navigateByUrl("/admin")
+      // window.location.replace("/admin")
+      this.toastr.info("You deleted " + this.tool.toolName + ", going back to the Tool list")
     })
   }
 

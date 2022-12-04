@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   constructor(public http: HttpClient, public accountService: AccountService) { }
 
   ngOnInit() {
-
     this.setCurrentUser()
   }
 
@@ -27,7 +26,7 @@ export class AppComponent implements OnInit {
     
   }
 
- 
+  
 
 
 

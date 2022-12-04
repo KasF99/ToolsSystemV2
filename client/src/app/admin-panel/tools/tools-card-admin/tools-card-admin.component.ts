@@ -19,7 +19,6 @@ export class ToolsCardAdminComponent implements OnInit {
   close() {
     if (this.tool.serviceDate < 20) {
       this.closeToService = true
-      console.log(this.tool.photoUrl)
     }
   }
 

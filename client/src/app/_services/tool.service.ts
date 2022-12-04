@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders, JsonpInterceptor } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { of, ReplaySubject, Subject } from 'rxjs';
+import { delay, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Tool } from '../_models/tools';
 
@@ -18,15 +19,23 @@ import { Tool } from '../_models/tools';
 export class ToolService {
   baseUrl = environment.apiUrl
   tools: Tool[] = []
+  private currentToolsSource = new ReplaySubject<Tool[]>(1);
+  currentTools$ = this.currentToolsSource.asObservable();
+  version = 1
+  lastversion = -1
 
 
-  constructor(public http: HttpClient, public toastr: ToastrService ) { }
+  constructor(public http: HttpClient, public toastr: ToastrService, public router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
+  
 
   getTools() {
-    if (this.tools.length > 0) return of(this.tools)
+    if (this.tools.length > 0 && this.version == this.lastversion) return of(this.tools)
+    this.lastversion = this.version
     return this.http.get<Tool[]>(this.baseUrl + 'tools').pipe(
       map(tools => {
-        this.tools = tools
+        this.tools = tools 
         return this.tools
       })
     )
@@ -41,6 +50,7 @@ export class ToolService {
   updateTool(tool: Tool, toolname: string) {
     return this.http.put<Tool>(this.baseUrl + 'tools/' + toolname, tool).pipe(
       map(() => {
+        this.version++
         const index = this.tools.indexOf(tool)
         this.tools[index] = { ...this.tools[index], ...tool }
       }
@@ -49,7 +59,7 @@ export class ToolService {
   }
 
   setMainPhoto(photoId: number, toolname: string) { 
-    return this.http.put(this.baseUrl + 'tools/' + toolname + '/set-main-photo/' + photoId, {});
+    return this.http.put(this.baseUrl + 'tools/' + toolname + '/set-main-photo/' + photoId, {})
   }
 
   deletePhoto(photoId: number, toolname: string) { 
@@ -59,8 +69,9 @@ export class ToolService {
   addTool(model: any, owner: string) {
     return this.http.post(this.baseUrl + 'users/' + owner + '/register-tool', model).pipe(
       map((tool: Tool) => {
+        this.version++
         if (tool) {
-          this.toastr.success("You added new user, for futher information and edit check TOOLS tab")
+        
         }
         return tool
       })
@@ -68,8 +79,13 @@ export class ToolService {
   }
 
   deleteTool(owner: string, toolname: string) {
+    this.version++
     return this.http.delete(this.baseUrl + 'users/' + owner + '/delete-tool/' + toolname)
   }
 
+  reloadPage(){
+    this.router.navigateByUrl("/admin")
+    window.location.reload()
+  }
 
 }
