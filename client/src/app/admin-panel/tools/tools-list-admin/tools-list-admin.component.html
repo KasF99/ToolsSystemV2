@@ -1,7 +1,36 @@
-<form #editForm="ngForm" id="editForm">
-    <div class="row mt-3">
-        <div *ngFor="let tool of tools$ | async" class="col-2">
-            <app-tools-card-admin [tool]="tool"></app-tools-card-admin>
-        </div>
+<div class="row mt-3">
+    <div *ngFor="let tool of tools" class="col-2">
+
+        <!-- <div *ngFor="let tool of tools$ | async" class="col-2"> -->
+        <app-tools-card-admin [tool]="tool"></app-tools-card-admin>
     </div>
-</form>
+</div>
+
+<!-- <div class="d-flex justify-content-center">
+    <pagination
+        [boundaryLinks]="true" 
+        [totalItems]="pagination.totalItems"
+        [itemsPerPage]="pagination.itemsPerPage" 
+        [maxSize]="10" 
+        [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)"
+        previousText="&lsaquo;" 
+        nextText="&rsaquo;"\
+        firstText="&laquo;"
+        lastText="&raquo;">
+    </pagination>
+</div> -->
+
+<div class="d-flex justify-content-center" *ngIf="pagination">
+    <pagination 
+        [boundaryLinks]="true" 
+        [totalItems]="pagination.totalItems"
+        [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)"
+        previousText="&lsaquo;" 
+        nextText="&rsaquo;" 
+        firstText="&laquo;" 
+        lastText="&raquo;">
+</pagination>
+</div>

@@ -17,7 +17,7 @@ export class ToolsListComponent implements OnInit {
   }
   loadTools() {
     this.toolService.getTools().subscribe(tools => {
-      this.tools = tools
+      // this.tools = tools
     })
   }
 

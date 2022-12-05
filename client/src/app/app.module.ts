@@ -38,6 +38,7 @@ import { ToolsRegisterAdminComponent } from './admin-panel/tools/tools-register-
 import { OwnerChooseComponent } from './_forms/owner-choose/owner-choose.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsDeletionComponent } from './_forms/modals-deletion/modals-deletion.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 
@@ -80,7 +81,8 @@ import { ModalsDeletionComponent } from './_forms/modals-deletion/modals-deletio
     TabsModule.forRoot(),
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    PaginationModule.forRoot()
 
   ],
   providers: [

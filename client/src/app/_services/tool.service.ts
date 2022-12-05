@@ -1,10 +1,11 @@
-import { HttpClient, HttpHeaders, JsonpInterceptor } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { of, ReplaySubject, Subject } from 'rxjs';
-import { delay, map, tap } from 'rxjs/operators';
+import { of, ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { PaginatedResult } from '../_models/paginations';
 import { Tool } from '../_models/tools';
 
 // const httpOptions = {
@@ -19,24 +20,46 @@ import { Tool } from '../_models/tools';
 export class ToolService {
   baseUrl = environment.apiUrl
   tools: Tool[] = []
-  private currentToolsSource = new ReplaySubject<Tool[]>(1);
-  currentTools$ = this.currentToolsSource.asObservable();
+
   version = 1
   lastversion = -1
+  paginatedResult: PaginatedResult<Tool[]> = new PaginatedResult<Tool[]>()
+
+  constructor(public http: HttpClient, public toastr: ToastrService, public router: Router) { }
 
 
-  constructor(public http: HttpClient, public toastr: ToastrService, public router: Router) {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-  }
-  
+  // getTools() {
+  //   if (this.tools.length > 0 && this.version == this.lastversion) return of(this.tools)
+  //   this.lastversion = this.version
+  //   return this.http.get<Tool[]>(this.baseUrl + 'tools').pipe(
+  //     map(tools => {
+  //       this.tools = tools
+  //       return this.tools
+  //     })
+  //   )
+  // }
 
-  getTools() {
-    if (this.tools.length > 0 && this.version == this.lastversion) return of(this.tools)
-    this.lastversion = this.version
-    return this.http.get<Tool[]>(this.baseUrl + 'tools').pipe(
-      map(tools => {
-        this.tools = tools 
-        return this.tools
+
+
+  getTools(page?: number, itemsPerPage?: number) {
+    let params = new HttpParams();
+
+    if (page && itemsPerPage) {
+      params = params.append('pageNumber', page)
+      params = params.append('pageSize', itemsPerPage )
+    }
+
+    return this.http.get<Tool[]>(this.baseUrl + 'tools', {observe: 'response', params}).pipe(
+      map(response => {
+        if (response.body) {
+          this.paginatedResult.result = response.body
+        }
+
+        const pagination = response.headers.get('Pagination')
+        if (pagination) {
+          this.paginatedResult.pagination = JSON.parse(pagination)
+        }
+        return this.paginatedResult
       })
     )
   }
@@ -50,7 +73,7 @@ export class ToolService {
   updateTool(tool: Tool, toolname: string) {
     return this.http.put<Tool>(this.baseUrl + 'tools/' + toolname, tool).pipe(
       map(() => {
-        this.version++
+        // this.version++
         const index = this.tools.indexOf(tool)
         this.tools[index] = { ...this.tools[index], ...tool }
       }
@@ -58,20 +81,20 @@ export class ToolService {
     )
   }
 
-  setMainPhoto(photoId: number, toolname: string) { 
+  setMainPhoto(photoId: number, toolname: string) {
     return this.http.put(this.baseUrl + 'tools/' + toolname + '/set-main-photo/' + photoId, {})
   }
 
-  deletePhoto(photoId: number, toolname: string) { 
+  deletePhoto(photoId: number, toolname: string) {
     return this.http.delete(this.baseUrl + 'tools/' + toolname + '/delete-photo/' + photoId);
   }
 
   addTool(model: any, owner: string) {
     return this.http.post(this.baseUrl + 'users/' + owner + '/register-tool', model).pipe(
       map((tool: Tool) => {
-        this.version++
+        // this.version++
         if (tool) {
-        
+
         }
         return tool
       })
@@ -79,13 +102,8 @@ export class ToolService {
   }
 
   deleteTool(owner: string, toolname: string) {
-    this.version++
+    // this.version++
     return this.http.delete(this.baseUrl + 'users/' + owner + '/delete-tool/' + toolname)
-  }
-
-  reloadPage(){
-    this.router.navigateByUrl("/admin")
-    window.location.reload()
   }
 
 }
