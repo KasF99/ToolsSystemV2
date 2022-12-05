@@ -32,9 +32,8 @@ export class AdminPanelComponent implements OnInit {
   OnActivatedTab(data: TabDirective) {
     this.activatedTab = data;
     if (this.activatedTab.id === "tab1") {
-     this.ngOnInit()
+     this.toolsTab.ngOnInit()
     }
-    
   }
 
 }

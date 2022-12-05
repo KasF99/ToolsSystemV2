@@ -35,9 +35,14 @@ export class ModalsDeletionComponent {
   delete() {
     this.toolService.deleteTool(this.tool.owner, this.tool.toolName).subscribe(() => {
       this.modalRef?.hide();
-      // window.location.replace("/admin")
-      this.toastr.info("You deleted " + this.tool.toolName + ", going back to the Tool list")
+      this.redirectTo('/admin');
+      this.toastr.info("You deleted " + this.tool.toolName + ", going back to the TOOLs tab")
     })
   }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 
 }

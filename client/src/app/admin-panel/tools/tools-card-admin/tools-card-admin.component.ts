@@ -14,6 +14,7 @@ export class ToolsCardAdminComponent implements OnInit {
   ngOnInit(): void {
     this.close()
     this.nullPhotoUrl()
+    console.log(this.tool.dateOfService)
   }
 
   close() {
@@ -24,7 +25,7 @@ export class ToolsCardAdminComponent implements OnInit {
 
   nullPhotoUrl() {
     if (this.tool.photoUrl === null) { 
-      this.tool.photoUrl = './assets/tool.png'
+      this.tool.photoUrl = './assets/tool1.jpg'
     }
   }
 

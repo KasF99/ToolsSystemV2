@@ -13,7 +13,8 @@ import { ToolService } from 'src/app/_services/tool.service';
   styleUrls: ['./tools-register-admin.component.css']
 })
 export class ToolsRegisterAdminComponent implements OnInit {
-  // @Output() registerMode = new EventEmitter();
+  // @Output() registerMode = new EventEmitter()
+  
 
   model: any = {};
   registerForm: FormGroup | undefined;
@@ -52,11 +53,12 @@ export class ToolsRegisterAdminComponent implements OnInit {
     const dob = this.getDateOnly(this.registerForm.controls['dateOfService'].value)
     const values = { ...this.registerForm.value, date: dob }
     this.toolService.addTool(values, values.owner).subscribe(response => {  
+      this.toastr.info("You have added new tool, redirecting to the TOOLs tab")
+      this.redirectTo('/admin');
     }, err => {
       this.validationErrors = err
     })
   }
-
 
   private getDateOnly(dob: string | undefined) {
     if (!dob) return;
@@ -64,6 +66,9 @@ export class ToolsRegisterAdminComponent implements OnInit {
     return new Date(theDob.setMinutes(theDob.getMinutes() - theDob.getTimezoneOffset())).toISOString().slice(0, 10)
   }
 
-
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 
 }

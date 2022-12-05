@@ -33,13 +33,13 @@ namespace API.Data
         //        .ToListAsync();
         // }
 
-        public async Task<PagedList<ToolsDto>> GetToolsAsync(UserParams userParams)
+        public async Task<PagedList<ToolsDto>> GetToolsAsync(ToolParams toolParams)
         {
             var query = _context.Tools
                .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
                .AsNoTracking();
 
-            return await PagedList<ToolsDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+            return await PagedList<ToolsDto>.CreateAsync(query, toolParams.PageNumber, toolParams.PageSize);
 
         }
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ReplaySubject } from 'rxjs';
 import { map } from "rxjs/operators";
@@ -13,9 +14,12 @@ export class AccountService {
 
   baseUrl = environment.apiUrl
   private currentUserSource = new ReplaySubject<User>(1);
+  isLoggedIn: boolean = false;
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(public http: HttpClient, public toastr: ToastrService) { }
+  constructor(public http: HttpClient, public toastr: ToastrService, public router: Router) {
+    
+  }
   
   login(model: any) {
     return this.http.post(this.baseUrl + 'account/login', model).pipe(
@@ -50,5 +54,13 @@ export class AccountService {
     this.currentUserSource.next(null)
   }
 
+  logged(){
+    this.currentUser$.subscribe(response => {
+      if (response) {
+        return true
+      }
+    })
+  }
+   
 
 }

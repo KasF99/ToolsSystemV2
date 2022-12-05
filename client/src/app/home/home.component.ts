@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-home',
@@ -10,11 +12,12 @@ export class HomeComponent implements OnInit {
   registerMode = false
   loginMode = false
   users: any = {};
+  ifLogged = false;
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, public accountService: AccountService, public router: Router) { }
 
   ngOnInit(): void {
-    // this.getUsers()
+    this.logged()
   }
 
   registerToggle() {
@@ -37,6 +40,14 @@ export class HomeComponent implements OnInit {
 
   cancelLoginMode(event: boolean) { 
     this.loginMode = false
+  }
+
+  logged() {
+    this.accountService.currentUser$.subscribe(response => {
+      if (response) {
+        this.router.navigateByUrl("/tools")
+      }
+    })
   }
 
 }

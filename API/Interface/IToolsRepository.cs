@@ -12,7 +12,7 @@ namespace API.Interface
         Task<Tools> GetToolsByIdAsync(int id);
         Task<Tools> GetToolsByToolnameAsync(string username);
         // Task<IEnumerable<ToolsDto>> GetToolsAsync();
-        Task<PagedList<ToolsDto>> GetToolsAsync(UserParams userParams);
+        Task<PagedList<ToolsDto>> GetToolsAsync(ToolParams userParams);
         Task<ToolsDto> GetToolAsync(string username);
         Task<IEnumerable<ToolsDto>> GetToolsByTheOwner(int id);
     }

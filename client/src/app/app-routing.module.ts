@@ -35,7 +35,6 @@ const routes: Routes = [
       { path: 'member/edit', component: MemberEditComponent },
       { path: 'admin', component: AdminPanelComponent },
       { path: 'mechanic', component: MechanicPanelComponent },
-
     ]
   },
   { path: 'errors', component: TestErrorsComponent },

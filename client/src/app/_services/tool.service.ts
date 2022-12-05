@@ -73,7 +73,7 @@ export class ToolService {
   updateTool(tool: Tool, toolname: string) {
     return this.http.put<Tool>(this.baseUrl + 'tools/' + toolname, tool).pipe(
       map(() => {
-        // this.version++
+        this.version++
         const index = this.tools.indexOf(tool)
         this.tools[index] = { ...this.tools[index], ...tool }
       }
@@ -92,9 +92,9 @@ export class ToolService {
   addTool(model: any, owner: string) {
     return this.http.post(this.baseUrl + 'users/' + owner + '/register-tool', model).pipe(
       map((tool: Tool) => {
-        // this.version++
+        this.version++
         if (tool) {
-
+          
         }
         return tool
       })
@@ -102,7 +102,7 @@ export class ToolService {
   }
 
   deleteTool(owner: string, toolname: string) {
-    // this.version++
+    this.version++
     return this.http.delete(this.baseUrl + 'users/' + owner + '/delete-tool/' + toolname)
   }
 
