@@ -13,12 +13,12 @@ export class ToolsListComponent implements OnInit {
   constructor(public toolService: ToolService) { }
 
   ngOnInit(): void {
-    this.loadTools()
+    // this.loadTools()
   }
-  loadTools() {
-    this.toolService.getTools().subscribe(tools => {
-      // this.tools = tools
-    })
-  }
+  // loadTools() {
+  //   this.toolService.getTools().subscribe(tools => {
+  //     // this.tools = tools
+  //   })
+  // }
 
 }

@@ -35,12 +35,18 @@ namespace API.Data
 
         public async Task<PagedList<ToolsDto>> GetToolsAsync(ToolParams toolParams)
         {
-            var query = _context.Tools
-               .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
-               .AsNoTracking();
+            // var query = _context.Tools
+            //    .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
+            //    .AsNoTracking();
 
-            return await PagedList<ToolsDto>.CreateAsync(query, toolParams.PageNumber, toolParams.PageSize);
+            // return await PagedList<ToolsDto>.CreateAsync(query, toolParams.PageNumber, toolParams.PageSize);
+            var query = _context.Tools.AsQueryable();
 
+            query = query.Where(u => u.DateOfService >= toolParams.minDate && u.DateOfService <= toolParams.maxDate);
+
+            return await PagedList<ToolsDto>.CreateAsync(query.ProjectTo<ToolsDto>(_mapper
+                .ConfigurationProvider).AsNoTracking(), 
+                    toolParams.PageNumber, toolParams.PageSize);
         }
 
         public async Task<Tools> GetToolsByIdAsync(int id)

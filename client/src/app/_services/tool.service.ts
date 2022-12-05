@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { PaginatedResult } from '../_models/paginations';
 import { Tool } from '../_models/tools';
+import { ToolsParams } from '../_models/toolsParams';
 
 // const httpOptions = {
 //   headers: new HttpHeaders({ Authorization: 'Bearer ' +JSON.parse(localStorage.getItem('user'))?.token})
@@ -41,27 +42,40 @@ export class ToolService {
 
 
 
-  getTools(page?: number, itemsPerPage?: number) {
-    let params = new HttpParams();
+  getTools(toolParams: ToolsParams) {
+    let params = this.GetPaginationHeaders(toolParams.pageNumber, toolParams.pageSize);
 
-    if (page && itemsPerPage) {
-      params = params.append('pageNumber', page)
-      params = params.append('pageSize', itemsPerPage )
-    }
+    params = params.append('minDate', toolParams.minDate.toDateString())
+    params = params.append('maxDate', toolParams.maxDate.toDateString())
 
-    return this.http.get<Tool[]>(this.baseUrl + 'tools', {observe: 'response', params}).pipe(
+
+    return this.GetPaginatedResult<Tool[]>(this.baseUrl + 'tools', params)
+  }
+
+  private GetPaginatedResult<T>(url: string, params: HttpParams) {
+    const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
+    return this.http.get<T>(url, { observe: 'response', params }).pipe(
       map(response => {
         if (response.body) {
-          this.paginatedResult.result = response.body
+          paginatedResult.result = response.body;
         }
 
-        const pagination = response.headers.get('Pagination')
+        const pagination = response.headers.get('Pagination');
         if (pagination) {
-          this.paginatedResult.pagination = JSON.parse(pagination)
+          paginatedResult.pagination = JSON.parse(pagination);
         }
-        return this.paginatedResult
+        return paginatedResult;
       })
-    )
+    );
+  }
+
+  private GetPaginationHeaders(page: number, itemsPerPage: number) {
+    let params = new HttpParams();
+
+    params = params.append('pageNumber', page);
+    params = params.append('pageSize', itemsPerPage);
+    return params;
+
   }
 
   getTool(toolname: string) {
@@ -94,7 +108,7 @@ export class ToolService {
       map((tool: Tool) => {
         this.version++
         if (tool) {
-          
+
         }
         return tool
       })
