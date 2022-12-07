@@ -25,6 +25,8 @@ namespace API.Helpers
         public DateTime minDate { get; set; } = DateTime.ParseExact("01/01/2000", "dd/MM/yyyy", CultureInfo.InvariantCulture);
         public DateTime maxDate { get; set; } = DateTime.ParseExact("01/01/2050", "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
+        public string orderBy { get; set; } = "dateOfService";
+
         // public DateTime minDate { get; set; } = DateTime.ParseExact("01/01/2000", "dd/MM/yyyy", CultureInfo.InvariantCulture);
         // public DateTime maxDate { get; set; } = DateTime.ParseExact("01/01/2050", "dd/MM/yyyy", CultureInfo.InvariantCulture);
 

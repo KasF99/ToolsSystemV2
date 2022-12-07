@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { of, ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { PaginatedResult } from '../_models/paginations';
 import { Tool } from '../_models/tools';
 import { ToolsParams } from '../_models/toolsParams';
+import { AccountService } from './account.service';
 
 // const httpOptions = {
 //   headers: new HttpHeaders({ Authorization: 'Bearer ' +JSON.parse(localStorage.getItem('user'))?.token})
@@ -25,32 +26,54 @@ export class ToolService {
   version = 1
   lastversion = -1
   paginatedResult: PaginatedResult<Tool[]> = new PaginatedResult<Tool[]>()
+  toolCache = new Map();
+  toolParams: ToolsParams;
+  bsConfig: { containerClass: string; dateInputFormat: string; isAnimated: boolean; adaptivePosition: boolean; };
 
-  constructor(public http: HttpClient, public toastr: ToastrService, public router: Router) { }
+  constructor(public http: HttpClient, public toastr: ToastrService, public router: Router, public accountService: AccountService) { 
+    this.accountService.currentUser$.pipe(take(1)).subscribe(response => {
+      this.toolParams = new ToolsParams();
+      this.bsConfig = {
+        containerClass: 'theme-dark-blue',
+        dateInputFormat: "MM-DD-YYYY",
+        isAnimated: true,
+        adaptivePosition: true
+      }
+    })
+  }
 
+  getToolParams() {
+    return this.toolParams;
+  }
 
-  // getTools() {
-  //   if (this.tools.length > 0 && this.version == this.lastversion) return of(this.tools)
-  //   this.lastversion = this.version
-  //   return this.http.get<Tool[]>(this.baseUrl + 'tools').pipe(
-  //     map(tools => {
-  //       this.tools = tools
-  //       return this.tools
-  //     })
-  //   )
-  // }
+  setToolParams(params: ToolsParams) {
+    this.toolParams = params;
+  }
 
-
+  resetToolParams() {
+    this.toolParams = new ToolsParams();
+    return this.toolParams
+  }
 
   getTools(toolParams: ToolsParams) {
+    var response = this.toolCache.get(Object.values(toolParams).join('-'));
+
+    if (response) {
+      return of(response);
+    }
+
     let params = this.GetPaginationHeaders(toolParams.pageNumber, toolParams.pageSize);
 
     params = params.append('minDate', toolParams.dates[0].toDateString())
     params = params.append('maxDate', toolParams.dates[1].toDateString())
     params = params.append('owner', toolParams.owner)
     params = params.append('toolname', toolParams.toolname)
+    params = params.append('orderBy', toolParams.orderBy)
 
-    return this.GetPaginatedResult<Tool[]>(this.baseUrl + 'tools', params)
+    return this.GetPaginatedResult<Tool[]>(this.baseUrl + 'tools', params).pipe(map(response => {
+      this.toolCache.set(Object.values(toolParams).join('-'), response);
+      return response;
+    }))
   }
 
   private GetPaginatedResult<T>(url: string, params: HttpParams) {
@@ -80,8 +103,13 @@ export class ToolService {
   }
 
   getTool(toolname: string) {
-    const tool = this.tools.find(x => x.toolName === toolname)
-    if (tool) return of(tool);
+    const tool = [...new Set(this.toolCache.values())]
+      .reduce((arr, elem) => arr.concat(elem.result), [])
+      .find((tool: Tool) => tool.toolName === toolname);
+
+    if (tool) {
+      return of(tool);
+    }
     return this.http.get<Tool>(this.baseUrl + 'tools/' + toolname)
   }
 

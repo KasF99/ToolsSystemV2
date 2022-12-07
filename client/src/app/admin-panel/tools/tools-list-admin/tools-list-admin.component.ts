@@ -27,16 +27,8 @@ export class ToolsListAdminComponent implements OnInit {
 
  
 
-  constructor(public toolService: ToolService, public accountService: AccountService, public membersService: MembersService) {
-    this.accountService.currentUser$.pipe(take(1)).subscribe(response => {
-      this.toolParams = new ToolsParams();
-      this.bsConfig = {
-        containerClass: 'theme-dark-blue',
-        dateInputFormat: "MM-DD-YYYY",
-        isAnimated: true,
-        adaptivePosition: true
-      }
-    })
+  constructor(public toolService: ToolService, public membersService: MembersService) {
+    this.toolParams = this.toolService.getToolParams();
   } 
   
   ngOnInit(): void {
@@ -45,17 +37,17 @@ export class ToolsListAdminComponent implements OnInit {
   }
 
   loadTools() {
-    if(!this.toolParams) return
-    this.toolService.getTools(this.toolParams).subscribe({
-      next: response => {
-        if (response.result && response.pagination) {
-          this.tools = response.result
-          this.pagination = response.pagination
+  {
+      this.toolService.setToolParams(this.toolParams)
+      this.toolService.getTools(this.toolParams).subscribe({
+        next: response => {
+          if (response.result && response.pagination) {
+            this.tools = response.result
+            this.pagination = response.pagination
+          }
         }
-
-        console.log(this.toolParams.dates)
-      }
-    })
+      })
+    }
   }
 
   loadMembers() {
@@ -67,12 +59,13 @@ export class ToolsListAdminComponent implements OnInit {
   pageChanged(event: any) {
     if (this.toolParams && this.toolParams?.pageNumber !== event.page) {
       this.toolParams.pageNumber = event.page;
+      this.toolService.setToolParams(this.toolParams)
       this.loadTools()
     }
   }
 
   resetFilters() {
-    this.toolParams = new ToolsParams() 
+    this.toolParams = this.toolService.resetToolParams()
     this.loadTools();
   } 
 }

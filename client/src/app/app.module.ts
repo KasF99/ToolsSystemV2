@@ -39,6 +39,7 @@ import { OwnerChooseComponent } from './_forms/owner-choose/owner-choose.compone
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsDeletionComponent } from './_forms/modals-deletion/modals-deletion.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 
 
@@ -82,7 +83,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot()
 
   ],
   providers: [

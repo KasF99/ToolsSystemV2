@@ -50,6 +50,12 @@ namespace API.Data
 
             query = query.Where(u => u.DateOfService >= toolParams.minDate && u.DateOfService <= toolParams.maxDate);
 
+            query = toolParams.orderBy switch
+            {
+                "created" => query.OrderByDescending(u => u.Created),
+                _ => query.OrderBy(u => u.DateOfService)
+            };
+
             return await PagedList<ToolsDto>.CreateAsync(query.ProjectTo<ToolsDto>(_mapper
                 .ConfigurationProvider).AsNoTracking(),
                     toolParams.PageNumber, toolParams.PageSize);
