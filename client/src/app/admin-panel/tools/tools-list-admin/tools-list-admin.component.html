@@ -1,36 +1,81 @@
+<div class="container mt-3">
+    <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadTools()" autocomplete="off">
+        <label class="px-2">Search by: </label>
+        <div class="form-group px-2">
+            <select required="" name="toolname" style="width: 150px" [(ngModel)]="toolParams.toolname"
+                class="form-control ml-1">
+                <option value="" disabled selected hidden>Tool name...</option>
+                <option *ngFor="let tool of tools">
+                    {{tool.toolName}}
+                </option>
+            </select>
+        </div>
+        <label class="px-2">or: </label>
+        <div class="form-group px-2">
+            <select required="" name="toolname" style="width: 100px" [(ngModel)]="toolParams.owner"
+                class="form-control ml-1">
+                <option value="" disabled selected hidden>Owner...</option>
+                <option *ngFor="let member of members">
+                    {{member.knownAs}}
+                </option>
+            </select>
+        </div>
+
+ 
+        <!-- <div class="form-group px-2">
+            <label class="px-2" >from: </label>
+            <input type="text" style="width: 150px" class='form-control'  bsDatepicker
+                [bsConfig]='bsConfig' [(ngModel)]="toolParams.minDate" [ngModelOptions]="{standalone: true}" >
+        </div>
+
+        <div class="form-group px-2">
+            <label class="px-2">to: </label>
+            <input type="text" style="width: 150px" class='form-control'  bsDatepicker
+                [bsConfig]='bsConfig' [(ngModel)]="toolParams.maxDate" [ngModelOptions]="{standalone: true}" >
+        </div> -->
+
+
+        <div class="form-group px-2">
+            <label class="px-2">Service date: </label>
+            <input type="text" style="width: 150px" class='form-control' bsDaterangepicker [bsConfig]='bsConfig'
+                [(ngModel)]="toolParams.dates" [ngModelOptions]="{standalone: true}">
+        </div>
+
+
+        <button class="btn btn-primary ml-1" type="submit">Apply Filters</button>
+        <button (click)="resetFilters()" class="btn btn-info ml-1" type="submit">Reset Filters</button>
+        <!-- <div class="col">
+            <div class="btn-group float-right">
+                <button 
+                    type="button"
+                    class="btn btn-primary" 
+                    name='orderBy' 
+                    (click)="loadMembers()"
+                    btnRadio='lastActive'
+                    [(ngModel)]="userParams.orderBy">Last Active</button>
+
+                <button 
+                    type="button"
+                    class="btn btn-primary" 
+                    name='orderBy' 
+                    (click)="loadMembers()"
+                    btnRadio='created'
+                    [(ngModel)]="userParams.orderBy">Newest Members</button>
+            </div>
+        </div> -->
+    </form>
+</div>
+
 <div class="row mt-3">
     <div *ngFor="let tool of tools" class="col-2">
-
-        <!-- <div *ngFor="let tool of tools$ | async" class="col-2"> -->
         <app-tools-card-admin [tool]="tool"></app-tools-card-admin>
     </div>
 </div>
 
-<!-- <div class="d-flex justify-content-center">
-    <pagination
-        [boundaryLinks]="true" 
-        [totalItems]="pagination.totalItems"
-        [itemsPerPage]="pagination.itemsPerPage" 
-        [maxSize]="10" 
-        [(ngModel)]="pagination.currentPage"
-        (pageChanged)="pageChanged($event)"
-        previousText="&lsaquo;" 
-        nextText="&rsaquo;"\
-        firstText="&laquo;"
-        lastText="&raquo;">
-    </pagination>
-</div> -->
 
 <div class="d-flex justify-content-center" *ngIf="pagination">
-    <pagination 
-        [boundaryLinks]="true" 
-        [totalItems]="pagination.totalItems"
-        [itemsPerPage]="pagination.itemsPerPage"
-        [(ngModel)]="pagination.currentPage"
-        (pageChanged)="pageChanged($event)"
-        previousText="&lsaquo;" 
-        nextText="&rsaquo;" 
-        firstText="&laquo;" 
-        lastText="&raquo;">
-</pagination>
+    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+    </pagination>
 </div>

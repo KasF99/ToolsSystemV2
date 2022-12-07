@@ -33,12 +33,8 @@ namespace API.Controllers
         public async Task<ActionResult<PagedList<ToolsDto>>> GetTools([FromQuery]ToolParams userParams)
         {
 
-            //   var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
-            // userParams.CurrentUsername = user.UserName;
-
-            // if (string.IsNullOrEmpty(userParams.Gender))
-            //     userParams.Gender = user.Gender == "male" ? "female" : "male";
-            var tools = await _toolsRepository.GetToolsAsync(userParams);
+      
+           var tools = await _toolsRepository.GetToolsAsync(userParams);
 
             Response.AddPaginationHeader(new PaginationHeader(tools.CurrentPage, tools.PageSize, tools.TotalCount, tools.TotalPages));
             return Ok(tools);

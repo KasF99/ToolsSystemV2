@@ -42,7 +42,7 @@ namespace API.Data
             //     .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             //     .AsNoTracking();
 
-            query = query.Where(u => u.UserName != userParams.CurrentUsername);    //this lines allows for not returning information for certain users
+            // query = query.Where(u => u.UserName != userParams.CurrentUsername);    //this lines allows for not returning information for certain users
 
           
             // var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);

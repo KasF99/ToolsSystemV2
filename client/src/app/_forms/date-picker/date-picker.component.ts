@@ -18,7 +18,8 @@ export class DatePickerComponent implements ControlValueAccessor {
     this.bsConfig = {
       containerClass: 'theme-dark-blue',
       // containerClass: 'theme-default',
-      dateInputFormat: 'DD MMMM YYYY'
+      dateInputFormat: 'DD MMMM YYYY',
+      isAnimated: true 
     }
    }
 
@@ -35,7 +36,7 @@ export class DatePickerComponent implements ControlValueAccessor {
 
   }
 
-  getContro
+
 
 
 

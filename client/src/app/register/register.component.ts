@@ -53,7 +53,6 @@ export class RegisterComponent implements OnInit {
     const values = {...this.registerForm.value}
     this.accountService.register(values).subscribe(response => {
       this.router.navigateByUrl("/tools")
-      // this.cancel()
     }, err => { 
       this.validationErrors = err
     })

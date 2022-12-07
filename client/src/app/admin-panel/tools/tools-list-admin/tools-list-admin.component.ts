@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { Member } from 'src/app/_models/member';
 import { Pagination } from 'src/app/_models/paginations';
 import { Tool } from 'src/app/_models/tools';
 import { ToolsParams } from 'src/app/_models/toolsParams';
 import { AccountService } from 'src/app/_services/account.service';
+import { MembersService } from 'src/app/_services/members.service';
 import { ToolService } from 'src/app/_services/tool.service';
 
 @Component({
@@ -18,20 +21,27 @@ export class ToolsListAdminComponent implements OnInit {
   tools$: Observable<Tool[]> = new Observable()
   pagination: Pagination | undefined
   toolParams: ToolsParams
-  pageNumber = 1
-  pageSize = 5
+  members: Member[] = [];
+  bsConfig: Partial<BsDatepickerConfig> | undefined
+  dateToSpread: Date[]
 
-  constructor(public toolService: ToolService, public accountService: AccountService) {
+ 
+
+  constructor(public toolService: ToolService, public accountService: AccountService, public membersService: MembersService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe(response => {
       this.toolParams = new ToolsParams();
+      this.bsConfig = {
+        containerClass: 'theme-dark-blue',
+        dateInputFormat: "MM-DD-YYYY",
+        isAnimated: true,
+        adaptivePosition: true
+      }
     })
   } 
-
   
-
   ngOnInit(): void {
-    // this.tools$ = this.toolService.getTools();
     this.loadTools()
+    this.loadMembers()
   }
 
   loadTools() {
@@ -42,7 +52,15 @@ export class ToolsListAdminComponent implements OnInit {
           this.tools = response.result
           this.pagination = response.pagination
         }
+
+        console.log(this.toolParams.dates)
       }
+    })
+  }
+
+  loadMembers() {
+    this.membersService.getMembers().subscribe(members => {
+      this.members = members
     })
   }
 
@@ -51,7 +69,10 @@ export class ToolsListAdminComponent implements OnInit {
       this.toolParams.pageNumber = event.page;
       this.loadTools()
     }
-   
   }
 
+  resetFilters() {
+    this.toolParams = new ToolsParams() 
+    this.loadTools();
+  } 
 }

@@ -42,10 +42,16 @@ namespace API.Data
             // return await PagedList<ToolsDto>.CreateAsync(query, toolParams.PageNumber, toolParams.PageSize);
             var query = _context.Tools.AsQueryable();
 
+            if (toolParams.owner != null)
+            query = query.Where(u => u.AppUser.KnownAs == toolParams.owner);
+
+             if (toolParams.toolname != null)
+            query = query.Where(u => u.ToolName == toolParams.toolname);
+
             query = query.Where(u => u.DateOfService >= toolParams.minDate && u.DateOfService <= toolParams.maxDate);
 
             return await PagedList<ToolsDto>.CreateAsync(query.ProjectTo<ToolsDto>(_mapper
-                .ConfigurationProvider).AsNoTracking(), 
+                .ConfigurationProvider).AsNoTracking(),
                     toolParams.PageNumber, toolParams.PageSize);
         }
 
@@ -57,7 +63,7 @@ namespace API.Data
         public async Task<IEnumerable<ToolsDto>> GetToolsByTheOwner(int id)   //for the future chagnes
         {
 
-            return await _context.Tools  
+            return await _context.Tools
                 .Where(x => x.AppUserId == id)
                 .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();

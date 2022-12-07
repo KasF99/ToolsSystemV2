@@ -45,9 +45,10 @@ export class ToolService {
   getTools(toolParams: ToolsParams) {
     let params = this.GetPaginationHeaders(toolParams.pageNumber, toolParams.pageSize);
 
-    params = params.append('minDate', toolParams.minDate.toDateString())
-    params = params.append('maxDate', toolParams.maxDate.toDateString())
-
+    params = params.append('minDate', toolParams.dates[0].toDateString())
+    params = params.append('maxDate', toolParams.dates[1].toDateString())
+    params = params.append('owner', toolParams.owner)
+    params = params.append('toolname', toolParams.toolname)
 
     return this.GetPaginatedResult<Tool[]>(this.baseUrl + 'tools', params)
   }

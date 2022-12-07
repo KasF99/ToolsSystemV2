@@ -53,8 +53,6 @@ export class ToolsRegisterAdminComponent implements OnInit {
     const dob = this.getDateOnly(this.registerForm.controls['dateOfService'].value)
     const values = { ...this.registerForm.value, date: dob }
     this.toolService.addTool(values, values.owner).subscribe(response => {  
-      console.log(this.registerForm.value)
-      console.log(response.dateOfService)
       this.toastr.info("You have added new tool, redirecting to the TOOLs tab")
       this.redirectTo('/admin');
     }, err => {
