@@ -13,8 +13,7 @@ import { ToolService } from 'src/app/_services/tool.service';
   styleUrls: ['./tools-register-admin.component.css']
 })
 export class ToolsRegisterAdminComponent implements OnInit {
-  // @Output() registerMode = new EventEmitter()
-  
+
 
   model: any = {};
   registerForm: FormGroup | undefined;
@@ -23,8 +22,7 @@ export class ToolsRegisterAdminComponent implements OnInit {
   members: Member[] | undefined;
 
   constructor(private memberService: MembersService, public accountService: AccountService,
-    public toastr: ToastrService, public router: Router, public fb: FormBuilder, public toolService: ToolService) {
-    // this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);                                 //for future development 
+    public toastr: ToastrService, public router: Router, public fb: FormBuilder, public toolService: ToolService) {                             //for future development 
   }
 
   ngOnInit(): void {
@@ -49,7 +47,6 @@ export class ToolsRegisterAdminComponent implements OnInit {
   }
 
   register(): void {
-    console.log(this.registerForm.value)
     const dob = this.getDateOnly(this.registerForm.controls['dateOfService'].value)
     const values = { ...this.registerForm.value, date: dob }
     this.toolService.addTool(values, values.owner).subscribe(response => {  
@@ -66,7 +63,7 @@ export class ToolsRegisterAdminComponent implements OnInit {
     return new Date(theDob.setMinutes(theDob.getMinutes() - theDob.getTimezoneOffset())).toISOString().slice(0, 10)
   }
 
-  redirectTo(uri:string){
+  redirectTo(uri: string) {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
  }

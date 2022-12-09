@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { initialState } from 'ngx-bootstrap/timepicker/reducer/timepicker.reducer';
 import { ToastrService } from 'ngx-toastr';
 import { Tool } from 'src/app/_models/tools';
 import { ToolService } from 'src/app/_services/tool.service';
@@ -21,7 +22,7 @@ export class ModalsDeletionComponent {
 
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm modal-dialog-centered' });
   }
 
   confirm(): void {

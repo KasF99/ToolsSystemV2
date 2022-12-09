@@ -23,8 +23,8 @@ export class ToolService {
   baseUrl = environment.apiUrl
   tools: Tool[] = []
 
-  version = 1
-  lastversion = -1
+  isAdd: boolean
+  isDelete: boolean
   paginatedResult: PaginatedResult<Tool[]> = new PaginatedResult<Tool[]>()
   toolCache = new Map();
   toolParams: ToolsParams;
@@ -33,6 +33,8 @@ export class ToolService {
   constructor(public http: HttpClient, public toastr: ToastrService, public router: Router, public accountService: AccountService) { 
     this.accountService.currentUser$.pipe(take(1)).subscribe(response => {
       this.toolParams = new ToolsParams();
+      this.isAdd = false
+      this.isDelete = false
       this.bsConfig = {
         containerClass: 'theme-dark-blue',
         dateInputFormat: "MM-DD-YYYY",
@@ -56,6 +58,7 @@ export class ToolService {
   }
 
   getTools(toolParams: ToolsParams) {
+
     var response = this.toolCache.get(Object.values(toolParams).join('-'));
 
     if (response) {
@@ -106,7 +109,6 @@ export class ToolService {
     const tool = [...new Set(this.toolCache.values())]
       .reduce((arr, elem) => arr.concat(elem.result), [])
       .find((tool: Tool) => tool.toolName === toolname);
-
     if (tool) {
       return of(tool);
     }
@@ -116,7 +118,6 @@ export class ToolService {
   updateTool(tool: Tool, toolname: string) {
     return this.http.put<Tool>(this.baseUrl + 'tools/' + toolname, tool).pipe(
       map(() => {
-        this.version++
         const index = this.tools.indexOf(tool)
         this.tools[index] = { ...this.tools[index], ...tool }
       }
@@ -135,9 +136,8 @@ export class ToolService {
   addTool(model: any, owner: string) {
     return this.http.post(this.baseUrl + 'users/' + owner + '/register-tool', model).pipe(
       map((tool: Tool) => {
-        this.version++
         if (tool) {
-
+          this.isAdd = true
         }
         return tool
       })
@@ -145,8 +145,13 @@ export class ToolService {
   }
 
   deleteTool(owner: string, toolname: string) {
-    this.version++
-    return this.http.delete(this.baseUrl + 'users/' + owner + '/delete-tool/' + toolname)
+    return this.http.delete(this.baseUrl + 'users/' + owner + '/delete-tool/' + toolname).pipe(
+      map(() => {
+        {
+          this.isDelete = true
+        }
+      })
+    )
   }
 
 }

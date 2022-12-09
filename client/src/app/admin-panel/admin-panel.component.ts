@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
-import { Tool } from '../_models/tools';
 import { ToolService } from '../_services/tool.service';
 import { ToolsListAdminComponent } from './tools/tools-list-admin/tools-list-admin.component';
 
@@ -17,7 +17,7 @@ export class AdminPanelComponent implements OnInit {
   @ViewChild(ToolsListAdminComponent) toolsTab: ToolsListAdminComponent
 
 
-  constructor(public toolService: ToolService) { }
+  constructor(public toolService: ToolService, public router: Router) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +32,7 @@ export class AdminPanelComponent implements OnInit {
   OnActivatedTab(data: TabDirective) {
     this.activatedTab = data;
     if (this.activatedTab.id === "tab1") {
-     this.toolsTab.ngOnInit()
+     
     }
   }
 
