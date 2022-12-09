@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221209093648_ToolProperties")]
+    partial class ToolProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,7 +164,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ToolProps");
+                    b.ToTable("Properties");
                 });
 
             modelBuilder.Entity("API.Entities.Tools", b =>
@@ -210,7 +212,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("ToolPropertiesId");
 
-                    b.ToTable("Properties");
+                    b.ToTable("ToolToolProperties");
                 });
 
             modelBuilder.Entity("API.Entities.Photo", b =>

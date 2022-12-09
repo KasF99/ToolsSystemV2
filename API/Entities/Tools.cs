@@ -14,6 +14,7 @@ namespace API.Entities
         public AppUser AppUser { get; set; }
         public int AppUserId { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<ToolToolProperties> ToolToolProperties { get; set; }
 
         public int GetServiceDate()
         {

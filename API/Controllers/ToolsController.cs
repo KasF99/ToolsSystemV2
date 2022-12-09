@@ -32,9 +32,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedList<ToolsDto>>> GetTools([FromQuery]ToolParams userParams)
         {
-
-      
-           var tools = await _toolsRepository.GetToolsAsync(userParams);
+            var tools = await _toolsRepository.GetToolsAsync(userParams);
 
             Response.AddPaginationHeader(new PaginationHeader(tools.CurrentPage, tools.PageSize, tools.TotalCount, tools.TotalPages));
             return Ok(tools);
