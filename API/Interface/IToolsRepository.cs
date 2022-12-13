@@ -8,12 +8,12 @@ namespace API.Interface
     {
         void Update(Tools tool);
         Task<bool> SaveAllAsync();
-        Task<IEnumerable<Tools>> GetToolssAsync();
         Task<Tools> GetToolsByIdAsync(int id);
         Task<Tools> GetToolsByToolnameAsync(string username);
-        // Task<IEnumerable<ToolsDto>> GetToolsAsync();
+        // Task<IEnumerable<ToolsDto>> GetToolsAsync(ToolParams userParams);
         Task<PagedList<ToolsDto>> GetToolsAsync(ToolParams userParams);
+
+        Task<IEnumerable<ToolsDto>> GetToolsAsyncNP();
         Task<ToolsDto> GetToolAsync(string username);
-        Task<IEnumerable<ToolsDto>> GetToolsByTheOwner(int id);
     }
 }

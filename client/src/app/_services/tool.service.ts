@@ -30,7 +30,7 @@ export class ToolService {
   toolParams: ToolsParams;
   bsConfig: { containerClass: string; dateInputFormat: string; isAnimated: boolean; adaptivePosition: boolean; };
 
-  constructor(public http: HttpClient, public toastr: ToastrService, public router: Router, public accountService: AccountService) { 
+  constructor(public http: HttpClient, public toastr: ToastrService, public router: Router, public accountService: AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe(response => {
       this.toolParams = new ToolsParams();
       this.isAdd = false
@@ -57,7 +57,9 @@ export class ToolService {
     return this.toolParams
   }
 
-  getTools(toolParams: ToolsParams) {
+
+
+  getTools(toolParams: ToolsParams, returnAll: boolean = false) {
 
     var response = this.toolCache.get(Object.values(toolParams).join('-'));
 
@@ -65,18 +67,25 @@ export class ToolService {
       return of(response);
     }
 
-    let params = this.GetPaginationHeaders(toolParams.pageNumber, toolParams.pageSize);
+    if (returnAll) {
+      return this.http.get(this.baseUrl + 'tools/?returnAll=true')
+    }
 
-    params = params.append('minDate', toolParams.dates[0].toDateString())
-    params = params.append('maxDate', toolParams.dates[1].toDateString())
-    params = params.append('owner', toolParams.owner)
-    params = params.append('toolname', toolParams.toolname)
-    params = params.append('orderBy', toolParams.orderBy)
+    else {
+      let params = this.GetPaginationHeaders(toolParams.pageNumber, toolParams.pageSize);
 
-    return this.GetPaginatedResult<Tool[]>(this.baseUrl + 'tools', params).pipe(map(response => {
-      this.toolCache.set(Object.values(toolParams).join('-'), response);
-      return response;
-    }))
+      params = params.append('minDate', toolParams.dates[0].toDateString())
+      params = params.append('maxDate', toolParams.dates[1].toDateString())
+      params = params.append('owner', toolParams.owner)
+      params = params.append('toolname', toolParams.toolname)
+      params = params.append('orderBy', toolParams.orderBy)
+
+      return this.GetPaginatedResult<Tool[]>(this.baseUrl + 'tools', params).pipe(map(response => {
+        this.toolCache.set(Object.values(toolParams).join('-'), response);
+        return response;
+      }))
+    }
+
   }
 
   private GetPaginatedResult<T>(url: string, params: HttpParams) {

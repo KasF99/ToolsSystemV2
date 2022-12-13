@@ -13,6 +13,7 @@ namespace API.Entities
         public DateTime DateOfService { get; set; }
         public AppUser AppUser { get; set; }
         public int AppUserId { get; set; }
+        public ToolProperties ToolProperties { get; set; } =  new ToolProperties();
         public ICollection<Photo> Photos { get; set; }
 
         public int GetServiceDate()

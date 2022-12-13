@@ -14,6 +14,6 @@ namespace API.DTOs
         public DateTime DateOfService { get; set; }
         public int ServiceDate { get; set; }
         public ICollection<PhotoDto> Photos { get; set; }
-
+        public ToolPropertiesDto ToolProperties { get; set; } = new ToolPropertiesDto();
     }
 }

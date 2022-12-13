@@ -25,21 +25,9 @@ namespace API.Data
              .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
              .SingleOrDefaultAsync();
         }
-
-        // public async Task<IEnumerable<ToolsDto>> GetToolsAsync()
-        // {
-        //     return await _context.Tools
-        //        .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
-        //        .ToListAsync();
-        // }
-
+        
         public async Task<PagedList<ToolsDto>> GetToolsAsync(ToolParams toolParams)
         {
-            // var query = _context.Tools
-            //    .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
-            //    .AsNoTracking();
-
-            // return await PagedList<ToolsDto>.CreateAsync(query, toolParams.PageNumber, toolParams.PageSize);
             var query = _context.Tools.AsQueryable();
 
             if (toolParams.owner != null)
@@ -60,6 +48,12 @@ namespace API.Data
                 .ConfigurationProvider).AsNoTracking(),
                     toolParams.PageNumber, toolParams.PageSize);
         }
+        public async Task<IEnumerable<ToolsDto>> GetToolsAsyncNP()
+        {
+            return await _context.Tools
+               .ProjectTo<ToolsDto>(_mapper.ConfigurationProvider)
+               .ToListAsync();
+        }
 
         public async Task<Tools> GetToolsByIdAsync(int id)
         {
@@ -79,7 +73,13 @@ namespace API.Data
         {
             return await _context.Tools
                 .Include(t => t.Photos)
+                .Include(tp => tp.ToolProperties)
                 .SingleOrDefaultAsync(x => x.ToolName == toolname);
+        }
+
+        public Task<Tools> GetToolsByToolnameAsyncNP(string username)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Tools>> GetToolssAsync()

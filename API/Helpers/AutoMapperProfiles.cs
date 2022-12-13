@@ -19,6 +19,9 @@ namespace API.Helpers
             CreateMap<ToolUpdateDto, Tools>();
             CreateMap<RegisterDto, AppUser>();
             CreateMap<ToolsDto, Tools>();
+            CreateMap<ToolProperties, ToolPropertiesDto>();
+            CreateMap<ToolPropertiesDto, ToolProperties>();
+            CreateMap<ToolPropertiesUpdateDto, ToolProperties>();
         }
     }
 }

@@ -30,15 +30,22 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<ToolsDto>>> GetTools([FromQuery]ToolParams userParams)
+        public async Task<ActionResult<IEnumerable<ToolsDto>>> GetTools([FromQuery] ToolParams userParams, [FromQuery]bool returnAll = false)
         {
+            if (returnAll == false)
+            {
+                var tools = await _toolsRepository.GetToolsAsync(userParams);
+                Response.AddPaginationHeader(new PaginationHeader(tools.CurrentPage, tools.PageSize, tools.TotalCount, tools.TotalPages));
+                return Ok(tools);
+            }
 
-      
-           var tools = await _toolsRepository.GetToolsAsync(userParams);
-
-            Response.AddPaginationHeader(new PaginationHeader(tools.CurrentPage, tools.PageSize, tools.TotalCount, tools.TotalPages));
-            return Ok(tools);
+            else
+            {
+                var tools = await _toolsRepository.GetToolsAsyncNP();
+                return Ok(tools);
+            }
         }
+
 
 
         [HttpGet("{toolname}")]
@@ -60,6 +67,23 @@ namespace API.Controllers
             if (await _toolsRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to update tool");
+        }
+
+
+        [HttpPut("{toolname}/service")]
+        public async Task<ActionResult> ServiceTool(ToolPropertiesUpdateDto toolPropertiesDto, string toolname)
+        {
+            var tool = await _toolsRepository.GetToolsByToolnameAsync(toolname);
+
+            var toolProps = tool.ToolProperties;
+
+            _mapper.Map(toolPropertiesDto, toolProps);
+
+            _toolsRepository.Update(tool);
+
+            if (await _toolsRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to service tool");
         }
 
         [HttpPost("{toolname}/add-photo")]

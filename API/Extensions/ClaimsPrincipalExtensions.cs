@@ -8,5 +8,10 @@ namespace API.Extensions
         {
             return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
+
+        public static string GetToolname( this ClaimsPrincipal tool)
+        {
+            return tool.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        }
     }
 }

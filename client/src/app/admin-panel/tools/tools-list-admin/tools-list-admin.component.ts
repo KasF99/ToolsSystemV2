@@ -16,8 +16,7 @@ import { ToolService } from 'src/app/_services/tool.service';
 export class ToolsListAdminComponent implements OnInit {
 
   tools: Tool[] = []
-  isAdd$: Observable<boolean> = new Observable()
-  // tools$: Observable<Tool[]> = new Observable()
+  toolsAll: Tool[] = []
 
   pagination: Pagination | undefined
   toolParams: ToolsParams
@@ -33,6 +32,7 @@ export class ToolsListAdminComponent implements OnInit {
     this.ToolAdded()
     this.ToolDeleted()
     this.loadTools()
+    this.loadToolsNP()
     this.loadMembers()
   }
 
@@ -48,6 +48,12 @@ export class ToolsListAdminComponent implements OnInit {
         }
       })
     }
+  }
+
+  loadToolsNP() {
+    this.toolService.getTools(this.toolParams, true).subscribe(tools => {
+      this.toolsAll = tools
+    })
   }
 
   loadMembers() {

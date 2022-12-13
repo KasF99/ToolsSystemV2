@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221212073841_ToolProperties")]
+    partial class ToolProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,79 +90,79 @@ namespace API.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CurrentValue")
+                    b.Property<int>("CurrentValue")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("ExternalBendProtectorState")
+                    b.Property<bool>("ExternalBendProtectorState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("ExternalCasingConditionState")
+                    b.Property<bool>("ExternalCasingConditionState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("ExternalCompleteButtonsState")
+                    b.Property<bool>("ExternalCompleteButtonsState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("ExternalCompleteHandlesState")
+                    b.Property<bool>("ExternalCompleteHandlesState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("ExternalIsCleanState")
+                    b.Property<bool>("ExternalIsCleanState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("ExternalLeakageState")
+                    b.Property<bool>("ExternalLeakageState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("ExternalOuterCoverState")
+                    b.Property<bool>("ExternalOuterCoverState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("ExternalPlugState")
+                    b.Property<bool>("ExternalPlugState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("ExternalWireState")
+                    b.Property<bool>("ExternalWireState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IdleRunState")
+                    b.Property<bool>("IdleRunState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("InternalBearingsState")
+                    b.Property<bool>("InternalBearingsState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("InternalBendProtectorState")
+                    b.Property<bool>("InternalBendProtectorState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("InternalCommutatorState")
+                    b.Property<bool>("InternalCommutatorState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("InternalElectricEqState")
+                    b.Property<bool>("InternalElectricEqState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("InternalEngineDirtyState")
+                    b.Property<bool>("InternalEngineDirtyState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("InternalPlugWireState")
+                    b.Property<bool>("InternalPlugWireState")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsValid")
+                    b.Property<bool>("IsValid")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsolateResistanceState")
+                    b.Property<bool>("IsolateResistanceState")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("MesauredResistanceState")
+                    b.Property<int>("MesauredResistanceState")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PermissibleProtectiveConductorResistance")
+                    b.Property<int>("PermissibleProtectiveConductorResistance")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProtectiveConductorResistance")
+                    b.Property<int>("ProtectiveConductorResistance")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RequiredResistanceState")
+                    b.Property<int>("RequiredResistanceState")
                         .HasColumnType("int");
 
                     b.Property<int>("ToolsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VoltageValue")
+                    b.Property<int>("VoltageValue")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
