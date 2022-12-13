@@ -1,39 +1,38 @@
 <div class="card">
-    <div class="card-body">
-        <tabset class="adminTabs" #adminTabs>
-    
-            <!-- <tab heading="Tools" id="tab1" (selectTab)="OnActivatedTab($event)"> -->
-            <tab heading="Tools" id="tab1">
-                <app-tools-list-admin>
-                </app-tools-list-admin>
-            </tab>
-    
-            <tab heading="Add new Tool" id="tab2">
-              <div class="container mt-5">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-4">
-                            <app-tools-register-admin>
-                            </app-tools-register-admin>
-                        </div>
-                    </div>
-                </div>
+  <div class="card-body">
+    <tabset class="adminTabs" #adminTabs>
+      <!-- <tab heading="Tools" id="tab1" (selectTab)="OnActivatedTab($event)"> -->
+      <tab heading="Tools" id="tab1">
+        <app-tools-list-admin> </app-tools-list-admin>
+      </tab>
+
+      <tab heading="Add new Tool" id="tab2">
+        <div class="container mt-5">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-4">
+                <app-tools-register-admin> </app-tools-register-admin>
+              </div>
             </div>
-            </tab>
-    
-            <tab heading="Register new user" id="tab3">
-                <div class="container mt-5">
-                    <div *ngIf="!registerMode" class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-4">
-                                <app-register>
-                                </app-register>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </tab>
-    
-        </tabset>
-    </div>
+          </div>
+        </div>
+      </tab>
+
+      <tab heading="Register new user" id="tab3">
+        <div class="container mt-5">
+          <div *ngIf="!registerMode" class="container">
+            <div class="row justify-content-center">
+              <div class="col-4">
+                <app-register> </app-register>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+
+      <tab heading="Service" id="tab4">
+        <app-tools-service-admin> </app-tools-service-admin>
+      </tab>
+    </tabset>
+  </div>
 </div>

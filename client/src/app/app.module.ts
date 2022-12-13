@@ -40,6 +40,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsDeletionComponent } from './_forms/modals-deletion/modals-deletion.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { ToolsServiceAdminComponent } from './admin-panel/tools/tools-service-admin/tools-service-admin.component';
 
 
 
@@ -70,7 +71,9 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     ToolsRegisterAdminComponent,
     OwnerChooseComponent,
     ModalsDeletionComponent,
-
+    ToolsServiceAdminComponent,
+  
+    
   ],
   imports: [
     BrowserModule,

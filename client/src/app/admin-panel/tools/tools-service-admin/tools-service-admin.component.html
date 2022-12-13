@@ -1,0 +1,138 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-12 col-md-offset-3">
+      <form [formGroup]="serviceForm[0]" id="msform">
+        <fieldset *ngIf="step == 1">
+          <h2 class="fs-title">Personal Details</h2>
+<!-- 
+            <input type="radio" id="html" name="fav_language" value="HTML">
+            <label for="html">HTML</label><br>
+            <input type="radio" id="css" name="fav_language" value="CSS">
+            <label for="css">CSS</label><br>
+            <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+            <label for="javascript">JavaScript</label> -->
+          <!-- <input
+            type="text"
+            formControlName="name"
+            [ngClass]="{ 'is-invalid': personal_step && personal.name.errors }"
+            placeholder="Full Name"
+          />
+          <div *ngIf="personal_step && personalDetails.controls.name.errors">
+            <div *ngIf="personal.name.errors?.required">Name is required</div>
+          </div>
+          <input
+            type="text"
+            formControlName="email"
+            name="email"
+            placeholder="Email"
+          />
+          <div *ngIf="personal_step && personalDetails.controls.email.errors">
+            <div *ngIf="personal.email.errors?.required">Email is required</div>
+          </div>
+          <input
+            type="text"
+            formControlName="phone"
+            name="phone"
+            placeholder="Phone"
+          />
+          <div *ngIf="personal_step && personalDetails.controls.phone.errors">
+            <div *ngIf="personal.phone.errors?.required">Phone is required</div>
+          </div> -->
+          <div class="mt-2">
+            <button type="button" class="btn btn-primary" (click)="next()">
+              Next
+            </button>
+          </div>
+        </fieldset>
+      </form>
+      <form [formGroup]="serviceForm[1]" id="msform">
+        <fieldset *ngIf="step == 2">
+          <h2 class="fs-title">Address Details</h2>
+          <!-- <input type="text" formControlName="city" placeholder="City" />
+          <div *ngIf="address_step && addressDetails.controls.city.errors">
+            <div *ngIf="address.city.errors?.required">City is required</div>
+          </div>
+          <textarea
+            rows="5"
+            cols="5"
+            formControlName="address"
+            placeholder="address"
+          ></textarea>
+          <div *ngIf="address_step && addressDetails.controls.address.errors">
+            <div *ngIf="address.address.errors?.required">
+              Address is required
+            </div>
+          </div>
+          <input type="text" formControlName="pincode" placeholder="Pincode" />
+          <div *ngIf="address_step && addressDetails.controls.pincode.errors">
+            <div *ngIf="address.pincode.errors?.required">
+              Pincode is required
+            </div>
+          </div> -->
+          <button type="button" class="btn btn-primary" (click)="previous()">
+            Previous
+          </button>
+          <div class="divider"></div>
+          <button type="button" class="btn btn-primary" (click)="next()">
+            Next
+          </button>
+        </fieldset>
+      </form>
+      <form [formGroup]="serviceForm[3]" id="msform">
+        <fieldset *ngIf="step == 3">
+          <h2 class="fs-title">Educational Details</h2>
+          <!-- <input
+            type="text"
+            formControlName="highest_qualification"
+            placeholder="Highest Qualification"
+          />
+          <div
+            *ngIf="
+              education_step &&
+              educationalDetails.controls.highest_qualification.errors
+            "
+          >
+            <div *ngIf="education.highest_qualification.errors?.required">
+              Highest qualification is required
+            </div>
+          </div>
+          <input
+            type="text"
+            formControlName="university"
+            placeholder="University"
+          />
+          <div
+            *ngIf="
+              education_step && educationalDetails.controls.university.errors
+            "
+          >
+            <div *ngIf="education.university.errors?.required">
+              University is required
+            </div>
+          </div>
+          <input
+            type="text"
+            formControlName="total_marks"
+            placeholder="Total Marks"
+          />
+          <div
+            *ngIf="
+              education_step && educationalDetails.controls.total_marks.errors
+            "
+          >
+            <div *ngIf="education.total_marks.errors?.required">
+              Total marks is required
+            </div>
+          </div> -->
+          <button type="button" class="btn btn-primary" (click)="previous()">
+            Previous
+          </button>
+          <div class="divider"></div>
+          <button type="button" class="btn btn-primary" (click)="submit()">
+            Submit
+          </button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

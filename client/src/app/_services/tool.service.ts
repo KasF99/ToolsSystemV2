@@ -163,4 +163,10 @@ export class ToolService {
     )
   }
 
+  serviceTool(toolname: string) {
+    return this.http.put(this.baseUrl + 'tools/' + toolname + '/service', {})
+  }
+
+
+
 }

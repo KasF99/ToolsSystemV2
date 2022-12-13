@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
     "@kolkov/ngx-gallery": "^2.0.1",
+    "@popperjs/core": "^2.11.6",
     "bootstrap": "^4.5.3",
     "bootswatch": "^5.2.2",
     "fontawesome-4.7": "^4.7.0",

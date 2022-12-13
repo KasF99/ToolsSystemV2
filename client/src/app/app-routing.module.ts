@@ -5,6 +5,7 @@ import { ToolsDetailAdminComponent } from './admin-panel/tools/tools-detail-admi
 import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/tools-edit-admin.component';
 import { ToolsListAdminComponent } from './admin-panel/tools/tools-list-admin/tools-list-admin.component';
 import { ToolsRegisterAdminComponent } from './admin-panel/tools/tools-register-admin/tools-register-admin.component';
+import { ToolsServiceAdminComponent } from './admin-panel/tools/tools-service-admin/tools-service-admin.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
@@ -30,7 +31,8 @@ const routes: Routes = [
       { path: 'admin/tools', component: ToolsListAdminComponent },
       { path: 'admin/tools/:toolname', component: ToolsDetailAdminComponent },
       { path: 'admin/tools/:toolname/edit', component: ToolsEditAdminComponent, canDeactivate: [PreventChangesGuard] },
-      { path: 'admin/register-tools', component: ToolsRegisterAdminComponent},
+      { path: 'admin/register-tools', component: ToolsRegisterAdminComponent },
+      { path: 'admin/service-tools', component: ToolsServiceAdminComponent},
 
       { path: 'member/edit', component: MemberEditComponent },
       { path: 'admin', component: AdminPanelComponent },
