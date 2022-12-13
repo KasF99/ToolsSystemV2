@@ -41,7 +41,10 @@ import { ModalsDeletionComponent } from './_forms/modals-deletion/modals-deletio
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { ToolsServiceAdminComponent } from './admin-panel/tools/tools-service-admin/tools-service-admin.component';
-
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio'
 
 
 
@@ -72,8 +75,8 @@ import { ToolsServiceAdminComponent } from './admin-panel/tools/tools-service-ad
     OwnerChooseComponent,
     ModalsDeletionComponent,
     ToolsServiceAdminComponent,
-  
-    
+
+
   ],
   imports: [
     BrowserModule,
@@ -87,7 +90,11 @@ import { ToolsServiceAdminComponent } from './admin-panel/tools/tools-service-ad
     BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    MatStepperModule,
+    MatInputModule,
+    MatButtonModule,
+    MatRadioModule
 
   ],
   providers: [

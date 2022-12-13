@@ -39,16 +39,57 @@ export class ToolsServiceAdminComponent implements OnInit {
   validationErrors: string[] = [];
   members: Member[] | undefined;
 
+
+  isLinear = false;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+
   constructor(private memberService: MembersService, public accountService: AccountService,
     public toastr: ToastrService, public router: Router, public fb: FormBuilder, public toolService: ToolService) {
     this.toolParams = this.toolService.getToolParams();
   }
+  
 
   ngOnInit(): void {
     this.loadMembers()
     this.loadToolsNP()
     this.initializeForm()
   }
+
+  get Basicform(){
+    return this.Empregister.get("basic") as FormGroup;
+  }
+  get contactform(){
+    return this.Empregister.get("contact") as FormGroup;
+  }
+  get addressform(){
+    return this.Empregister.get("address") as FormGroup;
+  }
+  HandleSubmit(){
+    if(this.Empregister.valid){
+      console.log(this.Empregister.value);
+    }
+  }
+
+  Empregister = this.fb.group({
+    basic: this.fb.group({
+      isTrue: this.fb.control('', Validators.nullValidator),
+      firstname:this.fb.control('',Validators.required),
+      lastname:this.fb.control('',Validators.required)
+
+    }),
+    contact: this.fb.group({
+      email:this.fb.control('',Validators.required),
+      phone:this.fb.control('',Validators.required),
+      fax:this.fb.control('',Validators.required)
+
+    }),
+    address: this.fb.group({
+      street:this.fb.control('',Validators.required),
+      city:this.fb.control('',Validators.required),
+      pin:this.fb.control('',Validators.required)
+    })
+  });
 
 
   loadMembers() {
