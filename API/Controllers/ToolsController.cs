@@ -19,10 +19,12 @@ namespace API.Controllers
         private readonly IToolsRepository _toolsRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPhotoService _photoService;
+        private readonly IEmailService _emailService;
 
         private readonly IMapper _mapper;
-        public ToolsController(IToolsRepository toolsRepository, IMapper mapper, IUserRepository userRepository, IPhotoService photoService)
+        public ToolsController(IToolsRepository toolsRepository, IMapper mapper, IUserRepository userRepository, IPhotoService photoService, IEmailService emailService)
         {
+            this._emailService = emailService;
             this._photoService = photoService;
             this._userRepository = userRepository;
             this._toolsRepository = toolsRepository;
@@ -30,7 +32,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ToolsDto>>> GetTools([FromQuery] ToolParams userParams, [FromQuery]bool returnAll = false)
+        public async Task<ActionResult<IEnumerable<ToolsDto>>> GetTools([FromQuery] ToolParams userParams, [FromQuery] bool returnAll = false)
         {
             if (returnAll == false)
             {
@@ -84,6 +86,13 @@ namespace API.Controllers
             if (await _toolsRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to service tool");
+        }
+
+        [HttpPost("email")]
+        public IActionResult SendEmail(EmailDto request)
+        {
+            _emailService.SendEmail(request);
+            return Ok();
         }
 
         [HttpPost("{toolname}/add-photo")]

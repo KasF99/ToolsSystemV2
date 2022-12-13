@@ -20,6 +20,7 @@ namespace API.Extensions
             {
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
             });
+            services.AddScoped<IEmailService, EmailService>();
 
             return services;
         }
