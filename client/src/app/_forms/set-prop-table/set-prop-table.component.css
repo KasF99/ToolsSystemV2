@@ -1,0 +1,25 @@
+.divider {
+    width: 5%;
+    height: auto;
+    display: inline-block;
+  }
+  
+  .mat-radio-group {
+    vertical-align: -1%;
+    display: grid;
+    margin: 15px 0;
+    grid-template-columns: auto auto auto;
+  }
+  
+  .example-label{
+    margin: 5px;
+    margin-top: 2%;
+    float: left;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+    margin-top: 17px;
+    float: right
+  }
+  

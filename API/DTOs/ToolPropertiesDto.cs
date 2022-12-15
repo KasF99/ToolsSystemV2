@@ -22,10 +22,12 @@ namespace API.DTOs
         public int? RequiredResistanceState { get; set; }
         public bool? IsolateResistanceState { get; set; }
         public int? CurrentValue { get; set; }
-        public int? VoltageValue { get; set; } 
+        public int? VoltageValue { get; set; }
         public int? ProtectiveConductorResistance { get; set; }
         public int? PermissibleProtectiveConductorResistance { get; set; }
         public bool? IdleRunState { get; set; }
         public bool? IsValid { get; set; }
+        public bool? PCCState { get; set; }
+        public string? Comments { get; set; }
     }
 }

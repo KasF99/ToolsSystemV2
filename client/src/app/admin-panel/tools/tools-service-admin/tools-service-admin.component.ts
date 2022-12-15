@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Member } from 'src/app/_models/member';
 import { ToolProperties } from 'src/app/_models/toolProperties';
 import { Tool } from 'src/app/_models/tools';
@@ -17,207 +18,134 @@ import { ToolService } from 'src/app/_services/tool.service';
 })
 export class ToolsServiceAdminComponent implements OnInit {
 
-  externalInspection!: FormGroup | undefined;
-  internalInspection!: FormGroup | undefined;
-  insulationResistanceMeasurement!: FormGroup | undefined;
-  protectiveCircuitCheck!: FormGroup | undefined;
-  iddleCheck!: FormGroup | undefined;
-  finalEvaluation!: FormGroup | undefined;
-  toolParams: ToolsParams
-  toolProp: ToolProperties
-  step1 = false;
-  step2 = false;
-  step3 = false;
-  step4 = false;
-  step5 = false;
-  ster6 = false;
-  step = 1;
-  model: any = {};
-  tools: Tool[] | undefined
-  serviceForm: FormGroup[] | undefined;
-  minDate: Date = new Date();
-  validationErrors: string[] = [];
-  members: Member[] | undefined;
+  serviceForm: FormGroup | undefined
+  toolProperties: ToolProperties
+  constructor(private builder: FormBuilder, public toolService: ToolService, public memberService: MembersService) { }
+  isLinear = true;
+  isNull: boolean
+  // MV = 0
+  // RV = 0
+
+  // myVar = new Observable(() => {
+  //   if (this.MV > this.RV) this.isNull = true;
+  //   if (this.RV > this.MV) this.isNull = true;
+  //   console.log(this.isNull)
+  // })
 
 
-  isLinear = false;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
 
-  constructor(private memberService: MembersService, public accountService: AccountService,
-    public toastr: ToastrService, public router: Router, public fb: FormBuilder, public toolService: ToolService) {
-    this.toolParams = this.toolService.getToolParams();
-  }
-  
+
 
   ngOnInit(): void {
-    this.loadMembers()
-    this.loadToolsNP()
     this.initializeForm()
-  }
-
-  get Basicform(){
-    return this.Empregister.get("basic") as FormGroup;
-  }
-  get contactform(){
-    return this.Empregister.get("contact") as FormGroup;
-  }
-  get addressform(){
-    return this.Empregister.get("address") as FormGroup;
-  }
-  HandleSubmit(){
-    if(this.Empregister.valid){
-      console.log(this.Empregister.value);
-    }
-  }
-
-  Empregister = this.fb.group({
-    basic: this.fb.group({
-      isTrue: this.fb.control('', Validators.nullValidator),
-      firstname:this.fb.control('',Validators.required),
-      lastname:this.fb.control('',Validators.required)
-
-    }),
-    contact: this.fb.group({
-      email:this.fb.control('',Validators.required),
-      phone:this.fb.control('',Validators.required),
-      fax:this.fb.control('',Validators.required)
-
-    }),
-    address: this.fb.group({
-      street:this.fb.control('',Validators.required),
-      city:this.fb.control('',Validators.required),
-      pin:this.fb.control('',Validators.required)
-    })
-  });
-
-
-  loadMembers() {
-    this.memberService.getMembers().subscribe(member => {
-      this.members = member;
-    })
-  }
-
-  loadToolsNP() {
-    this.toolService.getTools(this.toolParams, true).subscribe(tools => {
-      this.tools = tools
-    })
+    this.irs()
+    // this.MVRV()
+    
   }
 
   initializeForm() {
-    this.externalInspection = this.fb.group({
-      externalIsCleanState: ['', Validators.required],
-      externalCasingConditionState: ['', Validators.required],
-      externalPlugState: ['', Validators.required],
-      externalWireState: ['', Validators.required],
-      externalBendProtectorState: ['', Validators.required],
-      externalCompleteButtonsState: ['', Validators.required],
-      externalCompleteHandlesState: ['', Validators.required],
-      externalOuterCoverState: ['', Validators.required],
-      externalLeakageState: ['', Validators.required],
+    this.serviceForm = this.builder.group({
+      externalInspection: this.builder.group({
+        externalIsCleanState: this.builder.control('', [Validators.nullValidator]),
+        externalCasingConditionState: this.builder.control('', Validators.nullValidator),
+        externalPlugState: this.builder.control('', Validators.nullValidator),
+        externalWireState: this.builder.control('', Validators.nullValidator),
+        externalBendProtectorState: this.builder.control('', Validators.nullValidator),
+        externalCompleteButtonsState: this.builder.control('', Validators.nullValidator),
+        externalCompleteHandlesState: this.builder.control('', Validators.nullValidator),
+        externalOuterCoverState: this.builder.control('', Validators.nullValidator),
+        externalLeakageState: this.builder.control('', Validators.nullValidator),
+      }),
+      internalInspection: this.builder.group({
+        internalBendProtectorState: this.builder.control('', Validators.nullValidator),
+        internalPlugWireState: this.builder.control('', Validators.nullValidator),
+        internalElectricEqState: this.builder.control('', Validators.nullValidator),
+        internalEngineDirtyState: this.builder.control('', Validators.nullValidator),
+        internalCommutatorState: this.builder.control('', Validators.nullValidator),
+        internalBearingsState: this.builder.control('', Validators.nullValidator),
+      }),
+      insulationResistanceMeasurement: this.builder.group({
+        mesauredResistanceState: this.builder.control('', Validators.nullValidator),
+        requiredResistanceState: this.builder.control('', [Validators.nullValidator]),
+        isolateResistanceState: this.builder.control('', Validators.nullValidator),
+      }),
+
+      protectionCircuitCheck: this.builder.group({
+        currentValue: this.builder.control('', Validators.nullValidator),
+        voltageValue: this.builder.control('', Validators.nullValidator),
+        protectiveConductorResistance: this.builder.control('', Validators.nullValidator),
+        permissibleProtectiveConductorResistance: this.builder.control('', Validators.nullValidator),
+        //dodac ocene tak/nie w modelu API
+      }),
+      idleCheck: this.builder.group({
+        idleRunState: this.builder.control('', Validators.nullValidator),
+      }),
+
+      finalEvaluation: this.builder.group({
+        isValid: this.builder.control('', Validators.required),
+        //dodac date nastepnego zadania
+        //uwagi
+      }),
     });
-
-    this.internalInspection = this.fb.group({
-      internalBendProtectorState: ['', Validators.required],
-      internalPlugWireState: ['', Validators.required],
-      internalElectricEqState: ['', Validators.required],
-      internalEngineDirtyState: ['', Validators.required],
-      internalCommutatorState: ['', Validators.required],
-      internalBearingsState: ['', Validators.required],
-    });
-
-    this.insulationResistanceMeasurement = this.fb.group({
-      mesauredResistanceState: ['', Validators.required],
-      requiredResistanceState: ['', Validators.required],
-      isolateResistanceState: ['', Validators.required]
-    });
-
-    this.protectiveCircuitCheck = this.fb.group({
-      // highest_qualification: ['', Validators.required],
-      // university: ['', Validators.required],
-      // total_marks: ['', Validators.required],
-      currentValue: ['', Validators.required],
-      voltageValue: ['', Validators.required],
-      protectiveConductorResistance: ['', Validators.required],
-      permissibleProtectiveConductorResistance: ['', Validators.required], 
-      ///trzeba dopisac ostatni wiersz!
-    });
-
-    this.iddleCheck = this.fb.group({
-      idleRunState: ['', Validators.required], 
-    });
-
-    this.finalEvaluation = this.fb.group({
-      isValid: ['', Validators.required], //to ma sie zatwierdzac jesli nie ma zadnego false
-      //dodac uwagi
-      //dodac zmiane daty
-    })
-
-    this.serviceForm = [
-      this.externalInspection,
-      this.internalInspection,
-      this.insulationResistanceMeasurement,
-      this.iddleCheck,
-      this.finalEvaluation
-    ]
   }
 
-  get external() { return this.externalInspection.controls; }
-
-  get internal() { return this.internalInspection.controls; }
-
-  get iRM() { return this.insulationResistanceMeasurement.controls; }
-
-  get iC() { return this.iddleCheck.controls; }
-
-  get fE() { return this.finalEvaluation.controls; }
-
-  next() {
-    if (this.step == 1) {
-      this.step1
-        = true;
-      if (this.externalInspection.invalid) { return }
-      this.step++
-    }
-
-    else if (this.step == 2) {
-      this.step2 = true;
-      if (this.internalInspection.invalid) { return }
-      this.step++;
-    }
-
+  get externalInspection() {
+    return this.serviceForm.get("externalInspection") as FormGroup;
+  }
+  get internalInspection() {
+    return this.serviceForm.get("internalInspection") as FormGroup;
+  }
+  get insulationResistanceMeasurement() {
+    return this.serviceForm.get("insulationResistanceMeasurement") as FormGroup;
+  }
+  get protectionCircuitCheck() {
+    return this.serviceForm.get("protectionCircuitCheck") as FormGroup;
+  }
+  get idleCheck() {
+    return this.serviceForm.get("idleCheck") as FormGroup;
+  }
+  get finalEvaluation() {
+    return this.serviceForm.get("finalEvaluation") as FormGroup;
   }
 
-  previous() {
-    this.step--
 
-    if (this.step == 1) {
-      this.step2 = false;
-    }
-    if (this.step == 2) {
-      this.step3 = false;
-    }
+  // MVRV() {
+  //   this.insulationResistanceMeasurement.get("requiredResistanceState").valueChanges.subscribe(x => {
+  //     this.RV = x
+  //   })
 
-  }
+  //   this.insulationResistanceMeasurement.get("mesauredResistanceState").valueChanges.subscribe(x => {
+  //     this.MV = x
+  //   })
+  // }
 
-  submit() {
 
-    if (this.step == 3) {
-      this.step3 = true;
-      if (this.insulationResistanceMeasurement.invalid) { return }
-      alert("Well done!!")
-    }
-  }
+  irs() {
+    this.insulationResistanceMeasurement.get("isolateResistanceState").valueChanges.subscribe(x => {
+      if (x === null) {
+        this.insulationResistanceMeasurement.controls['mesauredResistanceState'].disable()
+        this.insulationResistanceMeasurement.controls['requiredResistanceState'].disable()
 
-  register(): void {
-    // const dob = this.getDateOnly(this.registerForm.controls['dateOfService'].value)
-    // const values = { ...this.registerForm.value, date: dob }
-    this.toolService.serviceTool("jajka").subscribe(response => {
-      console.log(this.serviceForm.values)
-      // this.toastr.info("You have added new tool, redirecting to the Tools tab")
-      // this.redirectTo('/admin');
-    }, err => {
-      this.validationErrors = err
+      }
+      if (x !== null) {
+        this.insulationResistanceMeasurement.controls['mesauredResistanceState'].enable()
+        this.insulationResistanceMeasurement.controls['requiredResistanceState'].enable()
+      }
     })
   }
+
+  HandleSubmit() {
+    if (this.serviceForm.valid) {
+      console.log(this.serviceForm.value);
+    }
+  }
+
+  // jebac() {
+  //   this.myVar.subscribe(() => {
+
+  //   })
+  // }
+
+
+
 }

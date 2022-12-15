@@ -12,13 +12,14 @@ import { User } from '../_models/user';
 })
 export class AccountService {
 
+  isRegister: boolean
   baseUrl = environment.apiUrl
   private currentUserSource = new ReplaySubject<User>(1);
   isLoggedIn: boolean = false;
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(public http: HttpClient, public toastr: ToastrService, public router: Router) {
-    
+    this.isRegister = false;
   }
   
   login(model: any) {
@@ -36,6 +37,7 @@ export class AccountService {
     return this.http.post(this.baseUrl + 'account/register', model).pipe(
       map((user: User) => {
         if (user) {
+          this.isRegister = true
           this.toastr.success("You registered new user, check ... tab")
         }
         return user

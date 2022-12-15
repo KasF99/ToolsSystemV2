@@ -14,8 +14,8 @@ export interface ToolProperties {
     internalEngineDirtyState?:boolean;
     internalCommutatorState?:boolean;
     internalBearingsState?: boolean;
-    mesauredResistanceState: number;
-    requiredResistanceState: number;
+    mesauredResistanceState?: number;
+    requiredResistanceState?: number;
     isolateResistanceState?: boolean;
     currentValue?: number;
     voltageValue?: number;

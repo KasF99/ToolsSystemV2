@@ -44,7 +44,11 @@ import { ToolsServiceAdminComponent } from './admin-panel/tools/tools-service-ad
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatRadioModule } from '@angular/material/radio'
+import { MatRadioModule } from '@angular/material/radio';
+import { SetPropComponent } from './_forms/set-prop/set-prop.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTableModule } from '@angular/material/table';
+import { SetPropTableComponent } from './_forms/set-prop-table/set-prop-table.component';
 
 
 
@@ -75,8 +79,8 @@ import { MatRadioModule } from '@angular/material/radio'
     OwnerChooseComponent,
     ModalsDeletionComponent,
     ToolsServiceAdminComponent,
-
-
+    SetPropComponent,
+    SetPropTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,7 +98,9 @@ import { MatRadioModule } from '@angular/material/radio'
     MatStepperModule,
     MatInputModule,
     MatButtonModule,
-    MatRadioModule
+    MatRadioModule,
+    MatGridListModule,
+    MatTableModule
 
   ],
   providers: [
