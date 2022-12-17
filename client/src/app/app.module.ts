@@ -49,6 +49,9 @@ import { SetPropComponent } from './_forms/set-prop/set-prop.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
 import { SetPropTableComponent } from './_forms/set-prop-table/set-prop-table.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 
 
@@ -100,8 +103,9 @@ import { SetPropTableComponent } from './_forms/set-prop-table/set-prop-table.co
     MatButtonModule,
     MatRadioModule,
     MatGridListModule,
-    MatTableModule
-
+    MatTableModule,
+    MatSlideToggleModule, 
+    MatCheckboxModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
