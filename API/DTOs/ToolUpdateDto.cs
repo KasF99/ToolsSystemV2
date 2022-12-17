@@ -1,3 +1,5 @@
+using API.Data.Migrations;
+
 namespace API.DTOs
 {
     public class ToolUpdateDto

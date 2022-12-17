@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Member } from 'src/app/_models/member';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { take } from 'rxjs/operators';
 import { ToolProperties } from 'src/app/_models/toolProperties';
-import { Tool } from 'src/app/_models/tools';
-import { ToolsParams } from 'src/app/_models/toolsParams';
-import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
 import { ToolService } from 'src/app/_services/tool.service';
 
@@ -21,26 +15,17 @@ export class ToolsServiceAdminComponent implements OnInit {
   serviceForm: FormGroup | undefined
   toolProperties: ToolProperties
   constructor(private builder: FormBuilder, public toolService: ToolService, public memberService: MembersService) { }
+  
   isLinear = true;
-  isNull: boolean
-  // MV = 0
-  // RV = 0
-
-  // myVar = new Observable(() => {
-  //   if (this.MV > this.RV) this.isNull = true;
-  //   if (this.RV > this.MV) this.isNull = true;
-  //   console.log(this.isNull)
-  // })
-
-
-
+  isTrue: boolean
+  MV: string = '0'
+  RV: string  = '0'
 
 
   ngOnInit(): void {
     this.initializeForm()
-    this.irs()
-    // this.MVRV()
-    
+    this.changeIRS()
+    this.changeTBstate()
   }
 
   initializeForm() {
@@ -67,7 +52,7 @@ export class ToolsServiceAdminComponent implements OnInit {
       insulationResistanceMeasurement: this.builder.group({
         mesauredResistanceState: this.builder.control('', Validators.nullValidator),
         requiredResistanceState: this.builder.control('', [Validators.nullValidator]),
-        isolateResistanceState: this.builder.control('', Validators.nullValidator),
+        isolateResistanceState: this.builder.control({ value: this.isTrue }, Validators.nullValidator),
       }),
 
       protectionCircuitCheck: this.builder.group({
@@ -83,7 +68,7 @@ export class ToolsServiceAdminComponent implements OnInit {
 
       finalEvaluation: this.builder.group({
         isValid: this.builder.control('', Validators.required),
-        //dodac date nastepnego zadania
+        //dodac date nastepnego zadania - check!
         //uwagi
       }),
     });
@@ -108,21 +93,33 @@ export class ToolsServiceAdminComponent implements OnInit {
     return this.serviceForm.get("finalEvaluation") as FormGroup;
   }
 
+  changeTBstate() {
+    this.insulationResistanceMeasurement.get("requiredResistanceState").valueChanges.subscribe(x => {
+      this.RV = x
+      this.insulationResistanceMeasurement.get('requiredResistanceState').markAsTouched()
+    })
 
-  // MVRV() {
-  //   this.insulationResistanceMeasurement.get("requiredResistanceState").valueChanges.subscribe(x => {
-  //     this.RV = x
-  //   })
-
-  //   this.insulationResistanceMeasurement.get("mesauredResistanceState").valueChanges.subscribe(x => {
-  //     this.MV = x
-  //   })
-  // }
+    this.insulationResistanceMeasurement.get("mesauredResistanceState").valueChanges.subscribe(x => {
+      this.MV = x 
+      
+      console.log(parseInt(this.MV) > parseInt(this.RV))
+      this.isTrue = this.isValid(parseInt(this.MV), parseInt(this.RV))
 
 
-  irs() {
+      if (this.insulationResistanceMeasurement.controls['requiredResistanceState'].touched) {
+        this.insulationResistanceMeasurement.get('requiredResistanceState').markAsUntouched()
+        this.insulationResistanceMeasurement.controls['isolateResistanceState'].setValue(this.isTrue)
+
+      }
+    })
+  }
+
+
+  changeIRS() {
     this.insulationResistanceMeasurement.get("isolateResistanceState").valueChanges.subscribe(x => {
       if (x === null) {
+        this.insulationResistanceMeasurement.controls['mesauredResistanceState'].setValue(null)
+        this.insulationResistanceMeasurement.controls['requiredResistanceState'].setValue(null)
         this.insulationResistanceMeasurement.controls['mesauredResistanceState'].disable()
         this.insulationResistanceMeasurement.controls['requiredResistanceState'].disable()
 
@@ -140,12 +137,13 @@ export class ToolsServiceAdminComponent implements OnInit {
     }
   }
 
-  // jebac() {
-  //   this.myVar.subscribe(() => {
 
-  //   })
-  // }
-
-
-
+  isValid(v1: number, v2: number) {
+    if (v1 >= v2) {
+      return true;
+    }
+    else if (v1 < v2) {
+      return false
+    }
+  }
 }

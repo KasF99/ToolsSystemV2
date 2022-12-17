@@ -25,8 +25,10 @@ namespace API.DTOs
         public int? ProtectiveConductorResistance { get; set; }
         public int? PermissibleProtectiveConductorResistance { get; set; }
         public bool? IdleRunState { get; set; }
+        public DateTime DateOfService { get; set; }
         public bool? IsValid { get; set; }
-        public bool? PCCState { get; set; }
-        public string? Comments { get; set; }
+
+
+
     }
 }

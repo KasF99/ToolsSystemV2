@@ -81,6 +81,8 @@ namespace API.Controllers
 
             _mapper.Map(toolPropertiesDto, toolProps);
 
+            tool.DateOfService = toolPropertiesDto.DateOfService; //you can create mapper but is it worth for one prop?
+
             _toolsRepository.Update(tool);
 
             if (await _toolsRepository.SaveAllAsync()) return Ok();
