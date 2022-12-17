@@ -99,8 +99,8 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Required resistance value [Ω]</th>
-              <th scope="col">Measured value of insulation resistance [Ω]</th>
+              <th scope="col">Required resistance value [<span>&#8486;</span>]</th>
+              <th scope="col">Measured value of insulation resistance [<span>&#8486;</span>]</th>
               <th scope="col">
                 Evaluation <br />
                 (Measured value must be higher than required value)
@@ -111,19 +111,13 @@
             <tr>
               <td>
                 <mat-form-field appearance="fill" style="width: 300px">
-                  <input      
-                    matInput
-                    formControlName="requiredResistanceState"
-                  />
+                  <input matInput formControlName="requiredResistanceState" />
                 </mat-form-field>
               </td>
 
               <td>
                 <mat-form-field appearance="fill" style="width: 300px">
-                  <input
-                    matInput
-                    formControlName="mesauredResistanceState"
-                  />
+                  <input matInput formControlName="mesauredResistanceState" />
                 </mat-form-field>
               </td>
 
@@ -131,9 +125,8 @@
                 <app-set-prop-table
                   formControlName="isolateResistanceState"
                 ></app-set-prop-table>
+
               </td>
-
-
             </tr>
           </tbody>
         </table>
@@ -144,11 +137,65 @@
           </button>
           |
           <button mat-raised-button color="primary" matStepperNext>Next</button>
-          
-          <!-- <button (click)="jebac()" mat-raised-button color="primary" >
-            japierdole
-          </button> -->
         </div>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="protectionCircuitCheck">
+      <div formGroupName="protectionCircuitCheck">
+        <ng-template matStepLabel>Checking of the protection circuit</ng-template>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Current Intensity [mA]</th>
+              <th scope="col">Voltage drop between the protective contact and the metal part [V]</th>
+              <th scope="col">Protective conductor resistance<span>&#8486;</span> </th>
+              <th scope="col">Permissible resistance<span>&#8486;</span> </th>
+              <th scope="col">Is it Valid?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <mat-form-field appearance="fill" style="width: 300px">
+                  <input matInput formControlName="requiredResistanceState" />
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field appearance="fill" style="width: 300px">
+                  <input matInput formControlName="mesauredResistanceState" />
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field appearance="fill" style="width: 300px">
+                  <input matInput formControlName="requiredResistanceState" />
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field appearance="fill" style="width: 300px">
+                  <input matInput formControlName="requiredResistanceState" />
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field appearance="fill" style="width: 300px">
+                  <input matInput formControlName="requiredResistanceState" />
+                </mat-form-field>
+              </td>
+
+              <td>
+                <app-set-prop-table
+                  formControlName="isolateResistanceState"
+                ></app-set-prop-table>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+                
       </div>
     </mat-step>
 
@@ -167,34 +214,9 @@
       </div>
     </mat-step>
 
-    <!-- <mat-step [stepControl]="internalInspection">
-      <div formGroupName="basic">
-        <ng-template matStepLabel>Internal Inspection</ng-template>
+  
 
-        <app-set-prop [label]="'name'" formControlName="isTrue"></app-set-prop>
-
-        <mat-form-field appearance="fill">
-          <mat-label>First Name</mat-label>
-          <input
-            matInput
-            placeholder="First name"
-            formControlName="firstname"
-          />
-          </mat-form-field>
-        <br />
-
-        <mat-form-field appearance="fill">
-          <mat-label>Last Name</mat-label>
-          <input matInput placeholder="Last name" formControlName="lastname" />
-        </mat-form-field>
-        <div>
-          <button mat-raised-button color="primary" matStepperNext>Next</button>
-        </div>
-      </div>
-    </mat-step>
-
-
-    <mat-step [stepControl]="insulationResistanceMeasurement">
+ <!-- <mat-step [stepControl]="insulationResistanceMeasurement">
       <div formGroupName="basic">
         <ng-template matStepLabel>Measurement of the Insulation Resistance</ng-template>
 

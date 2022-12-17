@@ -15,11 +15,13 @@ export class ToolsServiceAdminComponent implements OnInit {
   serviceForm: FormGroup | undefined
   toolProperties: ToolProperties
   constructor(private builder: FormBuilder, public toolService: ToolService, public memberService: MembersService) { }
-  
+
   isLinear = true;
   isTrue: boolean
   MV: string = '0'
-  RV: string  = '0'
+  RV: string = '0'
+  checked: boolean
+  disabled: boolean
 
 
   ngOnInit(): void {
@@ -100,14 +102,16 @@ export class ToolsServiceAdminComponent implements OnInit {
     })
 
     this.insulationResistanceMeasurement.get("mesauredResistanceState").valueChanges.subscribe(x => {
-      this.MV = x 
-      
-      console.log(parseInt(this.MV) > parseInt(this.RV))
-      this.isTrue = this.isValid(parseInt(this.MV), parseInt(this.RV))
+      this.MV = x
+
+      // console.log(parseInt(this.MV) > parseInt(this.RV))
 
 
       if (this.insulationResistanceMeasurement.controls['requiredResistanceState'].touched) {
+        this.isTrue = this.isValid(parseInt(this.MV), parseInt(this.RV))
+
         this.insulationResistanceMeasurement.get('requiredResistanceState').markAsUntouched()
+
         this.insulationResistanceMeasurement.controls['isolateResistanceState'].setValue(this.isTrue)
 
       }
@@ -118,6 +122,9 @@ export class ToolsServiceAdminComponent implements OnInit {
   changeIRS() {
     this.insulationResistanceMeasurement.get("isolateResistanceState").valueChanges.subscribe(x => {
       if (x === null) {
+
+        this.insulationResistanceMeasurement.get('requiredResistanceState').markAsTouched()
+        this.insulationResistanceMeasurement.get('mesauredResistanceState').markAsTouched()
         this.insulationResistanceMeasurement.controls['mesauredResistanceState'].setValue(null)
         this.insulationResistanceMeasurement.controls['requiredResistanceState'].setValue(null)
         this.insulationResistanceMeasurement.controls['mesauredResistanceState'].disable()
