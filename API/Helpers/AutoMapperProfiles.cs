@@ -22,9 +22,6 @@ namespace API.Helpers
             CreateMap<ToolProperties, ToolPropertiesDto>()
              .ForMember(dest => dest.DateOfService, opt => opt.MapFrom(src =>
                  src.Tools.DateOfService));
-            // CreateMap<ToolPropertiesDto, ToolProperties>()
-            //  .ForMember(dest => dest.DateOfService, opt => opt.MapFrom(src =>
-            //      src.DateOfService));
             CreateMap<ToolPropertiesDto, ToolProperties>();
 
             CreateMap<ToolPropertiesUpdateDto, ToolProperties>();

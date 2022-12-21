@@ -1,5 +1,63 @@
-<form [formGroup]="serviceForm" (ngSubmit)="HandleSubmit()">
+<form [formGroup]="serviceForm" autocomplete="off">
   <mat-stepper [orientation]="'vertical'" [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="titlePage">
+      <div formGroupName="titlePage">
+        <ng-template matStepLabel>Information page</ng-template>
+
+        <div class="form-group mt-1">
+          <select
+            required=""
+            name="toolname"
+            style="width: 150px"
+            [formControl]="titlePage.controls['toolname']"
+            class="form-control ml-1"
+            (blur)="loadTool()"
+          >
+            <option value="" disabled selected hidden>
+              - - Select tool - -
+            </option>
+            <option *ngFor="let tool of tools">
+              {{ tool.toolName }}
+            </option>
+          </select>
+        </div>
+
+        <table *ngIf="tool" class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Number</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Date of Service</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ tool.toolName }}</td>
+              <td>{{ tool.toolNumber }}</td>
+              <td>{{ tool.owner }}</td>
+              <td>{{ tool.dateOfService | date : "dd-MM-yyyy" }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div>
+          <button mat-raised-button color="primary" matStepperPrevious>
+            Back
+          </button>
+          |
+          <button
+            mat-raised-button
+            [disabled]="!tool"
+            color="primary"
+            matStepperNext
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </mat-step>
+
     <mat-step [stepControl]="externalInspection">
       <div formGroupName="externalInspection">
         <ng-template matStepLabel>External Inspection</ng-template>
@@ -8,6 +66,7 @@
           [label]="'externalIsCleanState'"
           formControlName="externalIsCleanState"
         ></app-set-prop>
+
         <app-set-prop
           [label]="'externalCasingConditionState'"
           formControlName="externalCasingConditionState"
@@ -96,12 +155,16 @@
           Measurement Insulation Resistance
         </ng-template>
 
-        <table class="table">
-          <thead>
+        <table class="table table-striped">
+          <thead class="thead-dark">
             <tr>
-              <th scope="col">Required resistance value [<span>&#8486;</span>]</th>
-              <th scope="col">Measured value of insulation resistance [<span>&#8486;</span>]</th>
-              <th scope="col">
+              <th class="text-capitalize" scope="col">
+                Required resistance value [<span>&#8486;</span>]
+              </th>
+              <th class="text-capitalize" scope="col">
+                Measured value of insulation resistance [<span>&#8486;</span>]
+              </th>
+              <th class="text-capitalize" scope="col">
                 Evaluation <br />
                 (Measured value must be higher than required value)
               </th>
@@ -111,13 +174,21 @@
             <tr>
               <td>
                 <mat-form-field appearance="fill" style="width: 300px">
-                  <input matInput formControlName="requiredResistanceState" />
+                  <input
+                    matInput
+                    placeholder="Only numbers*"
+                    formControlName="requiredResistanceState"
+                  />
                 </mat-form-field>
               </td>
 
               <td>
                 <mat-form-field appearance="fill" style="width: 300px">
-                  <input matInput formControlName="mesauredResistanceState" />
+                  <input
+                    matInput
+                    placeholder="Only numbers*"
+                    formControlName="mesauredResistanceState"
+                  />
                 </mat-form-field>
               </td>
 
@@ -125,7 +196,6 @@
                 <app-set-prop-table
                   formControlName="isolateResistanceState"
                 ></app-set-prop-table>
-
               </td>
             </tr>
           </tbody>
@@ -143,59 +213,115 @@
 
     <mat-step [stepControl]="protectionCircuitCheck">
       <div formGroupName="protectionCircuitCheck">
-        <ng-template matStepLabel>Checking of the protection circuit</ng-template>
-        <table class="table">
-          <thead>
+        <ng-template matStepLabel
+          >Checking of the protection circuit</ng-template
+        >
+        <table class="table table-striped">
+          <thead class="thead-dark">
             <tr>
-              <th scope="col">Current Intensity [mA]</th>
-              <th scope="col">Voltage drop between the protective contact and the metal part [V]</th>
-              <th scope="col">Protective conductor resistance<span>&#8486;</span> </th>
-              <th scope="col">Permissible resistance<span>&#8486;</span> </th>
-              <th scope="col">Is it Valid?</th>
+              <th class="text-capitalize" scope="col">
+                Current Intensity [mA]
+              </th>
+              <th class="text-capitalize" scope="col">
+                Voltage drop between <br />
+                protective contact and the metal part [V]
+              </th>
+              <th class="text-capitalize" scope="col">
+                Protective conductor resistance [<span>&#8486;</span>]
+              </th>
+              <th class="text-capitalize" scope="col">
+                Permissible resistance [<span>&#8486;</span>]
+              </th>
+              <th class="text-capitalize" scope="col">Is it Valid?</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
-                <mat-form-field appearance="fill" style="width: 300px">
-                  <input matInput formControlName="requiredResistanceState" />
+                <mat-form-field appearance="fill" style="width: 90%">
+                  <input
+                    matInput
+                    placeholder="Only numbers*"
+                    formControlName="currentValue"
+                  />
                 </mat-form-field>
               </td>
 
               <td>
-                <mat-form-field appearance="fill" style="width: 300px">
-                  <input matInput formControlName="mesauredResistanceState" />
+                <mat-form-field appearance="fill" style="width: 90%">
+                  <input
+                    matInput
+                    placeholder="Only numbers*"
+                    formControlName="voltageValue"
+                  />
                 </mat-form-field>
               </td>
 
               <td>
-                <mat-form-field appearance="fill" style="width: 300px">
-                  <input matInput formControlName="requiredResistanceState" />
+                <mat-form-field appearance="fill" style="width: 90%">
+                  <input
+                    matInput
+                    [formControl]="
+                      protectionCircuitCheck.controls[
+                        'protectiveConductorResistance'
+                      ]
+                    "
+                    placeholder="Only numbers*"
+                  />
                 </mat-form-field>
               </td>
 
               <td>
-                <mat-form-field appearance="fill" style="width: 300px">
-                  <input matInput formControlName="requiredResistanceState" />
-                </mat-form-field>
-              </td>
-
-              <td>
-                <mat-form-field appearance="fill" style="width: 300px">
-                  <input matInput formControlName="requiredResistanceState" />
+                <mat-form-field appearance="fill" style="width: 90%">
+                  <input
+                    matInput
+                    formControlName="permissibleProtectiveConductorResistance"
+                    placeholder="Only numbers*"
+                  />
                 </mat-form-field>
               </td>
 
               <td>
                 <app-set-prop-table
-                  formControlName="isolateResistanceState"
+                  formControlName="protectionCircuitState"
+                  placeholder="Only numbers*"
                 ></app-set-prop-table>
-
               </td>
             </tr>
           </tbody>
         </table>
-                
+        <div
+          *ngIf="insulationResistanceMeasurement.errors?.required"
+          class="invalid-feedback"
+        >
+          uzupelnij...
+        </div>
+      </div>
+      <div>
+        <button mat-raised-button color="primary" matStepperPrevious>
+          Back
+        </button>
+        |
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="idleCheck">
+      <div formGroupName="idleCheck">
+        <ng-template matStepLabel> Idle Check </ng-template>
+
+        <app-set-prop
+          [label]="'idleCheck'"
+          formControlName="idleRunState"
+        ></app-set-prop>
+
+        <div>
+          <button mat-raised-button color="primary" matStepperPrevious>
+            Back
+          </button>
+          |
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
       </div>
     </mat-step>
 
@@ -208,215 +334,39 @@
           formControlName="isValid"
         ></app-set-prop>
 
+        <div style="width: 30%" *ngIf="IsValidForm">
+          <app-date-picker
+            [formControl]="finalEvaluation.controls['dateOfService']"
+            [label]="'Next service date'"
+            [minDate]="minDate"
+          ></app-date-picker>
+        </div>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Remarks</mat-label>
+          <textarea formControlName="remarks" matInput></textarea>
+        </mat-form-field>
+
         <div>
-          <button mat-raised-button color="submit" matStepperNext>Next</button>
+          <button mat-raised-button color="warn" (click)="stepper.reset()">
+            Reset
+          </button>
+          |
+          <button
+            mat-raised-button
+            type="submit"
+            (click)="HandleSubmit()"
+            color="submit"
+            matStepperNext
+          >
+            Submit
+          </button>
         </div>
       </div>
     </mat-step>
-
-  
-
- <!-- <mat-step [stepControl]="insulationResistanceMeasurement">
-      <div formGroupName="basic">
-        <ng-template matStepLabel>Measurement of the Insulation Resistance</ng-template>
-
-        <app-set-prop [label]="'name'" formControlName="isTrue"></app-set-prop>
-
-        <mat-form-field appearance="fill">
-          <mat-label>First Name</mat-label>
-          <input
-            matInput
-            placeholder="First name"
-            formControlName="firstname"
-          />
-          </mat-form-field>
-        <br />
-
-        <mat-form-field appearance="fill">
-          <mat-label>Last Name</mat-label>
-          <input matInput placeholder="Last name" formControlName="lastname" />
-        </mat-form-field>
-        <div>
-          <button mat-raised-button color="primary" matStepperNext>Next</button>
-        </div>
-      </div>
-    </mat-step>
-
-    <mat-step [stepControl]="protectionCircuitCheck">
-      <div formGroupName="basic">
-        <ng-template matStepLabel>Protection Circuit Check</ng-template>
-
-        <app-set-prop [label]="'name'" formControlName="isTrue"></app-set-prop>
-
-        <mat-form-field appearance="fill">
-          <mat-label>First Name</mat-label>
-          <input
-            matInput
-            placeholder="First name"
-            formControlName="firstname"
-          />
-          </mat-form-field>
-        <br />
-
-        <mat-form-field appearance="fill">
-          <mat-label>Last Name</mat-label>
-          <input matInput placeholder="Last name" formControlName="lastname" />
-        </mat-form-field>
-        <div>
-          <button mat-raised-button color="primary" matStepperNext>Next</button>
-        </div>
-      </div>
-    </mat-step>
-
-    <mat-step [stepControl]="idleCheck">
-      <div formGroupName="basic">
-        <ng-template matStepLabel>Idle Check</ng-template>
-
-        <app-set-prop [label]="'name'" formControlName="isTrue"></app-set-prop>
-
-        <mat-form-field appearance="fill">
-          <mat-label>First Name</mat-label>
-          <input
-            matInput
-            placeholder="First name"
-            formControlName="firstname"
-          />
-          </mat-form-field>
-        <br />
-
-        <mat-form-field appearance="fill">
-          <mat-label>Last Name</mat-label>
-          <input matInput placeholder="Last name" formControlName="lastname" />
-        </mat-form-field>
-        <div>
-          <button mat-raised-button color="primary" matStepperNext>Next</button>
-        </div>
-      </div>
-    </mat-step>
-
-
-    <mat-step [stepControl]="finalEvaluation">
-      <div formGroupName="basic">
-        <ng-template matStepLabel>Final Evaluation</ng-template>
-
-        <app-set-prop [label]="'name'" formControlName="isTrue"></app-set-prop>
-
-        <mat-form-field appearance="fill">
-          <mat-label>First Name</mat-label>
-          <input
-            matInput
-            placeholder="First name"
-            formControlName="firstname"
-          />
-          </mat-form-field>
-        <br />
-
-        <mat-form-field appearance="fill">
-          <mat-label>Last Name</mat-label>
-          <input matInput placeholder="Last name" formControlName="lastname" />
-        </mat-form-field>
-        <div>
-          <button mat-raised-button color="primary" matStepperNext>Next</button>
-        </div>
-      </div>
-    </mat-step> -->
-
-    <!-- <mat-step [stepControl]="basicform">
-        <div formGroupName="basic">
-          <ng-template matStepLabel>Fill Basic Details</ng-template>
-
-          <app-set-prop [label]="'name'" formControlName="isTrue"></app-set-prop>
-
-          <mat-form-field appearance="fill">
-            <mat-label>First Name</mat-label>
-            <input
-              matInput
-              placeholder="First name"
-              formControlName="firstname"
-            />
-            </mat-form-field>
-          <br />
-
-          <mat-form-field appearance="fill">
-            <mat-label>Last Name</mat-label>
-            <input matInput placeholder="Last name" formControlName="lastname" />
-          </mat-form-field>
-          <div>
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
-          </div>
-        </div>
-      </mat-step>
-
-      
-
-      <mat-step [stepControl]="contactform" label="Fill out contact info">
-        <div formGroupName="contact">
-          <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input
-              matInput
-              formControlName="email"
-              placeholder="Email"
-              required
-            />
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Phone</mat-label>
-            <input
-              matInput
-              formControlName="phone"
-              placeholder="Phone"
-              required
-            />
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Fax</mat-label>
-            <input matInput formControlName="fax" placeholder="Fax" required />
-          </mat-form-field>
-          <div>
-            <button mat-raised-button color="primary" matStepperPrevious>
-              Back
-            </button>
-            |
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
-          </div>
-        </div>
-      </mat-step>
-
-      <mat-step [stepControl]="addressform" label="Fill out address">
-        <div formGroupName="address">
-          <mat-form-field appearance="fill">
-            <mat-label>Street</mat-label>
-            <input
-              matInput
-              formControlName="street"
-              placeholder="street"
-              required
-            />
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>City</mat-label>
-            <input matInput formControlName="city" placeholder="City" required />
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>PIN</mat-label>
-            <input matInput formControlName="pin" placeholder="Pin" required />
-          </mat-form-field>
-          <div>
-            <button mat-raised-button color="primary" matStepperPrevious>
-              Back
-            </button>
-            |
-            <button mat-raised-button color="accent">Submit</button>
-          </div>
-        </div>
-      </mat-step>
-    </mat-stepper>
-  </form> -->
 
     <pre>
-  {{ serviceForm.value | json }}
-</pre
-    >
+      {{ serviceForm.value | json }}
+    </pre>
   </mat-stepper>
 </form>

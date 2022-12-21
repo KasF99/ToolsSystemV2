@@ -31,6 +31,7 @@ export class ToolsListAdminComponent implements OnInit {
   ngOnInit(): void {
     this.ToolAdded()
     this.ToolDeleted()
+    this.ToolService()
     this.loadTools()
     this.loadToolsNP()
     this.loadMembers()
@@ -89,6 +90,11 @@ export class ToolsListAdminComponent implements OnInit {
     }
   }
 
-
+  ToolService() {
+    if (this.toolService.isService) {
+      this.toolParams = this.toolService.resetToolParams()
+      this.loadTools();
+    }
+  }
 
 }

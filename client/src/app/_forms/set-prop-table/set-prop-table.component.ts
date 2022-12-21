@@ -1,5 +1,5 @@
-import { Component, forwardRef, Input, OnInit, Self } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormControlName, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-set-prop-table',
@@ -14,10 +14,6 @@ import { ControlValueAccessor, FormControl, FormControlName, NgControl, NG_VALUE
   ]
 })
 export class SetPropTableComponent implements ControlValueAccessor {
-
-
-  @Input() MV!: number;
-  @Input() RV!: number;
 
   value!: boolean;
   onChange!: (value: string) => void;
@@ -34,17 +30,6 @@ export class SetPropTableComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
-  }
-
-  setMark() {
-    if (this.MV >= this.RV) {
-      this.value = true
-    }
-
-    if (this.MV < this.RV) {
-      this.value = false
-    }
-    
   }
 
 }

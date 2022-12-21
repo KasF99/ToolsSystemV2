@@ -24,8 +24,10 @@ namespace API.DTOs
         public int? VoltageValue { get; set; }
         public int? ProtectiveConductorResistance { get; set; }
         public int? PermissibleProtectiveConductorResistance { get; set; }
+        public bool? ProtectionCircuitState { get; set; }
         public bool? IdleRunState { get; set; }
         public DateTime DateOfService { get; set; }
+        public string Remarks { get; set; }
         public bool? IsValid { get; set; }
 
 

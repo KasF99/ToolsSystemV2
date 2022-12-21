@@ -28,7 +28,9 @@ namespace API.Entities
         public int? VoltageValue { get; set; } = 0;
         public int? ProtectiveConductorResistance { get; set; } = 0;
         public int? PermissibleProtectiveConductorResistance { get; set; } = 0;
+        public bool? ProtectionCircuitState { get; set; }
         public bool? IdleRunState { get; set; }
+        public string Remarks { get; set; }
         public bool? IsValid { get; set; }
         public Tools Tools { get; set; }
         public int ToolsId { get; set; }

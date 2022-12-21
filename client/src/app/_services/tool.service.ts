@@ -10,11 +10,6 @@ import { Tool } from '../_models/tools';
 import { ToolsParams } from '../_models/toolsParams';
 import { AccountService } from './account.service';
 
-// const httpOptions = {
-//   headers: new HttpHeaders({ Authorization: 'Bearer ' +JSON.parse(localStorage.getItem('user'))?.token})
-// }
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -25,6 +20,7 @@ export class ToolService {
 
   isAdd: boolean
   isDelete: boolean
+  isService: boolean
   paginatedResult: PaginatedResult<Tool[]> = new PaginatedResult<Tool[]>()
   toolCache = new Map();
   toolParams: ToolsParams;
@@ -35,6 +31,7 @@ export class ToolService {
       this.toolParams = new ToolsParams();
       this.isAdd = false
       this.isDelete = false
+      this.isService = false
       this.bsConfig = {
         containerClass: 'theme-dark-blue',
         dateInputFormat: "MM-DD-YYYY",
@@ -66,10 +63,9 @@ export class ToolService {
     if (response) {
       return of(response);
     }
-
-    if (returnAll) {
-      return this.http.get(this.baseUrl + 'tools/?returnAll=true')
-    }
+    // if (returnAll) {
+    //   return this.http.get(this.baseUrl + 'tools/?returnAll=true')
+    // }
 
     else {
       let params = this.GetPaginationHeaders(toolParams.pageNumber, toolParams.pageSize);
@@ -86,6 +82,11 @@ export class ToolService {
       }))
     }
 
+  }
+
+
+  getToolsAll() {
+    return this.http.get<Tool[]>(this.baseUrl + 'tools/?returnAll=true')
   }
 
   private GetPaginatedResult<T>(url: string, params: HttpParams) {
@@ -163,8 +164,13 @@ export class ToolService {
     )
   }
 
-  serviceTool(toolname: string) {
-    return this.http.put(this.baseUrl + 'tools/' + toolname + '/service', {})
+  serviceTool(toolname: string, model: any) {
+    return this.http.put(this.baseUrl + 'tools/' + toolname + '/service', model).pipe(
+      map(() => {
+        this.isService = true
+      } 
+      )
+    )
   }
 
 
