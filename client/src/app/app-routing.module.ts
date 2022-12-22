@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { PdfCompAdminComponent } from './admin-panel/tools/pdf-comp-admin/pdf-comp-admin.component';
 import { ToolsDetailAdminComponent } from './admin-panel/tools/tools-detail-admin/tools-detail-admin.component';
 import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/tools-edit-admin.component';
 import { ToolsListAdminComponent } from './admin-panel/tools/tools-list-admin/tools-list-admin.component';
@@ -32,7 +33,10 @@ const routes: Routes = [
       { path: 'admin/tools/:toolname', component: ToolsDetailAdminComponent },
       { path: 'admin/tools/:toolname/edit', component: ToolsEditAdminComponent, canDeactivate: [PreventChangesGuard] },
       { path: 'admin/register-tools', component: ToolsRegisterAdminComponent },
-      { path: 'admin/service-tools', component: ToolsServiceAdminComponent},
+      { path: 'admin/service-tools', component: ToolsServiceAdminComponent },
+      { path: 'admin/pdf-print/:toolname', component: PdfCompAdminComponent },
+
+      
 
       { path: 'member/edit', component: MemberEditComponent },
       { path: 'admin', component: AdminPanelComponent },

@@ -48,8 +48,7 @@ namespace API.Controllers
             }
         }
 
-
-
+    
         [HttpGet("{toolname}")]
         public async Task<ActionResult<ToolsDto>> GetTool(string toolname)
         {

@@ -1,0 +1,6 @@
+<div [ngSwitch]="returnAnwser(tool)">
+    <div id="div1"> - {{label}}: </div> 
+    <div id="div2"*ngSwitchCase="true" style="color: green;">TAK</div>
+    <div id="div2"*ngSwitchCase="false" style="color: red;">NIE</div>
+    <div id="div2"*ngSwitchCase="null" style="color: blue;">NIE DOTYCZY</div>
+</div>

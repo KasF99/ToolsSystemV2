@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs/operators';
 import { ToolProperties } from 'src/app/_models/toolProperties';
 import { Tool } from 'src/app/_models/tools';
 import { ToolsParams } from 'src/app/_models/toolsParams';
@@ -98,7 +99,7 @@ export class ToolsServiceAdminComponent implements OnInit {
     this.formSubmit = this.builder.group({
     })
   }
-  
+
   get titlePage() {
     return this.serviceForm.get("titlePage") as FormGroup;
   }
@@ -126,7 +127,7 @@ export class ToolsServiceAdminComponent implements OnInit {
   }
 
   get IsValidForm() {
-    return this.finalEvaluation.get('isValid').value 
+    return this.finalEvaluation.get('isValid').value
   }
 
   get NextService() {
@@ -223,10 +224,21 @@ export class ToolsServiceAdminComponent implements OnInit {
   }
 
   serviceTool() {
-    this.toolService.serviceTool(this.ToolId, this.formSubmit.value).subscribe(() => {
-      this.toastr.info("kaczing!: " +  this.tool.toolName)
-      this.redirectTo('/admin');
-    })
+    this.toolService.serviceTool(this.ToolId, this.formSubmit.value).subscribe(
+      val => {
+        this.toastr.info("kaczing!: " + this.tool.toolName)
+        this.redirectTo('/admin/pdf-print/' + this.tool.toolName)
+      })
+    
+  }
+
+  lol() {
+    this.toolService.serviceTool(this.ToolId, this.formSubmit.value).pipe(
+      finalize(() => {
+        console.log('Finally')
+      })
+    )
+      .subscribe(() => { this.toastr.info("kaczing!: " + this.tool.toolName) })
   }
 
   redirectTo(uri: string) {
@@ -234,30 +246,8 @@ export class ToolsServiceAdminComponent implements OnInit {
       this.router.navigate([uri]));
   }
 
-
-//   reload() {
-//     const url = self ? this.router.url : '/';
-    
-//     this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
-//       this.router.navigate([`/${url}`]).then(()=>{
-//       console.log(`After navigation I am on:${this.router.url}`)
-//       })
-//       })
-//   }
-
-//   reloadComponent(self:boolean,urlToNavigateTo ?:string){
-//     //skipLocationChange:true means dont update the url to / when navigating
-//    console.log("Current route I am on:",this.router.url);
-//    const url=self ? this.router.url :urlToNavigateTo;
-//    this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
-//      this.router.navigate([`/${url}`]).then(()=>{
-//        console.log(`After navigation I am on:${this.router.url}`)
-//      })
-//    })
-//  }
-
-
-
-
+  openPDF() {
+    this.router.navigateByUrl('admin/pdf-print/' + this.tool.toolName)
+  }
 }
 

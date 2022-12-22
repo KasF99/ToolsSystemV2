@@ -1,0 +1,30 @@
+.header img {
+  float: right;
+  /* width: 100px;
+    height: 100px; */
+  background: #555;
+}
+
+.header h1 {
+  font-weight: bolder;
+  /* float: right; */
+  /* top: 18px;
+    left: 10px; */
+}
+
+.header p {
+  /* float: right; */
+}
+
+
+#div1 {
+  display: inline-block;
+}
+#div2 {
+  margin-left: 5%;
+  display: inline-block;
+}
+
+.footer p {
+  margin-bottom: 10%;
+}

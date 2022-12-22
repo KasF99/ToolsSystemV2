@@ -17,7 +17,7 @@ export class ToolsDetailAdminComponent implements OnInit {
   closeToService: boolean = false
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
- 
+
 
   constructor(public toolService: ToolService, public route: ActivatedRoute,
     public toastr: ToastrService, public router: Router) { }
@@ -36,7 +36,7 @@ export class ToolsDetailAdminComponent implements OnInit {
       }
     ]
 
-    
+
   }
 
   getImages(): NgxGalleryImage[] {
@@ -62,7 +62,11 @@ export class ToolsDetailAdminComponent implements OnInit {
   close() {
     if (this.tool.serviceDate < 20) {
       this.closeToService = true
+    }
   }
+
+  openPDF() {
+    this.router.navigateByUrl('admin/pdf-print/' + this.tool.toolName)
   }
 
   // delete() {
@@ -71,6 +75,6 @@ export class ToolsDetailAdminComponent implements OnInit {
   //   })
   // }
 
- 
+
 
 }

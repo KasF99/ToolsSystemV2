@@ -1,4 +1,5 @@
 import { Photo } from "./photo";
+import { ToolProperties } from "./toolProperties";
 
 export interface Tool {
     id: number;
@@ -11,4 +12,5 @@ export interface Tool {
     dateOfService: Date;
     serviceDate: number;
     photos: Photo[];
+    toolProperties: ToolProperties
 }
