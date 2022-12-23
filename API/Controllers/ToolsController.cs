@@ -1,4 +1,6 @@
+using System.ComponentModel;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Security.Claims;
 using API.Data;
 using API.DTOs;
@@ -48,7 +50,7 @@ namespace API.Controllers
             }
         }
 
-    
+
         [HttpGet("{toolname}")]
         public async Task<ActionResult<ToolsDto>> GetTool(string toolname)
         {
@@ -90,9 +92,28 @@ namespace API.Controllers
         }
 
         [HttpPost("email")]
-        public IActionResult SendEmail(EmailDto request)
+        public async Task<IActionResult> SendEmailAsync(EmailDto request, [FromQuery] string toolname)
         {
+            var tool = await _toolsRepository.GetToolsByToolnameAsync(toolname);
+            var user = await _userRepository.GetUserByToolAsync(tool);
+
+            var isValid = tool.ToolProperties.IsValid;
+            var toolOwner = user.UserName;
+            var email = user.Email;
+
+            var temp = new EmailToolPropertiesDto()
+            {
+                ToolName = tool.ToolName,
+                Owner = toolOwner,
+                DateOfService = tool.DateOfService,
+                Email = email,
+                IsValid = isValid
+            };
+
+            request.Tool = temp;
+
             _emailService.SendEmail(request);
+
             return Ok();
         }
 

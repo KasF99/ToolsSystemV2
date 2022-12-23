@@ -7,6 +7,7 @@ import { ToolsEditAdminComponent } from './admin-panel/tools/tools-edit-admin/to
 import { ToolsListAdminComponent } from './admin-panel/tools/tools-list-admin/tools-list-admin.component';
 import { ToolsRegisterAdminComponent } from './admin-panel/tools/tools-register-admin/tools-register-admin.component';
 import { ToolsServiceAdminComponent } from './admin-panel/tools/tools-service-admin/tools-service-admin.component';
+import { EmailMessComponent } from './email-mess/email-mess.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
@@ -35,6 +36,7 @@ const routes: Routes = [
       { path: 'admin/register-tools', component: ToolsRegisterAdminComponent },
       { path: 'admin/service-tools', component: ToolsServiceAdminComponent },
       { path: 'admin/pdf-print/:toolname', component: PdfCompAdminComponent },
+      { path: 'admin/email', component: EmailMessComponent},
 
       
 

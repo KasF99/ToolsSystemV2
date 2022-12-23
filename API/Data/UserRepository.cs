@@ -37,14 +37,14 @@ namespace API.Data
         {
 
             var query = _context.Users.AsQueryable();
-    
+
             // var query = _context.Users
             //     .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             //     .AsNoTracking();
 
             // query = query.Where(u => u.UserName != userParams.CurrentUsername);    //this lines allows for not returning information for certain users
 
-          
+
             // var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
             // var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
 
@@ -56,14 +56,22 @@ namespace API.Data
             //     _ => query.OrderByDescending(u => u.LastActive)
             // };
 
-                return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper
-                .ConfigurationProvider).AsNoTracking(), 
-                    userParams.PageNumber, userParams.PageSize);
+            return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper
+            .ConfigurationProvider).AsNoTracking(),
+                userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users.FindAsync(id);
+        }
+
+        public async Task<AppUser> GetUserByToolAsync(Tools tool)
+        {
+            return await _context.Users
+                .Where(u => u.Tools.Contains(tool) == true)
+                .Include(t => t.Tools)
+                .SingleOrDefaultAsync();
         }
 
         public async Task<AppUser> GetUserByUsernameAsync(string username)

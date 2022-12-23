@@ -53,6 +53,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { PdfCompAdminComponent } from './admin-panel/tools/pdf-comp-admin/pdf-comp-admin.component';
 import { CustomValueComponent } from './_forms/custom-value/custom-value.component';
+import { EmailMessComponent } from './email-mess/email-mess.component';
 
 
 
@@ -88,6 +89,7 @@ import { CustomValueComponent } from './_forms/custom-value/custom-value.compone
     SetPropTableComponent,
     PdfCompAdminComponent,
     CustomValueComponent,
+    EmailMessComponent,
   ],
   imports: [
     BrowserModule,

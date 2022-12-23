@@ -77,6 +77,8 @@ namespace API.Data
                 .SingleOrDefaultAsync(x => x.ToolName == toolname);
         }
 
+        
+
         public Task<Tools> GetToolsByToolnameAsyncNP(string username)
         {
             throw new NotImplementedException();
