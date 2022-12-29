@@ -82,7 +82,7 @@ namespace API.Controllers
 
             _mapper.Map(toolPropertiesDto, toolProps);
 
-            tool.DateOfService = toolPropertiesDto.DateOfService; //you can create mapper but is it worth for one prop?
+            tool.DateOfService = toolPropertiesDto.DateOfService; //you can create mapper but is it worth for one property?
 
             _toolsRepository.Update(tool);
 
@@ -92,13 +92,18 @@ namespace API.Controllers
         }
 
         [HttpPost("email")]
-        public async Task<IActionResult> SendEmailAsync(EmailDto request, [FromQuery] string toolname)
+        public async Task<IActionResult> SendEmailAsync([FromQuery] string toolname)
         {
+            var request = new EmailDto();
+
             var tool = await _toolsRepository.GetToolsByToolnameAsync(toolname);
+
             var user = await _userRepository.GetUserByToolAsync(tool);
 
             var isValid = tool.ToolProperties.IsValid;
+
             var toolOwner = user.UserName;
+
             var email = user.Email;
 
             var temp = new EmailToolPropertiesDto()
@@ -111,6 +116,8 @@ namespace API.Controllers
             };
 
             request.Tool = temp;
+            request.To = email;
+            request.Subject = "ToolsManagmentSystem - Serwis narzędzia";
 
             _emailService.SendEmail(request);
 

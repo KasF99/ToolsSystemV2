@@ -164,9 +164,7 @@
                   <h1 style="text-align: left">
                     Protokół nr: {{ tDate | date : "ddMMyyhhmma" }}
                   </h1>
-                  <p style="text-align: left">
-                    Zleceniodawca: Przemysław Przybylski
-                  </p>
+                  <p style="text-align: left">Zleceniodawca: Adam Małysz</p>
                 </div>
                 <table class="table mt-5" *ngIf="tool">
                   <thead>
@@ -272,8 +270,12 @@
                   <table class="table mt-3" *ngIf="tool">
                     <thead class="">
                       <tr>
-                        <th scope="col">Zmierzona wartość rezystancji</th>
-                        <th scope="col">Wymagana wartość rezystancji</th>
+                        <th scope="col">
+                          Zmierzona wartość rezystancji [<span>&#8486;</span>]
+                        </th>
+                        <th scope="col">
+                          Wymagana wartość rezystancji [<span>&#8486;</span>]
+                        </th>
                         <th scope="col">Czy sprawny?</th>
                       </tr>
                     </thead>
@@ -286,10 +288,36 @@
                           {{ tool.toolProperties.requiredResistanceState }}
                         </td>
                         <td>
-                          <app-custom-value
-                            
-                            [tool]="tool.toolProperties.isolateResistanceState"
-                          ></app-custom-value>
+                          <div
+                            [ngSwitch]="
+                              returnAnwser(
+                                tool.toolProperties.isolateResistanceState
+                              )
+                            "
+                          >
+                            <div id="div1">{{ label }}</div>
+                            <div
+                              id="div2"
+                              *ngSwitchCase="true"
+                              style="color: green"
+                            >
+                              TAK
+                            </div>
+                            <div
+                              id="div2"
+                              *ngSwitchCase="false"
+                              style="color: red"
+                            >
+                              NIE
+                            </div>
+                            <div
+                              id="div2"
+                              *ngSwitchCase="null"
+                              style="color: blue"
+                            >
+                              NIE DOTYCZY
+                            </div>
+                          </div>
                         </td>
                       </tr>
                     </tbody>
@@ -330,9 +358,36 @@
                           }}
                         </td>
                         <td>
-                          <app-custom-value
-                            [tool]="tool.toolProperties.protectionCircuitState"
-                          ></app-custom-value>
+                          <div
+                            [ngSwitch]="
+                              returnAnwser(
+                                tool.toolProperties.protectionCircuitState
+                              )
+                            "
+                          >
+                            <div id="div1">{{ label }}</div>
+                            <div
+                              id="div2"
+                              *ngSwitchCase="true"
+                              style="color: green"
+                            >
+                              TAK
+                            </div>
+                            <div
+                              id="div2"
+                              *ngSwitchCase="false"
+                              style="color: red"
+                            >
+                              NIE
+                            </div>
+                            <div
+                              id="div2"
+                              *ngSwitchCase="null"
+                              style="color: blue"
+                            >
+                              NIE DOTYCZY
+                            </div>
+                          </div>
                         </td>
                       </tr>
                     </tbody>
@@ -342,7 +397,9 @@
                   <h5>5. Sprawdzenie biegu jałowego</h5>
                   <div *ngIf="tool">
                     <app-custom-value
-                      [label]="'Występowanie prawidłowego rozruchu oraz równomierna praca'"
+                      [label]="
+                        'Występowanie prawidłowego rozruchu oraz równomierna praca'
+                      "
                       [tool]="tool.toolProperties.isolateResistanceState"
                     ></app-custom-value>
                   </div>
@@ -354,7 +411,10 @@
                       [label]="'Zdatność narzędzia do eksplotacji'"
                       [tool]="tool.toolProperties.isValid"
                     ></app-custom-value>
-                  <div> - Data następnego badania: <b>{{tool.dateOfService | date : "dd.MM.yy"}}</b> </div>
+                    <div>
+                      - Data następnego badania:
+                      <b>{{ tool.dateOfService | date : "dd.MM.yy" }}</b>
+                    </div>
                   </div>
                 </div>
                 <div class="footer mt-5">
@@ -371,7 +431,12 @@
   </div>
 </div>
 <div class="text-center">
-  <button class="btn btn-warning btn-lg mt-5" style="height: auto;" (click)="downloadAsPDF()" aria-pressed="true">
+  <button
+    class="btn btn-warning btn-lg mt-5"
+    style="height: auto"
+    (click)="downloadAsPDF()"
+    aria-pressed="true"
+  >
     Export To PDF
   </button>
 </div>

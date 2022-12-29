@@ -1,8 +1,7 @@
 #div1 {
-    display: inline-block;
-  }
-  #div2 {
-    margin-left: 5%;
-    display: inline-block;
-  }
-  
+  display: inline-block;
+}
+#div2 {
+  float: right;
+  display: inline-block;
+}

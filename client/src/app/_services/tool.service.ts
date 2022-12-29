@@ -173,6 +173,17 @@ export class ToolService {
     )
   }
 
+  sendEmail(toolname: string, model: any) {
+    return this.http.post(this.baseUrl + 'tools/email?toolname=' + toolname, null ).pipe(
+      map(() => {
+        this.toastr.info("Mail sent")
+      } 
+      )
+    )
+  }
+
+
+
 
 
 }

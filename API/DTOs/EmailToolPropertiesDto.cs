@@ -9,5 +9,6 @@ namespace API.DTOs
         public DateTime DateOfService { get; set; }
         public bool? IsValid { get; set; }
         public string Email { get; set; }
+        public string Subject { get; set; } = "ToolsManagmentSystem - Serwis narzędzia";
     }
 }

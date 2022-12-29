@@ -196,7 +196,14 @@ export class ToolsServiceAdminComponent implements OnInit {
   HandleSubmit() {
     if (this.serviceForm.valid) {
       this.logKeyValuePairs(this.serviceForm)
-      this.serviceTool()
+      this.serviceToolWNQ()
+    }
+  }
+
+  HandleSubmitPDF() {
+    if (this.serviceForm.valid) {
+      this.logKeyValuePairs(this.serviceForm)
+      this.serviceToolPDF()
     }
   }
 
@@ -227,19 +234,28 @@ export class ToolsServiceAdminComponent implements OnInit {
     this.toolService.serviceTool(this.ToolId, this.formSubmit.value).subscribe(
       val => {
         this.toastr.info("kaczing!: " + this.tool.toolName)
-        this.redirectTo('/admin/pdf-print/' + this.tool.toolName)
+        this.redirectTo('/admin')
       })
-    
   }
 
-  lol() {
-    this.toolService.serviceTool(this.ToolId, this.formSubmit.value).pipe(
-      finalize(() => {
-        console.log('Finally')
+  serviceToolWNQ() {
+    this.toolService.serviceTool(this.ToolId, this.formSubmit.value).subscribe(
+      val => {
+        this.toastr.info("kaczing!: " + this.tool.toolName)
       })
-    )
-      .subscribe(() => { this.toastr.info("kaczing!: " + this.tool.toolName) })
   }
+
+
+
+
+  serviceToolPDF() {
+    this.toolService.serviceTool(this.ToolId, this.formSubmit.value).subscribe(
+      val => {
+        this.toastr.info("kaczing!: " + this.tool.toolName)
+        this.redirectTo('/admin/pdf-print/' + this.tool.toolName)
+      })
+  }
+
 
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
@@ -248,6 +264,16 @@ export class ToolsServiceAdminComponent implements OnInit {
 
   openPDF() {
     this.router.navigateByUrl('admin/pdf-print/' + this.tool.toolName)
+  }
+
+  resetForm() {
+    this.initializeForm()
+  }
+
+  sendEmail() {
+    this.toolService.sendEmail(this.tool.toolName, "hola").subscribe(() => {
+      console.log(this.tool.toolName)
+    })
   }
 }
 

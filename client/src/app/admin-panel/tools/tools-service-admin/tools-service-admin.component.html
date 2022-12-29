@@ -348,10 +348,20 @@
         </mat-form-field>
 
         <div>
-          <button mat-raised-button color="warn" (click)="stepper.reset()">
+          <!-- <button mat-raised-button color="warn" (click)="resetForm()">
             Reset
-          </button>
-          |
+          </button> 
+          
+          |-->
+          <button
+          mat-raised-button
+          (click)="sendEmail()"
+          color="warn"
+          matStepperNext
+        >
+          Send Mail
+        </button>
+        |
           <button
             mat-raised-button
             type="submit"
@@ -361,6 +371,16 @@
           >
             Submit
           </button>
+          <!-- |
+          <button
+          mat-raised-button
+          type="submit"
+          (click)="HandleSubmitPDF()"
+          color="submit"
+          matStepperNext
+        >
+          Submit PDF
+        </button> -->
        
 
         </div>
