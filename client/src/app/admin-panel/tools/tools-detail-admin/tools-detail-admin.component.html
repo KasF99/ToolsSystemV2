@@ -4,21 +4,26 @@
             <img src="{{tool.photoUrl || './assets/tool1.jpg'}}" alt="{{tool.toolName}}"
                 class="card-img-top img-thumbnail">
             <div class="card-body">
+
                 <div class="mb-2">
                     <strong>Tool name: </strong> {{tool.toolName}}
                 </div>
+
                 <div class="mb-2">
                     <strong>Owner: </strong> {{tool.owner}}
 
                 </div>
-                <div>
-                    <strong>Added: </strong>
-                    <p>{{tool.created}}</p>
+
+                <div class="mb-2">
+                    <strong>State: </strong> {{tool.toolProperties.isValid}}
                 </div>
+              
                 <div>
                     <strong>Service date: </strong>
-                    <p>{{tool.dateOfService}}</p>
+                    <p>{{tool.dateOfService | date:'dd-MM-yy'}}</p>
                 </div>
+
+
             </div>
             <div class="card-footer">
                 <div class="btn-group d-flex">
@@ -36,24 +41,26 @@
         </div>
 
         <div *ngIf="closeToService" class="card card-service">
-            <img src="{{tool.photoUrl || './assets/tool.png'}}" alt="{{tool.toolName}}"
+            <img src="{{tool.photoUrl || './assets/tool1.jpg'}}" alt="{{tool.toolName}}"
                 class="card-img-top img-thumbnail">
             <div class="card-body">
                 <div class="mb-2">
                     <strong>Tool name: </strong> {{tool.toolName}}
                 </div>
+
                 <div class="mb-2">
                     <strong>Owner: </strong> {{tool.owner}}
+                </div>
 
+                <div class="mb-2">
+                    <strong>State: </strong> {{tool.toolProperties.isValid}}
                 </div>
-                <div>
-                    <strong>Added date: </strong>
-                    <p>{{tool.created}}</p>
-                </div>
+
                 <div class="service-date">
                     <strong>Service date: </strong>
-                    <p>{{tool.dateOfService}}</p>
+                    <p>{{tool.dateOfService | date:'dd-MM-yy' }}</p>
                 </div>
+
             </div>
             <div class="card-footer">
                 <div class="btn-group d-flex">
@@ -62,8 +69,6 @@
                         <app-modals-deletion [tool]="tool"></app-modals-deletion>
                     </div>
                     <button class="btn btn-warning" (click)="openPDF()">PDF</button>
-
-
                 </div>
             </div>
         </div>
@@ -72,11 +77,14 @@
     <div class="col-8">
         <tabset class="member-tabset">
             <tab heading="About {{tool.toolName}}">
-                <h4>Tool number: </h4>
+                <h4>Tool reference number: </h4>
                 <p>{{tool.toolNumber}}</p>
                 <h4>Description: </h4>
                 <p>{{tool.description}}</p>
-                <h4>Place for more info in future....</h4>
+                <h4>Days until the service expires: </h4>
+                <p>{{tool.serviceDate}}</p>
+                <h4>Added: </h4>
+                <p>{{tool.created | date:'dd-MM-yy' }}</p>
 
             </tab>
             <tab heading="Photos">

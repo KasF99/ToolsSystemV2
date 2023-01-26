@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { min } from 'rxjs/operators';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup | undefined;
   maxDate: Date;
   validationErrors: string[] = [];
-  
+  test: boolean = false;
+
 
   constructor(public accountService: AccountService, public toastr: ToastrService, public router: Router, public fb: FormBuilder) { }
 
@@ -39,7 +41,6 @@ export class RegisterComponent implements OnInit {
     this.registerForm.controls['password'].valueChanges.subscribe({
       next: () => this.registerForm.controls['confirmPassword'].updateValueAndValidity()
     })
-
   }
 
   matchValues(matchTo: string): ValidatorFn {
@@ -50,25 +51,26 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    const values = {...this.registerForm.value}
+    const values = { ...this.registerForm.value }
     this.accountService.register(values).subscribe(response => {
       this.router.navigateByUrl("/tools")
-    }, err => { 
+    }, err => {
       this.validationErrors = err
     })
   }
 
+  
 
   cancel() {
     this.cancelRegister.emit(false);
   }
-  
+
   //FOR GOOD DATE
 
   private getDateOnly(dob: string | undefined) {
     if (!dob) return;
     let theDob = new Date(dob);
-    return new Date(theDob.setMinutes(theDob.getMinutes()-theDob.getTimezoneOffset())).toISOString().slice(0,10)
+    return new Date(theDob.setMinutes(theDob.getMinutes() - theDob.getTimezoneOffset())).toISOString().slice(0, 10)
   }
 
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { finalize } from 'rxjs/operators';
 import { ToolProperties } from 'src/app/_models/toolProperties';
 import { Tool } from 'src/app/_models/tools';
 import { ToolsParams } from 'src/app/_models/toolsParams';
@@ -90,7 +89,7 @@ export class ToolsServiceAdminComponent implements OnInit {
       }),
 
       finalEvaluation: this.builder.group({
-        remarks: this.builder.control(' ', Validators.nullValidator),
+        remarks: this.builder.control('BRAK UWAG', Validators.nullValidator),
         dateOfService: this.builder.control(this.NextService, Validators.nullValidator),
         isValid: this.builder.control('', Validators.required),
       })
@@ -140,8 +139,11 @@ export class ToolsServiceAdminComponent implements OnInit {
   }
 
   changeTBstate() {
+    
     this.insulationResistanceMeasurement.get("requiredResistanceState").valueChanges.subscribe(x => {
+
       this.RV = x
+      
       this.insulationResistanceMeasurement.get('requiredResistanceState').markAsTouched()
     })
 
@@ -153,7 +155,7 @@ export class ToolsServiceAdminComponent implements OnInit {
 
         this.insulationResistanceMeasurement.get('requiredResistanceState').markAsUntouched()
 
-        this.insulationResistanceMeasurement.controls['isolateResistanceState'].setValue(this.isTrue)
+        this.insulationResistanceMeasurement.controls['isolateResistanceState'].setValue(!this.isTrue)
 
       }
     })
@@ -207,11 +209,18 @@ export class ToolsServiceAdminComponent implements OnInit {
     }
   }
 
+  HandleSubmitEmail() {
+    if (this.serviceForm.valid) {
+      this.logKeyValuePairs(this.serviceForm)
+      this.serviceToolEmail()
+    }
+  }
+
   isValid(v1: number, v2: number) {
     if (v1 >= v2) {
       return true;
     }
-    else if (v1 < v2) {
+    if (v1 < v2) {
       return false
     }
   }
@@ -238,6 +247,18 @@ export class ToolsServiceAdminComponent implements OnInit {
       })
   }
 
+  serviceToolEmail() {    
+      this.toolService.serviceTool(this.ToolId, this.formSubmit.value).subscribe(
+        val => {
+          this.toolService.sendEmail(this.tool.toolName, "hola").subscribe(() => {
+            console.log(this.tool.toolName)
+            this.toastr.info("kaczing!: " + this.tool.toolName)
+            this.redirectTo('/admin')
+          })
+        }) 
+  }
+
+
   serviceToolWNQ() {
     this.toolService.serviceTool(this.ToolId, this.formSubmit.value).subscribe(
       val => {
@@ -245,15 +266,19 @@ export class ToolsServiceAdminComponent implements OnInit {
       })
   }
 
-
-
-
   serviceToolPDF() {
+    let flag = false
     this.toolService.serviceTool(this.ToolId, this.formSubmit.value).subscribe(
       val => {
         this.toastr.info("kaczing!: " + this.tool.toolName)
         this.redirectTo('/admin/pdf-print/' + this.tool.toolName)
+        flag = !flag
       })
+    
+    if (flag) { 
+      this.sendEmail()
+      flag = false
+    }
   }
 
 
