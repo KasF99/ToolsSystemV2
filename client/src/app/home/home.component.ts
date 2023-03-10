@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
   }
 
   getUsers() {
-    this.http.get('https://localhost:5001/api/users').subscribe(users => {
+    this.http.get(environment.apiUrl + 'users').subscribe(users => {
       this.users = users
     })
   }
