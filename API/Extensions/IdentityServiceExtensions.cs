@@ -1,6 +1,10 @@
 using System.Text;
+using API.Data;
+using API.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Org.BouncyCastle.Crypto.Tls;
 
 namespace API.Extensions
 {
@@ -8,7 +12,16 @@ namespace API.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+
+            services.AddIdentityCore<AppUser>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+
+            }).AddRoles<AppRole>()
+              .AddRoleManager<RoleManager<AppRole>>()
+              .AddEntityFrameworkStores<DataContext>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                options.TokenValidationParameters = new TokenValidationParameters
                {
